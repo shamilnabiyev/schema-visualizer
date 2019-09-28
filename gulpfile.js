@@ -44,16 +44,6 @@ function modules() {
   // Bootstrap SCSS
   var bootstrapSCSS = gulp.src('./node_modules/bootstrap/scss/**/*')
     .pipe(gulp.dest('./vendor/bootstrap/scss'));
-  // ChartJS
-  var chartJS = gulp.src('./node_modules/chart.js/dist/*.js')
-    .pipe(gulp.dest('./vendor/chart.js'));
-  // dataTables
-  var dataTables = gulp.src([
-      './node_modules/datatables.net/js/*.js',
-      './node_modules/datatables.net-bs4/js/*.js',
-      './node_modules/datatables.net-bs4/css/*.css'
-    ])
-    .pipe(gulp.dest('./vendor/datatables'));
   // Font Awesome
   var fontAwesome = gulp.src('./node_modules/@fortawesome/**/*')
     .pipe(gulp.dest('./vendor'));
@@ -62,11 +52,20 @@ function modules() {
     .pipe(gulp.dest('./vendor/jquery-easing'));
   // jQuery
   var jquery = gulp.src([
-      './node_modules/jquery/dist/*',
-      '!./node_modules/jquery/dist/core.js'
-    ])
+    './node_modules/jquery/dist/*',
+    '!./node_modules/jquery/dist/core.js'
+  ])
     .pipe(gulp.dest('./vendor/jquery'));
-  return merge(bootstrapJS, bootstrapSCSS, chartJS, dataTables, fontAwesome, jquery, jqueryEasing);
+  // Backbone
+  var backbone = gulp.src('./node_modules/backbone/backbone-min.js')
+    .pipe(gulp.dest('./vendor/backbone'));
+  // Lodash
+  var lodash = gulp.src('./node_modules/lodash/lodash.min.js')
+    .pipe(gulp.dest('./vendor/lodash'));
+  // JointJs  
+  var jointjs = gulp.src('./node_modules/jointjs/dist/joint.min.js')
+  .pipe(gulp.dest('./vendor/jointjs'));
+  return merge(bootstrapJS, bootstrapSCSS, fontAwesome, jquery, jqueryEasing, backbone, lodash, jointjs);
 }
 
 // CSS task
