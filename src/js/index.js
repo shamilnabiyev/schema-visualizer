@@ -8,7 +8,8 @@ import './fontAwesomeCustom.js';
 
 import { portOptions, createLink } from './jointjs-helper/JointJsHelper';
 
-import 'fontawesome_all_min_css';
+import 'typeface-nunito';
+import 'fontawesome_min_css';
 import 'fontawesome_solid_min_css';
 import 'jointjs_min_css';
 import '../scss/index.scss';
