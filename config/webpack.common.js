@@ -1,62 +1,53 @@
-const path = require('path');
+const Path = require('path');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
-    resolve: {
-        modules: ['node_modules', 'src'],
-        alias: {
-            jointjs_css: path.join(__dirname, '../node_modules/jointjs/dist/joint.css'),
-            jointjs_min_css: path.join(__dirname, '../node_modules/jointjs/dist/joint.min.css'),
-            normalize_css: path.join(__dirname, '../node_modules/normalize.css')
-        }
-    },
-    output: {
-        path: path.resolve(__dirname, '../dist'),
-        filename: '[id].[hash].bundle.js',
-        chunkFilename: '[id].[hash].chunk.js'
-    },
-    plugins: [
-        new CleanWebpackPlugin(),
-        new HtmlWebpackPlugin({
-            favicon: path.join(__dirname, '../src/', 'favicon.ico'),
-            template: path.join(__dirname, '../src/', 'index.html'),
-            inject: true,
-            minify: {
-                removeComments: true,
-                collapseWhitespace: false
-            }
-        }),
-        new MiniCssExtractPlugin({
-            filename: '[id].[hash].styles.css',
-            chunkFilename: '[id].[hash].styles.css'
-        })
-    ],
-    module: {
-        rules: [
-            {
-                test: /\.html$/,
-                loader: "html-loader"
-            },
-            {
-                test: /\.css$/,
-                use: [MiniCssExtractPlugin.loader, 'css-loader']
-            },
-            {
-                test: /\.ico$/,
-                loader: 'file-loader?name=[name].[ext]'
-            },
-            {
-                test: /\.m?js$/,
-                exclude: /node_modules/,
-                use: {
-                  loader: 'babel-loader',
-                  options: {
-                    presets: ['@babel/preset-env']
-                  }
-                }
-              }
-        ]
+  entry: {
+    app: Path.resolve(__dirname, '../src/js/index.js')
+  },
+  output: {
+    path: Path.join(__dirname, '../build'),
+    filename: 'js/[name].js'
+  },
+  optimization: {
+    splitChunks: {
+      chunks: 'all',
+      name: false
     }
-}
+  },
+  plugins: [
+    new CleanWebpackPlugin(),
+    new CopyWebpackPlugin([
+      { from: Path.resolve(__dirname, '../public'), to: 'public' }
+    ]),
+    new HtmlWebpackPlugin({
+      template: Path.resolve(__dirname, '../src/', 'index.html'),
+      favicon: Path.join(__dirname, '../src/', 'favicon.ico'),
+    })
+  ],
+  resolve: {
+    alias: {
+      '~': Path.resolve(__dirname, '../src')
+    }
+  },
+  module: {
+    rules: [
+      {
+        test: /\.mjs$/,
+        include: /node_modules/,
+        type: 'javascript/auto'
+      },
+      {
+        test: /\.(ico|jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2)(\?.*)?$/,
+        use: {
+          loader: 'file-loader',
+          options: {
+            name: '[path][name].[ext]'
+          }
+        }
+      },
+    ]
+  }
+};
