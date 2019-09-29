@@ -4,81 +4,31 @@ import * as jQuery from 'jquery';
 import * as _ from 'lodash';
 import Backbone from 'backbone';
 import * as joint from 'jointjs';
+import './fontAwesomeCustom.js';
 
+import { portOptions, createLink } from './jointjs-helper/JointJsHelper';
+
+import 'fontawesome_all_min_css';
+import 'fontawesome_solid_min_css';
 import 'jointjs_min_css';
 import '../scss/index.scss';
 
 import CustomElement from './schema-diagram/common/CustomHtmlElement';
 // import simple_row from "./schema-diagram/simple-row/";
 // import diagram_title from "./schema-diagram/diagram-title/";
-import simpleRowTemplate from "./schema-diagram/simple-row/template.html";
-import diagramTitleTemplate from "./schema-diagram/diagram-title/template.html";
+import simpleRowTemplate from "./schema-diagram/simple-row/SimpleRow.html";
+import diagramTitleTemplate from "./schema-diagram/diagram-title/DiagramTitle.html";
 
 (function ($) {
-    const portOptions = {
-        groups: {
-            'in': {
-                label: {
-                    position: {
-                        name: 'right',
-                    }
-                }
-            },
-            'out': {
-                label: {
-                    position: {
-                        name: 'left',
-                    }
-                },
-            }
-        }
-    };
-
     var graph = new joint.dia.Graph();
     var paper = new joint.dia.Paper({
         el: $('#paper-html-elements'),
-        width: 1024,
-        height: 400,
+        width: '100%', 
+        height: 800,
         gridSize: 1,
         model: graph,
         cellViewNamespace: joint.shapes,
     });
-
-    var connect = function (source, sourcePort, target, targetPort, label) {
-        var link = new joint.shapes.standard.Link({
-            router: { name: 'manhattan' },
-            connector: { name: 'rounded' },
-            source: {
-                id: source.id,
-                port: sourcePort
-            },
-            target: {
-                id: target.id,
-                port: targetPort
-            }
-        });
-
-        link.appendLabel({
-            attrs: {
-                text: {
-                    text: label || 'REF'
-                },
-                line: {
-                    strokeWidth: 4,
-                }
-            },
-            body: {
-                ref: 'label',
-                fill: '#ffffff',
-                stroke: 'red',
-                strokeWidth: 2,
-                refR: 1,
-                refCx: 0,
-                refCy: 0
-            },
-        });
-        link.addTo(graph).reparent();
-    };
 
     var c1 = new joint.shapes.devs.Coupled({
         attrs: { text: { text: 'USER' } },
@@ -216,12 +166,13 @@ import diagramTitleTemplate from "./schema-diagram/diagram-title/template.html";
     c2.toFront();
 
     try {
-        connect(sr23, "in", sr1, "out", "");
+        var newLink = createLink(sr23, "in", sr1, "out", "");
+        newLink.addTo(graph).reparent();
     } catch (error) {
-        console.log("error on link connection");
+        console.log(error);
     }
 
-    paper.scale(0.85, 0.85);
+    paper.scale(0.7, 0.7);
     paper.on('blank:mousewheel', (event, x, y, delta) => {
         event.preventDefault();
         zoomOnMousewheel(delta);
