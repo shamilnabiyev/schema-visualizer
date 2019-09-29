@@ -28,8 +28,11 @@ module.exports = {
     })
   ],
   resolve: {
+    modules: ['node_modules', 'src'],
     alias: {
-      '~': Path.resolve(__dirname, '../src')
+      '~': Path.resolve(__dirname, '../src'),
+      jointjs_min_css: Path.join(__dirname, '../node_modules/jointjs/dist/joint.min.css'),
+      normalize_css: Path.join(__dirname, '../node_modules/normalize.css')
     }
   },
   module: {
