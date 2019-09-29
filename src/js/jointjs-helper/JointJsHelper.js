@@ -1,4 +1,13 @@
 import * as joint from 'jointjs';
+import CustomElement from '../schema-diagram/common/CustomHtmlElement';
+
+const getPosition = function (options) {
+    return { x: options.x, y: options.y };
+};
+
+const getSize = function (options) {
+    return { width: options.width, height: options.height };
+};
 
 export const portOptions = {
     groups: {
@@ -59,10 +68,32 @@ export const createLink = function (source, sourcePort, target, targetPort, labe
 export const createPaper = function (paperDivElement, graph) {
     return new joint.dia.Paper({
         el: paperDivElement,
-        width: '100%', 
+        width: '100%',
         height: 800,
         gridSize: 1,
         model: graph,
         cellViewNamespace: joint.shapes,
+    });
+};
+
+export const createCoupled = function (options) {
+    return new joint.shapes.devs.Coupled({
+        attrs: { text: { text: options.text } },
+        position: getPosition(options),
+        size: getSize(options),
+        attrs: {
+            rect: { stroke: '#ffffff', 'stroke-width': 1 }
+        }
+    });
+};
+
+export const createCustomElement = function (options) {
+    return new CustomElement.Element({
+        template: options.template,
+        customAttrs: {
+            entity_title: options.title
+        },
+        position: getPosition(options),
+        size: getSize(options)
     });
 };

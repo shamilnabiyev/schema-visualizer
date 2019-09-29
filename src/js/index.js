@@ -6,7 +6,9 @@ import Backbone from 'backbone';
 import * as joint from 'jointjs';
 import './fontAwesomeCustom.js';
 
-import { portOptions, createLink, createPaper } from './jointjs-helper/JointJsHelper';
+import {
+    portOptions, createLink, createPaper, createCoupled, createCustomElement
+} from './jointjs-helper/JointJsHelper';
 
 import 'typeface-nunito';
 import 'fontawesome_min_css';
@@ -22,25 +24,12 @@ import diagramTitleTemplate from "./schema-diagram/diagram-title/DiagramTitle.ht
 
 (function ($) {
     var graph = new joint.dia.Graph();
-    var paper = createPaper($('#paper-html-elements'), graph); 
+    var paper = createPaper($('#paper-html-elements'), graph);
 
-    var c1 = new joint.shapes.devs.Coupled({
-        attrs: { text: { text: 'USER' } },
-        position: { x: 50, y: 15 },
-        size: { width: 400, height: 175 },
-        attrs: {
-            rect: { stroke: '#ffffff', 'stroke-width': 1 }
-        }
-    });
+    var c1 = createCoupled({ text: 'USER', x: 50, y: 15, width: 400, height: 175 });
 
-    var t1 = new CustomElement.Element({
-        template: diagramTitleTemplate,
-        customAttrs: {
-            entity_title: "USER"
-        },
-        position: { x: 50, y: 15 },
-        size: { width: 400, height: 35 }
-    });
+    var t1 = createCustomElement({ title: 'USER', template: diagramTitleTemplate, x: 50, y: 15, width: 400, height: 175 });
+
 
     var sr1 = new CustomElement.Element({
         template: simpleRowTemplate,
