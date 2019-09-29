@@ -1,16 +1,4 @@
-.sd-row {
-  width: inherit;
-  border: 1px solid #aaa;
-  display: inline-block;
-  background-color: #ffffff;
-}
-
-.sd-expander {
-  width: 5px;
-  border: 1px solid #eee;
-}
-
-.sd-flex-container {
+.flex-container {
   display: flex;
   flex-wrap: nowrap;
   justify-content: space-between;
@@ -18,16 +6,16 @@
   background-color: #ffffff;
 }
 
-.sd-in-port {
+.in_port {
   padding: 0.5em 0.5em;
 }
 
-.sd-out-port {
+.out_port {
   display: flex;
   flex-wrap: nowrap;
 }
 
-.sd-field-constraints {
+.field_constraints {
   /*min-width: 11em;*/
   /*text-align: center;*/
   font-style: italic;
@@ -35,23 +23,19 @@
   padding: 0.5em 0.5em;
 }
 
-.sd-field-date-type {
+.field_date_type {
   min-width: 5em;
   text-align: right;
 
   padding: 0.5em 0.5em;
 }
 
-.sd-header {
+.header {
   border: 1px solid #aaa;
   padding: 0.5em 0.5em;
   text-align: center;
   background-color: deepskyblue;
   color: #fff;
-}
-
-.sd-row,
-.sd-header {
   border-top-left-radius: 0.5em;
   border-top-right-radius: 0.5em;
 }
