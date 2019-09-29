@@ -2,10 +2,6 @@ import * as $ from 'jquery';
 import * as _ from 'lodash';
 import Backbone from 'backbone';
 import * as joint from 'jointjs';
-/* Workaround to fix the missing global jointjs variable */
-window.joint = joint;
-/* */
-
 
 var html = joint.shapes.html = {};
 html.Element = joint.shapes.devs.Atomic.extend({

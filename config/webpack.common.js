@@ -38,6 +38,10 @@ module.exports = {
   module: {
     rules: [
       {
+        test: /\.html$/,
+        loader: "html-loader"
+      },
+      {
         test: /\.mjs$/,
         include: /node_modules/,
         type: 'javascript/auto'
