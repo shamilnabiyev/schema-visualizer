@@ -52,7 +52,17 @@ export const createLink = function (source, sourcePort, target, targetPort, labe
             refCy: 0
         },
     });
-    // link.addTo(graph).reparent();
-    return link;
 
+    return link;
+};
+
+export const createPaper = function (paperDivElement, graph) {
+    return new joint.dia.Paper({
+        el: paperDivElement,
+        width: '100%', 
+        height: 800,
+        gridSize: 1,
+        model: graph,
+        cellViewNamespace: joint.shapes,
+    });
 };

@@ -6,7 +6,7 @@ import Backbone from 'backbone';
 import * as joint from 'jointjs';
 import './fontAwesomeCustom.js';
 
-import { portOptions, createLink } from './jointjs-helper/JointJsHelper';
+import { portOptions, createLink, createPaper } from './jointjs-helper/JointJsHelper';
 
 import 'typeface-nunito';
 import 'fontawesome_min_css';
@@ -22,14 +22,7 @@ import diagramTitleTemplate from "./schema-diagram/diagram-title/DiagramTitle.ht
 
 (function ($) {
     var graph = new joint.dia.Graph();
-    var paper = new joint.dia.Paper({
-        el: $('#paper-html-elements'),
-        width: '100%', 
-        height: 800,
-        gridSize: 1,
-        model: graph,
-        cellViewNamespace: joint.shapes,
-    });
+    var paper = createPaper($('#paper-html-elements'), graph); 
 
     var c1 = new joint.shapes.devs.Coupled({
         attrs: { text: { text: 'USER' } },
