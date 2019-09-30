@@ -8,13 +8,22 @@ import { library, dom } from '@fortawesome/fontawesome-svg-core';
 // Solid
 // https://fontawesome.com/icons?d=gallery&s=solid&m=free
 import {
-    faBars, faBorderStyle, faCheck, faFlag, faInfoCircle, faExclamationTriangle, faTrash,
-    faSearchPlus, faSearchMinus
+    faBars,
+    faBorderStyle,
+    faCheck,
+    faFlag,
+    faInfoCircle,
+    faExclamationTriangle,
+    faTrash,
+    faSearchPlus,
+    faSearchMinus,
+    faFolder,
+    faGripHorizontal
 } from '@fortawesome/free-solid-svg-icons';
 
 
 library.add(faBars, faBorderStyle, faCheck, faFlag, faInfoCircle, faExclamationTriangle,
-    faTrash, faSearchPlus, faSearchMinus);
+    faTrash, faSearchPlus, faSearchMinus, faFolder, faGripHorizontal);
 
 
 // automatically find any <i> tags in the page and replace those with <svg> elements
