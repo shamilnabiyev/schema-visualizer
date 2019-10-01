@@ -4,7 +4,7 @@
   "version": "2.0.0",
   "scripts": {
     "build": "cross-env NODE_ENV=production webpack --config config/webpack.prod.js  --colors",
-    "start": "webpack-dev-server --config config/webpack.dev.js"
+    "dev": "webpack-dev-server --config config/webpack.dev.js"
   },
   "private": true,
   "keywords": [

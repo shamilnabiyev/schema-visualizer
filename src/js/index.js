@@ -161,27 +161,9 @@ import diagramTitleTemplate from "./schema-diagram/diagram-title/DiagramTitle.ht
      */
     var m1 = new shapes.devs.Model({
         position: { x: 150, y: 250 },
-        size: { width: 90, height: 90 },
-        inPorts: ['in1', 'in2'],
-        outPorts: ['out1', 'out2'],
-        ports: {
-            groups: {
-                'in': {
-                    attrs: {
-                        '.port-body': {
-                            fill: 'red'
-                        }
-                    }
-                },
-                'out': {
-                    attrs: {
-                        '.port-body': {
-                            fill: 'green'
-                        }
-                    }
-                }
-            }
-        },
+        size: { width: 180, height: 180 },
+        inPorts: ['in1', 'in2', 'in3', 'in4'],
+        outPorts: ['out1', 'out2', 'out3', 'out4'],
         attrs: {
             '.label': { text: 'Model', 'ref-x': .5, 'ref-y': .2 },
             rect: { fill: '#2ECC71' }
