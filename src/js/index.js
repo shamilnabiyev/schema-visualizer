@@ -4,6 +4,7 @@ import jQuery from 'jquery';
 import _ from 'lodash';
 import Backbone from 'backbone';
 import {dia, shapes} from 'jointjs';
+import ulElem from './jointjs-helper/templateGenerator';
 import './fontAwesomeCustom.js';
 
 import {
@@ -25,7 +26,8 @@ import diagramTitleTemplate from "./schema-diagram/diagram-title/DiagramTitle.ht
 (function ($) {
     var graph = new dia.Graph();
     var paper = createPaper($('#paper-html-elements'), graph);
-
+    console.log("UL-ELEMENT: ", ulElem);
+    
     var c1 = createCoupled({ text: 'USER', x: 50, y: 15, width: 400, height: 175 });
 
     var t1 = createCustomElement({ title: 'USER', template: diagramTitleTemplate, x: 50, y: 15, width: 400, height: 175 });
