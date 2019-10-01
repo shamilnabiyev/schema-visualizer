@@ -1,7 +1,7 @@
 import 'bootstrap/dist/js/bootstrap.bundle';
 import './sb-admin-2.js';
-import * as jQuery from 'jquery';
-import * as _ from 'lodash';
+import jQuery from 'jquery';
+import _ from 'lodash';
 import Backbone from 'backbone';
 import {dia, shapes} from 'jointjs';
 import './fontAwesomeCustom.js';
@@ -30,6 +30,7 @@ import diagramTitleTemplate from "./schema-diagram/diagram-title/DiagramTitle.ht
 
     var t1 = createCustomElement({ title: 'USER', template: diagramTitleTemplate, x: 50, y: 15, width: 400, height: 175 });
 
+    console.log(t1.get('id'));
 
     var sr1 = new CustomElement.Element({
         template: simpleRowTemplate,
@@ -169,10 +170,47 @@ import diagramTitleTemplate from "./schema-diagram/diagram-title/DiagramTitle.ht
             rect: { fill: '#2ECC71' }
         }
     });
+
     graph.addCell(m1);
 
+    
+    const newTemplate = `
+        <div class="html-element">
+            <div class="header">
+                <div class="entity_title">USER</div>
+            </div>
+            <div class="flex-container">
+                <div class="in_port field_name">id</div>
+                <div class="out_port">
+                    <div class="field_constraints">ID, req, unq, idx</div>
+                    <div class="field_date_type">str</div>
+                </div>
+            </div>
+            <div class="flex-container">
+                <div class="in_port field_name">password</div>
+                <div class="out_port">
+                    <div class="field_constraints">req</div>
+                    <div class="field_date_type">str</div>
+                </div>
+            </div>
+            <div class="flex-container">
+                <div class="in_port field_name">email</div>
+                <div class="out_port">
+                    <div class="field_constraints">req, unq, idx</div>
+                    <div class="field_date_type">str</div>
+                </div>
+            </div>
+        </div>`;
 
-    paper.scale(0.7, 0.7);
+    const x1 = createCustomElement({ title: 'ENTITY', template: newTemplate, x: 450, y: 250, width: 400, height: 175 });
+    x1.addTo(graph);
+
+    /* Serialize the graph 
+     *
+     */
+    // console.log(graph.toJSON());
+
+    // paper.scale(0.7, 0.7);
     paper.on('blank:mousewheel', (event, x, y, delta) => {
         event.preventDefault();
         zoomOnMousewheel(delta);
