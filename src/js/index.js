@@ -28,6 +28,7 @@ import diagramTitleTemplate from "./schema-diagram/diagram-title/DiagramTitle.ht
     var paper = createPaper($('#paper-html-elements'), graph);
     console.log("UL-ELEMENT: ", ulElem);
     
+    
     var c1 = createCoupled({ text: 'USER', x: 50, y: 15, width: 400, height: 175 });
 
     var t1 = createCustomElement({ title: 'USER', template: diagramTitleTemplate, x: 50, y: 15, width: 400, height: 175 });
@@ -204,8 +205,10 @@ import diagramTitleTemplate from "./schema-diagram/diagram-title/DiagramTitle.ht
             </div>
         </div>`;
 
-    const x1 = createCustomElement({ title: 'ENTITY', template: newTemplate, x: 450, y: 250, width: 400, height: 175 });
+    const x1 = createCustomElement({ title: 'ENTITY', template: newTemplate, x: 450, y: 250, width: 250, height: 105 });
     x1.addTo(graph);
+
+    console.log("GRAPH", graph);
 
     /* Serialize the graph 
      *
