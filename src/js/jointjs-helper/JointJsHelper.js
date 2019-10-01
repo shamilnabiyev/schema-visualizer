@@ -1,4 +1,4 @@
-import * as joint from 'jointjs';
+import {dia, shapes} from 'jointjs';
 import CustomElement from '../schema-diagram/common/CustomHtmlElement';
 
 const getPosition = function (options) {
@@ -29,7 +29,7 @@ export const portOptions = {
 };
 
 export const createLink = function (source, sourcePort, target, targetPort, label) {
-    var link = new joint.shapes.standard.Link({
+    var link = new shapes.standard.Link({
         router: { name: 'manhattan' },
         connector: { name: 'rounded' },
         source: {
@@ -66,18 +66,18 @@ export const createLink = function (source, sourcePort, target, targetPort, labe
 };
 
 export const createPaper = function (paperDivElement, graph) {
-    return new joint.dia.Paper({
+    return new dia.Paper({
         el: paperDivElement,
         width: '100%',
         height: 800,
         gridSize: 1,
         model: graph,
-        cellViewNamespace: joint.shapes,
+        cellViewNamespace: shapes,
     });
 };
 
 export const createCoupled = function (options) {
-    return new joint.shapes.devs.Coupled({
+    return new shapes.devs.Coupled({
         attrs: { text: { text: options.text } },
         position: getPosition(options),
         size: getSize(options),

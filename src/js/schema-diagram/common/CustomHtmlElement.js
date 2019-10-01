@@ -1,22 +1,21 @@
 import * as $ from 'jquery';
 import * as _ from 'lodash';
-import Backbone from 'backbone';
-import * as joint from 'jointjs';
+import {dia, shapes, util} from 'jointjs';
 
-var html = joint.shapes.html = {};
-html.Element = joint.shapes.devs.Atomic.extend({
-    defaults: joint.util.deepSupplement({
+var html = shapes.html = {};
+html.Element = shapes.devs.Atomic.extend({
+    defaults: util.deepSupplement({
         type: 'html.Element',
         attrs: {
             rect: { stroke: 'none', 'fill-opacity': 0 }
         }
-    }, joint.shapes.devs.Atomic.prototype.defaults)
+    }, shapes.devs.Atomic.prototype.defaults)
 });
 
-html.ElementView = joint.dia.ElementView.extend({
+html.ElementView = dia.ElementView.extend({
     initialize: function () {
         _.bindAll(this, 'updateBox');
-        joint.dia.ElementView.prototype.initialize.apply(this, arguments);
+        dia.ElementView.prototype.initialize.apply(this, arguments);
 
         this.$box = $(_.template(this.model.get("template"))());
         this.$box.find('.delete').on('click', _.bind(this.model.remove, this.model));
@@ -26,7 +25,7 @@ html.ElementView = joint.dia.ElementView.extend({
     },
 
     render: function () {
-        joint.dia.ElementView.prototype.render.apply(this, arguments);
+        dia.ElementView.prototype.render.apply(this, arguments);
         this.listenTo(this.paper, 'scale', this.updateBox);
         this.listenTo(this.paper, 'translate', this.updateBox);
         this.paper.$el.prepend(this.$box);

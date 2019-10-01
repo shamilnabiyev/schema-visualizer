@@ -1,13 +1,13 @@
-import * as joint from 'jointjs';
+import {dia, shapes} from 'jointjs';
 
 
 export default Paper = function (paperDivElement) {
-    return new joint.dia.Paper({
+    return new dia.Paper({
         el: paperDivElement,
         width: '100%', 
         height: 800,
         gridSize: 1,
         model: graph,
-        cellViewNamespace: joint.shapes,
+        cellViewNamespace: shapes,
     });
 };

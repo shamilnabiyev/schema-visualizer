@@ -3,7 +3,7 @@ import './sb-admin-2.js';
 import * as jQuery from 'jquery';
 import * as _ from 'lodash';
 import Backbone from 'backbone';
-import * as joint from 'jointjs';
+import {dia, shapes} from 'jointjs';
 import './fontAwesomeCustom.js';
 
 import {
@@ -23,7 +23,7 @@ import simpleRowTemplate from "./schema-diagram/simple-row/SimpleRow.html";
 import diagramTitleTemplate from "./schema-diagram/diagram-title/DiagramTitle.html";
 
 (function ($) {
-    var graph = new joint.dia.Graph();
+    var graph = new dia.Graph();
     var paper = createPaper($('#paper-html-elements'), graph);
 
     var c1 = createCoupled({ text: 'USER', x: 50, y: 15, width: 400, height: 175 });
@@ -73,7 +73,7 @@ import diagramTitleTemplate from "./schema-diagram/diagram-title/DiagramTitle.ht
         ports: portOptions
     });
 
-    var c2 = new joint.shapes.devs.Coupled({
+    var c2 = new shapes.devs.Coupled({
         attrs: { text: { text: 'ORDER' } },
         position: { x: 700, y: 15 },
         size: { width: 400, height: 175 },
@@ -154,6 +154,41 @@ import diagramTitleTemplate from "./schema-diagram/diagram-title/DiagramTitle.ht
     } catch (error) {
         console.log(error);
     }
+
+
+    /**
+     * Model with multiple ports
+     */
+    var m1 = new shapes.devs.Model({
+        position: { x: 150, y: 250 },
+        size: { width: 90, height: 90 },
+        inPorts: ['in1', 'in2'],
+        outPorts: ['out1', 'out2'],
+        ports: {
+            groups: {
+                'in': {
+                    attrs: {
+                        '.port-body': {
+                            fill: 'red'
+                        }
+                    }
+                },
+                'out': {
+                    attrs: {
+                        '.port-body': {
+                            fill: 'green'
+                        }
+                    }
+                }
+            }
+        },
+        attrs: {
+            '.label': { text: 'Model', 'ref-x': .5, 'ref-y': .2 },
+            rect: { fill: '#2ECC71' }
+        }
+    });
+    graph.addCell(m1);
+
 
     paper.scale(0.7, 0.7);
     paper.on('blank:mousewheel', (event, x, y, delta) => {

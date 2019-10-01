@@ -49,7 +49,7 @@ module.exports = {
         type: 'javascript/auto'
       },
       {
-        test: /\.(ico|jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2)(\?.*)?$/,
+        test: /\.(ico|jpg|jpeg|png|gif|webp)(\?.*)?$/,
         use: {
           loader: 'file-loader',
           options: {
@@ -57,6 +57,18 @@ module.exports = {
           }
         }
       },
+      {
+        test: /\.(woff(2)?|ttf|eot|svg|otf)(\?v=\d+\.\d+\.\d+)?$/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: '[name].[ext]',
+              outputPath: 'fonts/'
+            }
+          }
+        ]
+      }
     ]
   }
 };
