@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import $ from 'jquery';
 import {
     bind as _bind,
@@ -5,6 +7,7 @@ import {
     template as _template
 } from 'lodash';
 import { dia, shapes, util } from 'jointjs';
+
 
 var html = shapes.html = {};
 html.Element = shapes.devs.Model.extend({
@@ -16,18 +19,34 @@ html.Element = shapes.devs.Model.extend({
     }, shapes.devs.Model.prototype.defaults)
 });
 
-html.state = {templates: []};
-
 html.ElementView = dia.ElementView.extend({
     initialize: function () {
         _bindAll(this, 'updateBox');
         dia.ElementView.prototype.initialize.apply(this, arguments);
 
+        // console.log('Initial template container: ', this.templateContainer);
+        // console.log('this.template: ', this.template);
+
         this.$box = $(_template(this.model.get("template"))());
         this.$box.find('.delete').on('click', _bind(this.model.remove, this.model));
+
+        const customAttrs = this.model.get("customAttrs");
+        for (var a in customAttrs) {
+            this.$box.find('div.' + a).text(customAttrs[a]);
+        }
+
         this.model.on('change', this.updateBox, this);
         this.model.on('remove', this.removeBox, this);
-        this.updateBox();
+
+        this.listenTo(this.model, 'change:template', this.templateOnUpdate);
+
+        // this.updateBox();
+    },
+    templateOnUpdate: function () {
+        console.log('templateOnUpdate fired!');
+        // console.log(this.model.get("template"));
+        // this.$box = $(_template(this.model.get("template"))());
+        this.render();
     },
 
     render: function () {
@@ -41,14 +60,10 @@ html.ElementView = dia.ElementView.extend({
 
     updateBox: function () {
         if (!this.paper) return;
+
         const bbox = this.getBBox({ useModelGeometry: true });
-
-        const customAttrs = this.model.get("customAttrs");
-        for (var a in customAttrs) {
-            this.$box.find('div.' + a).text(customAttrs[a]);
-        }
-
         const scale = this.paper.scale();
+        
         this.$box.css({
             transform: `scale(${scale.sx},${scale.sy})`,
             transformOrigin: '0 0',

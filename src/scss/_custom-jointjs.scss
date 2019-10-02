@@ -30,16 +30,14 @@
   -webkit-user-select: none;
   box-sizing: border-box;
   z-index: 2;
-  font-size: 10px;
+  font-size: 12px;
 }
 
 circle.port-body,
-circle.joint-port-body {
-  /*
+circle.joint-port-body {  
   opacity: 0;
   fill: #b8e88c;
   stroke: #b8e88c;
-  */
 }
 
 circle.port-body:hover,

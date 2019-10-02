@@ -26,14 +26,14 @@ import diagramTitleTemplate from "./schema-diagram/diagram-title/DiagramTitle.ht
 (function ($) {
     var graph = new dia.Graph();
     var paper = createPaper($('#paper-html-elements'), graph);
-    console.log("UL-ELEMENT: ", ulElem);
+    // console.log("UL-ELEMENT: ", ulElem);
     
     
-    var c1 = createCoupled({ text: 'USER', x: 50, y: 15, width: 400, height: 175 });
+    var c1 = createCoupled({ text: 'USER', x: 50, y: 15, width: 250, height: 175 });
 
-    var t1 = createCustomElement({ title: 'USER', template: diagramTitleTemplate, x: 50, y: 15, width: 400, height: 175 });
+    var t1 = createCustomElement({ title: 'USER', template: diagramTitleTemplate, x: 50, y: 15, width: 250, height: 175 });
 
-    console.log(t1.get('id'));
+    // console.log(t1.get('id'));
 
     var sr1 = new CustomElement.Element({
         template: simpleRowTemplate,
@@ -42,7 +42,7 @@ import diagramTitleTemplate from "./schema-diagram/diagram-title/DiagramTitle.ht
             field_constraints: 'ID, req, unq, idx',
             field_date_type: 'str'
         },
-        size: { width: 400, height: 35 },
+        size: { width: 250, height: 35 },
         position: { x: 50, y: 50 },
         inPorts: ['in'],
         outPorts: ['out'],
@@ -51,7 +51,7 @@ import diagramTitleTemplate from "./schema-diagram/diagram-title/DiagramTitle.ht
 
     var sr2 = new CustomElement.Element({
         template: simpleRowTemplate,
-        size: { width: 400, height: 35 },
+        size: { width: 250, height: 35 },
         customAttrs: {
             field_name: 'password',
             field_constraints: 'req',
@@ -65,7 +65,7 @@ import diagramTitleTemplate from "./schema-diagram/diagram-title/DiagramTitle.ht
 
     var sr3 = new CustomElement.Element({
         template: simpleRowTemplate,
-        size: { width: 400, height: 35 },
+        size: { width: 250, height: 35 },
         customAttrs: {
             field_name: 'email',
             field_constraints: 'req, unq, idx',
@@ -80,7 +80,7 @@ import diagramTitleTemplate from "./schema-diagram/diagram-title/DiagramTitle.ht
     var c2 = new shapes.devs.Coupled({
         attrs: { text: { text: 'ORDER' } },
         position: { x: 700, y: 15 },
-        size: { width: 400, height: 175 },
+        size: { width: 250, height: 175 },
         attrs: {
             rect: { stroke: '#ffffff', 'stroke-width': 1 }
         }
@@ -92,12 +92,12 @@ import diagramTitleTemplate from "./schema-diagram/diagram-title/DiagramTitle.ht
             entity_title: "ORDER"
         },
         position: { x: 700, y: 15 },
-        size: { width: 400, height: 35 }
+        size: { width: 250, height: 35 }
     });
 
     var sr21 = new CustomElement.Element({
         template: simpleRowTemplate,
-        size: { width: 400, height: 35 },
+        size: { width: 250, height: 35 },
         customAttrs: {
             field_name: 'id',
             field_constraints: 'ID, req, unq, idx',
@@ -111,7 +111,7 @@ import diagramTitleTemplate from "./schema-diagram/diagram-title/DiagramTitle.ht
 
     var sr22 = new CustomElement.Element({
         template: simpleRowTemplate,
-        size: { width: 400, height: 35 },
+        size: { width: 250, height: 35 },
         customAttrs: {
             field_name: 'created_on',
             field_constraints: 'req',
@@ -125,7 +125,7 @@ import diagramTitleTemplate from "./schema-diagram/diagram-title/DiagramTitle.ht
 
     var sr23 = new CustomElement.Element({
         template: simpleRowTemplate,
-        size: { width: 400, height: 35 },
+        size: { width: 250, height: 35 },
         customAttrs: {
             field_name: 'user_id',
             field_constraints: 'REF, req',
@@ -177,38 +177,17 @@ import diagramTitleTemplate from "./schema-diagram/diagram-title/DiagramTitle.ht
     graph.addCell(m1);
 
     
-    const newTemplate = `
+    const x1Template = `
         <div class="html-element">
             <div class="header">
                 <div class="entity_title">USER</div>
             </div>
-            <div class="flex-container">
-                <div class="in_port field_name">id</div>
-                <div class="out_port">
-                    <div class="field_constraints">ID, req, unq, idx</div>
-                    <div class="field_date_type">str</div>
-                </div>
-            </div>
-            <div class="flex-container">
-                <div class="in_port field_name">password</div>
-                <div class="out_port">
-                    <div class="field_constraints">req</div>
-                    <div class="field_date_type">str</div>
-                </div>
-            </div>
-            <div class="flex-container">
-                <div class="in_port field_name">email</div>
-                <div class="out_port">
-                    <div class="field_constraints">req, unq, idx</div>
-                    <div class="field_date_type">str</div>
-                </div>
-            </div>
         </div>`;
 
-    const x1 = createCustomElement({ title: 'ENTITY', template: newTemplate, x: 450, y: 250, width: 250, height: 105 });
+    const x1 = createCustomElement({ title: 'initial value', template: x1Template, x: 450, y: 250, width: 250, height: 105 });
     x1.addTo(graph);
 
-    console.log("GRAPH", graph);
+    // console.log("GRAPH", graph);
 
     /* Serialize the graph 
      *
@@ -245,6 +224,29 @@ import diagramTitleTemplate from "./schema-diagram/diagram-title/DiagramTitle.ht
         const newScaleX = scale.sx - 0.05;
         const newScaleY = scale.sy - 0.05;
         if (newScaleX >= 0.2 && newScaleX <= 2) paper.scale(newScaleX, newScaleY);
+    };
+
+    document.getElementById("btn-template-updater").onclick = function updateTemplate() {
+        if(x1 == null || x1 == undefined) return;
+
+        const newTemplate = `
+        <div class="html-element">
+            <div class="header">
+                <div class="entity_title">USER</div>
+            </div>
+            <div class="flex-container">
+                <div class="in_port field_name">id</div>
+                <div class="out_port">
+                    <div class="field_constraints">ID, req, unq, idx</div>
+                    <div class="field_date_type">str</div>
+                </div>
+            </div>
+        </div>`;
+
+        // console.log(x1.get('template'));
+        x1.set('template', newTemplate);
+        // console.log('------------------------------');
+        // console.log(x1.get('template'));
     };
 
 })(jQuery);
