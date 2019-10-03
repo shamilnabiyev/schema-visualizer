@@ -50,7 +50,7 @@ export const portOptions = {
  * @param {string} label 
  * @return {shapes.standard.Link} a new link
  */
-export const createLink = function createLink(sourceId, sourcePort, targetId, targetPort, label) {
+export const createLink = function createLink(sourceId, sourcePort, targetId, targetPort, labelText, cardinalityLabel) {
     /**
      * Use link tools to add segments, points and other link control
      * elements to the link. 
@@ -74,7 +74,7 @@ export const createLink = function createLink(sourceId, sourcePort, targetId, ta
     link.appendLabel({
         attrs: {
             text: {
-                text: label || 'REF'
+                text: labelText || 'REF'
             },
             line: {
                 strokeWidth: 2,
@@ -85,20 +85,7 @@ export const createLink = function createLink(sourceId, sourcePort, targetId, ta
         }
     });
 
-    link.appendLabel({
-        attrs: {
-            text: {
-                text: '1:1'
-            },
-            line: {
-                strokeWidth: 2,
-            }
-        },
-        position: {
-            distance: 20,
-            offset: 15
-        }
-    });
+    if (cardinalityLabel != null) link.appendLabel(cardinalityLabel);
 
     return link;
 };
@@ -107,7 +94,7 @@ export const createPaper = function createPaper(paperDivElement, graph) {
     const defaultLink = new dia.Link({
         attrs: { '.marker-target': { d: 'M 10 0 L 0 5 L 10 10 z' } }
     });
-    
+
     defaultLink.appendLabel({
         attrs: {
             text: {
@@ -161,9 +148,9 @@ export const createCustomElement = function createCustomElement(options) {
 
 
 export const createExampleDiagrams = function (graph, paper) {
-    var c1 = createCoupled({ text: 'USER', x: 50, y: 15, width: 400, height: 140 });
+    var c1 = createCoupled({ text: 'CUSTOMER', x: 50, y: 15, width: 400, height: 140 });
 
-    var t1 = createCustomElement({ title: 'USER', template: diagramTitleTemplate, x: 50, y: 15, width: 400, height: 145 });
+    var t1 = createCustomElement({ title: 'CUSTOMER', template: diagramTitleTemplate, x: 50, y: 15, width: 400, height: 145 });
 
     // console.log(t1.get('id'));
 
@@ -229,7 +216,7 @@ export const createExampleDiagrams = function (graph, paper) {
             entity_title: "ORDER"
         },
         position: { x: 700, y: 15 },
-        size: { width: 400, height: 35 }
+        size: { width: 400, height: 175 }
     });
 
     var sr21 = new CustomElement.Element({
@@ -274,23 +261,135 @@ export const createExampleDiagrams = function (graph, paper) {
         ports: portOptions
     });
 
+    var sr24 = new CustomElement.Element({
+        template: simpleRowTemplate,
+        size: { width: 400, height: 35 },
+        customAttrs: {
+            field_name: 'items',
+            field_constraints: 'REF',
+            field_date_type: '[ ] str',
+        },
+        position: { x: 700, y: 155 },
+        inPorts: ['in'],
+        outPorts: ['out'],
+        ports: portOptions
+    });
+
 
     c2.embed(t2);
     c2.embed(sr21);
     c2.embed(sr22);
     c2.embed(sr23);
+    c2.embed(sr24);
+
+    var c3 = createCoupled({ text: 'ITEM', x: 1300, y: 15, width: 400, height: 175 });
+
+    var t3 = createCustomElement({ title: 'ITEM', template: diagramTitleTemplate, x: 1300, y: 15, width: 400, height: 145 });
+
+    // console.log(t3.get('id'));
+
+    var sr31 = new CustomElement.Element({
+        template: simpleRowTemplate,
+        customAttrs: {
+            field_name: 'id',
+            field_constraints: 'ID, req, unq, idx',
+            field_date_type: 'str'
+        },
+        size: { width: 400, height: 35 },
+        position: { x: 1300, y: 50 },
+        inPorts: ['in'],
+        outPorts: ['out'],
+        ports: portOptions
+    });
+
+    var sr32 = new CustomElement.Element({
+        template: simpleRowTemplate,
+        size: { width: 400, height: 35 },
+        customAttrs: {
+            field_name: 'name',
+            field_constraints: 'req',
+            field_date_type: 'str',
+        },
+        position: { x: 1300, y: 85 },
+        inPorts: ['in'],
+        outPorts: ['out'],
+        ports: portOptions
+    });
+
+    var sr33 = new CustomElement.Element({
+        template: simpleRowTemplate,
+        size: { width: 400, height: 35 },
+        customAttrs: {
+            field_name: 'description',
+            field_constraints: 'req',
+            field_date_type: 'str',
+        },
+        position: { x: 1300, y: 120 },
+        inPorts: ['in'],
+        outPorts: ['out'],
+        ports: portOptions
+    });
+
+    var sr34 = new CustomElement.Element({
+        template: simpleRowTemplate,
+        size: { width: 400, height: 35 },
+        customAttrs: {
+            field_name: 'price',
+            field_constraints: 'req',
+            field_date_type: 'num',
+        },
+        position: { x: 1300, y: 155 },
+        inPorts: ['in'],
+        outPorts: ['out'],
+        ports: portOptions
+    });
+
+    c3.embed(t3);
+    c3.embed(sr31);
+    c3.embed(sr32);
+    c3.embed(sr33);
+    c3.embed(sr34);
 
 
-    graph.addCells([c1, t1, sr1, sr2, sr3, c2, t2, sr21, sr22, sr23]);
+    graph.addCells([c1, t1, sr1, sr2, sr3, c2, t2, sr21, sr22, sr23, sr24, c3, t3, sr31, sr32, sr33, sr34]);
 
     c1.toFront();
     c2.toFront();
-
-    var newLink;
+    c3.toFront();
 
     try {
-        newLink = createLink(sr23.id, "in", sr1.id, "out", "");
-        newLink.addTo(graph).reparent();
+        var cardianlityLabel = {
+            attrs: {
+                text: {
+                    text: '1:1'
+                },
+                line: {
+                    strokeWidth: 2,
+                }
+            },
+            position: {
+                distance: 20,
+                offset: 15
+            }
+        };
+        createLink(sr23.id, "in", sr1.id, "out", "REF", cardianlityLabel).addTo(graph).reparent();
+
+        var cardianlityLabel2 = {
+            attrs: {
+                text: {
+                    text: '1:N'
+                },
+                line: {
+                    strokeWidth: 2,
+                }
+            },
+            position: {
+                distance: 20,
+                offset: 15
+            }
+        };
+        createLink(sr24.id, "out", sr31.id, "in", "REF", cardianlityLabel2).addTo(graph).reparent();
+
     } catch (error) {
         console.log(error);
     }
