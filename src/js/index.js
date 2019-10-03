@@ -153,12 +153,11 @@ import diagramTitleTemplate from "./schema-diagram/diagram-title/DiagramTitle.ht
     c2.toFront();
 
     try {
-        var newLink = createLink(sr23, "in", sr1, "out", "");
+        var newLink = createLink(sr23.id, "in", sr1.id, "out", "");
         newLink.addTo(graph).reparent();
     } catch (error) {
         console.log(error);
     }
-
 
     /**
      * Model with multiple ports
@@ -177,16 +176,6 @@ import diagramTitleTemplate from "./schema-diagram/diagram-title/DiagramTitle.ht
     graph.addCell(m1);
 
     
-    const x1Template = `
-        <div class="html-element">
-            <div class="header">
-                <div class="entity_title">USER</div>
-            </div>
-        </div>`;
-
-    const x1 = createCustomElement({ title: 'initial value', template: x1Template, x: 450, y: 250, width: 250, height: 105 });
-    x1.addTo(graph);
-
     // console.log("GRAPH", graph);
 
     /* Serialize the graph 
@@ -225,28 +214,4 @@ import diagramTitleTemplate from "./schema-diagram/diagram-title/DiagramTitle.ht
         const newScaleY = scale.sy - 0.05;
         if (newScaleX >= 0.2 && newScaleX <= 2) paper.scale(newScaleX, newScaleY);
     };
-
-    document.getElementById("btn-template-updater").onclick = function updateTemplate() {
-        if(x1 == null || x1 == undefined) return;
-
-        const newTemplate = `
-        <div class="html-element">
-            <div class="header">
-                <div class="entity_title">USER</div>
-            </div>
-            <div class="flex-container">
-                <div class="in_port field_name">id</div>
-                <div class="out_port">
-                    <div class="field_constraints">ID, req, unq, idx</div>
-                    <div class="field_date_type">str</div>
-                </div>
-            </div>
-        </div>`;
-
-        // console.log(x1.get('template'));
-        x1.set('template', newTemplate);
-        // console.log('------------------------------');
-        // console.log(x1.get('template'));
-    };
-
 })(jQuery);

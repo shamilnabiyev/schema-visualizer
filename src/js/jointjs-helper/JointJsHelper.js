@@ -28,16 +28,16 @@ export const portOptions = {
     }
 };
 
-export const createLink = function (source, sourcePort, target, targetPort, label) {
-    var link = new shapes.standard.Link({
+export const createLink = function (sourceId, sourcePort, targetId, targetPort, label) {
+    var link = new shapes.standard.DoubleLink({
         router: { name: 'manhattan' },
         connector: { name: 'rounded' },
         source: {
-            id: source.id,
+            id: sourceId,
             port: sourcePort
         },
         target: {
-            id: target.id,
+            id: targetId,
             port: targetPort
         }
     });
