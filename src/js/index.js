@@ -6,6 +6,7 @@ import './sb-admin-2.js';
 import { dia, shapes } from 'jointjs';
 // import ulElem from './jointjs-helper/templateGenerator';
 import './fontAwesomeCustom.js';
+import "./jointjs-helper/DiagramGenerator";
 
 import {
     portOptions, createLink, createPaper, createCoupled, createCustomElement, createUserSchemaDagram, createExampleDiagrams

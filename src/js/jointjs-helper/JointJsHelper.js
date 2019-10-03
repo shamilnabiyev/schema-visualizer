@@ -135,9 +135,9 @@ export const createCoupled = function createCoupled(options) {
     });
 };
 
-export const createhtml = function createhtml(options) {
+export const createTitleRow = function createTitleRow(options) {
     return new html.Element({
-        template: options.template,
+        template: diagramTitleTemplate,
         customAttrs: {
             entity_title: options.title
         },
@@ -146,11 +146,27 @@ export const createhtml = function createhtml(options) {
     });
 };
 
+export const createSimpleRow = function createSimpleRow(options) {
+    return new html.Element({
+        template: simpleRowTemplate,
+        customAttrs: {
+            field_name: options.field_name,
+            field_constraints: options.field_constraints || 'ID, req, unq, idx',
+            field_date_type: options.field_date_type || 'str'
+        },
+        size: { width: options.width, height: options.height },
+        position: { x: options.x, y: options.y },
+        inPorts: ['in'],
+        outPorts: ['out'],
+        ports: portOptions
+    });
+};
+
 
 export const createExampleDiagrams = function (graph, paper) {
     var c1 = createCoupled({ text: 'Customer', x: 50, y: 15, width: 400, height: 170 });
 
-    var t1 = createhtml({
+    var t1 = createTitleRow({
         title: 'Customer',
         template: diagramTitleTemplate,
         x: 50, y: 15,
@@ -290,7 +306,8 @@ export const createExampleDiagrams = function (graph, paper) {
 
     var c3 = createCoupled({ text: 'Item', x: 1300, y: 15, width: 400, height: 175 });
 
-    var t3 = createhtml({ title: 'Item', template: diagramTitleTemplate, x: 1300, y: 15, width: 400, height: 35 });
+    var t3 = createTitleRow
+({ title: 'Item', template: diagramTitleTemplate, x: 1300, y: 15, width: 400, height: 35 });
 
     // console.log(t3.get('id'));
 
