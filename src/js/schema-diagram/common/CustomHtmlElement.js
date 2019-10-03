@@ -8,8 +8,7 @@ import {
 } from 'lodash';
 import { dia, shapes, util } from 'jointjs';
 
-
-var html = shapes.html = {};
+const html = shapes.html = {};
 html.Element = shapes.devs.Model.extend({
     defaults: util.deepSupplement({
         type: 'html.Element',
