@@ -57,7 +57,8 @@ export const createLink = function createLink(sourceId, sourcePort, targetId, ta
      * 
      * Tutorial: https://resources.jointjs.com/tutorial/link-tools
      */
-    var link = new shapes.standard.Link({
+    var link = new dia.Link({
+        attrs: { '.marker-target': { d: 'M 10 0 L 0 5 L 10 10 z' } },
         // router: { name: 'manhattan' },
         connector: { name: 'rounded' },
         source: {
@@ -67,7 +68,7 @@ export const createLink = function createLink(sourceId, sourcePort, targetId, ta
         target: {
             id: targetId,
             port: targetPort
-        }
+        },
     });
 
     link.appendLabel({
@@ -79,6 +80,24 @@ export const createLink = function createLink(sourceId, sourcePort, targetId, ta
                 strokeWidth: 2,
             }
         },
+        position: {
+            offset: 15
+        }
+    });
+
+    link.appendLabel({
+        attrs: {
+            text: {
+                text: '1:1'
+            },
+            line: {
+                strokeWidth: 2,
+            }
+        },
+        position: {
+            distance: 20,
+            offset: 15
+        }
     });
 
     return link;
@@ -275,17 +294,4 @@ export const createExampleDiagrams = function (graph, paper) {
     } catch (error) {
         console.log(error);
     }
-
-    const TOOLS_VIEW = new dia.ToolsView({
-        tools: [
-            verticesTool, segmentsTool,
-            sourceArrowheadTool, targetArrowheadTool,
-            sourceAnchorTool, targetAnchorTool,
-            boundaryTool, removeButton
-        ]
-    });
-
-    var linkView = newLink.findView(paper);
-    linkView.addTools(TOOLS_VIEW);
-    linkView.hideTools();
 };
