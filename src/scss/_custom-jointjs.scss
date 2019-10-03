@@ -10,7 +10,7 @@
 
 #paper-html-elements {
   position: relative;
-  border: 1px solid gray;
+  border: 1px solid #cccccc;
   display: inline-block;
   background: transparent;
   overflow: hidden;
@@ -28,8 +28,7 @@
   position: absolute;
   pointer-events: none;
   -webkit-user-select: none;
-  box-sizing: border-box;
-  z-index: 10;
+  z-index: 2;
 }
 
 

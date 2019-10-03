@@ -85,4 +85,8 @@ import diagramTitleTemplate from "./schema-diagram/diagram-title/DiagramTitle.ht
         const newScaleY = scale.sy - 0.05;
         if (newScaleX >= 0.2 && newScaleX <= 2) paper.scale(newScaleX, newScaleY);
     };
+
+    $(".object-row-expander").on('click', function name() {
+        console.log("Object row expander clicked!");
+    });
 })(jQuery);

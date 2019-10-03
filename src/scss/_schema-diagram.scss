@@ -1,9 +1,12 @@
 .flex-container {
+  height: 100%;
   display: flex;
   flex-wrap: nowrap;
   justify-content: space-between;
-  border-bottom: 1px solid #aaa;
   background-color: #ffffff;
+  border-bottom: 1px solid #aaa;
+  border-left: 1px solid #aaa;
+  border-right: 1px solid #aaa;
 }
 
 .in_port {
@@ -28,16 +31,20 @@
 }
 
 .header {
-  border: 1px solid #aaa;
-  padding: 0.5em 0.5em;
+  height: 100%;
+  width: 100%;
+  padding: 0.2em 0.5em;
   text-align: center;
   background-color: #0099ee;
   color: #fff;
-  border-top-left-radius: 0.5em;
-  border-top-right-radius: 0.5em;
+  border: 1px solid #00598a;
 }
 
 
-field_date_type:hover {
+.field_date_type:hover {
   color: red;
+}
+
+.object-row-expander {
+  position: absolute;
 }
