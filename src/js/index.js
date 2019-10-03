@@ -3,7 +3,7 @@ import './sb-admin-2.js';
 import jQuery from 'jquery';
 import _ from 'lodash';
 import Backbone from 'backbone';
-import {dia, shapes} from 'jointjs';
+import { dia, shapes } from 'jointjs';
 import ulElem from './jointjs-helper/templateGenerator';
 import './fontAwesomeCustom.js';
 
@@ -26,14 +26,14 @@ import diagramTitleTemplate from "./schema-diagram/diagram-title/DiagramTitle.ht
 (function ($) {
     var graph = new dia.Graph();
     var paper = createPaper($('#paper-html-elements'), graph);
-    
+
     createExampleDiagrams(graph, paper);
 
-    paper.on('link:mouseenter', function(linkView) {
+    paper.on('link:mouseenter', function (linkView) {
         linkView.showTools();
     });
-    
-    paper.on('link:mouseleave', function(linkView) {
+
+    paper.on('link:mouseleave', function (linkView) {
         linkView.hideTools();
     });
 
@@ -52,6 +52,7 @@ import diagramTitleTemplate from "./schema-diagram/diagram-title/DiagramTitle.ht
     });
 
     graph.addCell(m1);
+
 
     paper.scale(0.7, 0.7);
     paper.on('blank:mousewheel', (event, x, y, delta) => {

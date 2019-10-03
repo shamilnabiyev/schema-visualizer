@@ -204,7 +204,7 @@ export const createExampleDiagrams = function (graph, paper) {
     var c2 = new shapes.devs.Coupled({
         attrs: { text: { text: 'ORDER' } },
         position: { x: 700, y: 15 },
-        size: { width: 400, height: 175 },
+        size: { width: 400, height: 195 },
         attrs: {
             rect: { stroke: '#ffffff', 'stroke-width': 1 }
         }
@@ -216,7 +216,7 @@ export const createExampleDiagrams = function (graph, paper) {
             entity_title: "ORDER"
         },
         position: { x: 700, y: 15 },
-        size: { width: 400, height: 175 }
+        size: { width: 400, height: 180 }
     });
 
     var sr21 = new CustomElement.Element({
@@ -267,7 +267,7 @@ export const createExampleDiagrams = function (graph, paper) {
         customAttrs: {
             field_name: 'items',
             field_constraints: 'REF',
-            field_date_type: '[ ] str',
+            field_date_type: 'arr',
         },
         position: { x: 700, y: 155 },
         inPorts: ['in'],
