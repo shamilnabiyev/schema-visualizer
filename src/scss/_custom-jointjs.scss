@@ -29,18 +29,30 @@
   pointer-events: none;
   -webkit-user-select: none;
   box-sizing: border-box;
-  z-index: 2;
-  font-size: 12px;
+  z-index: 10;
 }
+
 
 circle.port-body,
 circle.joint-port-body {  
   opacity: 0;
-  fill: #b8e88c;
-  stroke: #b8e88c;
+  fill: yellow;
+  stroke: #424242;
 }
+
 
 circle.port-body:hover,
 circle.joint-port-body:hover {
   opacity: 1;
+}
+
+
+/* port styling */
+.available-magnet {
+  fill: yellow;
+}
+
+/* element styling */
+.available-cell rect {
+  stroke-dasharray: 5, 2;
 }

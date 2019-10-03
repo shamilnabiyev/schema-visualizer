@@ -1,4 +1,4 @@
-import {dia, shapes, linkTools} from 'jointjs';
+import { dia, shapes, linkTools } from 'jointjs';
 import CustomElement from '../schema-diagram/common/CustomHtmlElement';
 import simpleRowTemplate from "../schema-diagram/simple-row/SimpleRow.html";
 import diagramTitleTemplate from "../schema-diagram/diagram-title/DiagramTitle.html";
@@ -11,15 +11,6 @@ const sourceAnchorTool = new linkTools.SourceAnchor();
 const targetAnchorTool = new linkTools.TargetAnchor();
 const boundaryTool = new linkTools.Boundary();
 const removeButton = new linkTools.Remove();
-
-const TOOLS_VIEW = new dia.ToolsView({
-    tools: [
-        verticesTool, segmentsTool,
-        sourceArrowheadTool, targetArrowheadTool,
-        sourceAnchorTool, targetAnchorTool,
-        boundaryTool, removeButton
-    ]
-});
 
 const getPosition = function (options) {
     return { x: options.x, y: options.y };
@@ -85,17 +76,8 @@ export const createLink = function createLink(sourceId, sourcePort, targetId, ta
                 text: label || 'REF'
             },
             line: {
-                strokeWidth: 4,
+                strokeWidth: 2,
             }
-        },
-        body: {
-            ref: 'label',
-            fill: '#ffffff',
-            stroke: 'red',
-            strokeWidth: 2,
-            refR: 1,
-            refCx: 0,
-            refCy: 0
         },
     });
 
@@ -103,6 +85,18 @@ export const createLink = function createLink(sourceId, sourcePort, targetId, ta
 };
 
 export const createPaper = function createPaper(paperDivElement, graph) {
+    const defaultLink = new dia.Link({
+        attrs: { '.marker-target': { d: 'M 10 0 L 0 5 L 10 10 z' } }
+    });
+    
+    defaultLink.appendLabel({
+        attrs: {
+            text: {
+                text: 'REF'
+            }
+        }
+    });
+
     return new dia.Paper({
         el: paperDivElement,
         width: '100%',
@@ -110,6 +104,17 @@ export const createPaper = function createPaper(paperDivElement, graph) {
         gridSize: 1,
         model: graph,
         cellViewNamespace: shapes,
+        defaultLink: defaultLink,
+        validateConnection: function (cellViewS, magnetS, cellViewT, magnetT, end, linkView) {
+            // Prevent linking from input ports.
+            if (magnetS && magnetS.getAttribute('port-group') === 'in') return false;
+            // Prevent linking from output ports to input ports within one element.
+            if (cellViewS === cellViewT) return false;
+            // Prevent linking to input ports.
+            return magnetT && magnetT.getAttribute('port-group') === 'in';
+        },
+        snapLinks: { radius: 75 },
+        markAvailable: true
     });
 };
 
@@ -137,9 +142,9 @@ export const createCustomElement = function createCustomElement(options) {
 
 
 export const createExampleDiagrams = function (graph, paper) {
-    var c1 = createCoupled({ text: 'USER', x: 50, y: 15, width: 250, height: 175 });
+    var c1 = createCoupled({ text: 'USER', x: 50, y: 15, width: 400, height: 140 });
 
-    var t1 = createCustomElement({ title: 'USER', template: diagramTitleTemplate, x: 50, y: 15, width: 250, height: 175 });
+    var t1 = createCustomElement({ title: 'USER', template: diagramTitleTemplate, x: 50, y: 15, width: 400, height: 145 });
 
     // console.log(t1.get('id'));
 
@@ -150,7 +155,7 @@ export const createExampleDiagrams = function (graph, paper) {
             field_constraints: 'ID, req, unq, idx',
             field_date_type: 'str'
         },
-        size: { width: 250, height: 35 },
+        size: { width: 400, height: 35 },
         position: { x: 50, y: 50 },
         inPorts: ['in'],
         outPorts: ['out'],
@@ -159,7 +164,7 @@ export const createExampleDiagrams = function (graph, paper) {
 
     var sr2 = new CustomElement.Element({
         template: simpleRowTemplate,
-        size: { width: 250, height: 35 },
+        size: { width: 400, height: 35 },
         customAttrs: {
             field_name: 'password',
             field_constraints: 'req',
@@ -173,7 +178,7 @@ export const createExampleDiagrams = function (graph, paper) {
 
     var sr3 = new CustomElement.Element({
         template: simpleRowTemplate,
-        size: { width: 250, height: 35 },
+        size: { width: 400, height: 35 },
         customAttrs: {
             field_name: 'email',
             field_constraints: 'req, unq, idx',
@@ -193,7 +198,7 @@ export const createExampleDiagrams = function (graph, paper) {
     var c2 = new shapes.devs.Coupled({
         attrs: { text: { text: 'ORDER' } },
         position: { x: 700, y: 15 },
-        size: { width: 250, height: 175 },
+        size: { width: 400, height: 175 },
         attrs: {
             rect: { stroke: '#ffffff', 'stroke-width': 1 }
         }
@@ -205,12 +210,12 @@ export const createExampleDiagrams = function (graph, paper) {
             entity_title: "ORDER"
         },
         position: { x: 700, y: 15 },
-        size: { width: 250, height: 35 }
+        size: { width: 400, height: 35 }
     });
 
     var sr21 = new CustomElement.Element({
         template: simpleRowTemplate,
-        size: { width: 250, height: 35 },
+        size: { width: 400, height: 35 },
         customAttrs: {
             field_name: 'id',
             field_constraints: 'ID, req, unq, idx',
@@ -224,7 +229,7 @@ export const createExampleDiagrams = function (graph, paper) {
 
     var sr22 = new CustomElement.Element({
         template: simpleRowTemplate,
-        size: { width: 250, height: 35 },
+        size: { width: 400, height: 35 },
         customAttrs: {
             field_name: 'created_on',
             field_constraints: 'req',
@@ -238,7 +243,7 @@ export const createExampleDiagrams = function (graph, paper) {
 
     var sr23 = new CustomElement.Element({
         template: simpleRowTemplate,
-        size: { width: 250, height: 35 },
+        size: { width: 400, height: 35 },
         customAttrs: {
             field_name: 'user_id',
             field_constraints: 'REF, req',
@@ -270,6 +275,15 @@ export const createExampleDiagrams = function (graph, paper) {
     } catch (error) {
         console.log(error);
     }
+
+    const TOOLS_VIEW = new dia.ToolsView({
+        tools: [
+            verticesTool, segmentsTool,
+            sourceArrowheadTool, targetArrowheadTool,
+            sourceAnchorTool, targetAnchorTool,
+            boundaryTool, removeButton
+        ]
+    });
 
     var linkView = newLink.findView(paper);
     linkView.addTools(TOOLS_VIEW);

@@ -41,7 +41,7 @@ import diagramTitleTemplate from "./schema-diagram/diagram-title/DiagramTitle.ht
      * Model with multiple ports
      */
     var m1 = new shapes.devs.Model({
-        position: { x: 250, y: 250 },
+        position: { x: 80, y: 380 },
         size: { width: 180, height: 180 },
         inPorts: ['in1', 'in2', 'in3', 'in4'],
         outPorts: ['out1', 'out2', 'out3', 'out4'],
@@ -53,8 +53,7 @@ import diagramTitleTemplate from "./schema-diagram/diagram-title/DiagramTitle.ht
 
     graph.addCell(m1);
 
-
-    paper.scale(0.8, 0.8);
+    paper.scale(0.7, 0.7);
     paper.on('blank:mousewheel', (event, x, y, delta) => {
         event.preventDefault();
         zoomOnMousewheel(delta);
