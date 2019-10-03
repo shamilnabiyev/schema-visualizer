@@ -8,6 +8,12 @@ import {
 } from 'lodash';
 import { dia, shapes, util } from 'jointjs';
 
+/**
+ * Use the new custom html element tutorial
+ * 
+ * URL: https://github.com/clientIO/joint/blob/master/demo/shapes/src/html.js
+ */
+
 const html = shapes.html = {};
 html.Element = shapes.devs.Model.extend({
     defaults: util.deepSupplement({

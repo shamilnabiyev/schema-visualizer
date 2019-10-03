@@ -1,5 +1,6 @@
 // Sidebar
 .sidebar {
+  z-index: 1000;
   width: $sidebar-collapsed-width;
   min-height: 100vh;
   .nav-item {
@@ -60,7 +61,7 @@
           display: block;
           color: $gray-900;
           text-decoration: none;
-          border-radius: $border-radius;
+          // border-radius: $border-radius;
           white-space: nowrap;
           &:hover {
             background-color: $gray-200;
@@ -208,7 +209,7 @@
         // Accordion
         .collapse {
           position: absolute;
-          left: calc(#{$sidebar-collapsed-width} + #{$grid-gutter-width} / 2);
+          left: calc(#{$sidebar-collapsed-width} + 0.1rem);
           z-index: 1;
           top: 2px;
           // Grow In Animation for Toggled State
@@ -217,7 +218,7 @@
           animation-timing-function: transform cubic-bezier(.18,1.25,.4,1), opacity cubic-bezier(0,1,.4,1);
           .collapse-inner {
             box-shadow: $box-shadow;
-            border-radius: $border-radius;
+            // border-radius: $border-radius;
           }
         }
         .collapsing {
