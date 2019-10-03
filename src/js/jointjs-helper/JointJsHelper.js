@@ -1,5 +1,5 @@
 import { dia, shapes, linkTools } from 'jointjs';
-import CustomElement from '../schema-diagram/common/CustomHtmlElement';
+import html from '../schema-diagram/common/HtmlElement';
 import simpleRowTemplate from "../schema-diagram/simple-row/SimpleRow.html";
 import diagramTitleTemplate from "../schema-diagram/diagram-title/DiagramTitle.html";
 
@@ -135,8 +135,8 @@ export const createCoupled = function createCoupled(options) {
     });
 };
 
-export const createCustomElement = function createCustomElement(options) {
-    return new CustomElement.Element({
+export const createhtml = function createhtml(options) {
+    return new html.Element({
         template: options.template,
         customAttrs: {
             entity_title: options.title
@@ -150,7 +150,7 @@ export const createCustomElement = function createCustomElement(options) {
 export const createExampleDiagrams = function (graph, paper) {
     var c1 = createCoupled({ text: 'Customer', x: 50, y: 15, width: 400, height: 170 });
 
-    var t1 = createCustomElement({
+    var t1 = createhtml({
         title: 'Customer',
         template: diagramTitleTemplate,
         x: 50, y: 15,
@@ -159,7 +159,7 @@ export const createExampleDiagrams = function (graph, paper) {
 
     // console.log(t1.get('id'));
 
-    var sr1 = new CustomElement.Element({
+    var sr1 = new html.Element({
         template: simpleRowTemplate,
         customAttrs: {
             field_name: 'id',
@@ -173,7 +173,7 @@ export const createExampleDiagrams = function (graph, paper) {
         ports: portOptions
     });
 
-    var sr2 = new CustomElement.Element({
+    var sr2 = new html.Element({
         template: simpleRowTemplate,
         size: { width: 400, height: 36 },
         customAttrs: {
@@ -187,7 +187,7 @@ export const createExampleDiagrams = function (graph, paper) {
         ports: portOptions
     });
 
-    var sr3 = new CustomElement.Element({
+    var sr3 = new html.Element({
         template: simpleRowTemplate,
         size: { width: 400, height: 36 },
         customAttrs: {
@@ -205,6 +205,7 @@ export const createExampleDiagrams = function (graph, paper) {
     c1.embed(sr1);
     c1.embed(sr2);
     c1.embed(sr3);
+    c1.position({x: 55, y: 255});
 
     var c2 = new shapes.devs.Coupled({
         attrs: { text: { text: 'Order' } },
@@ -215,7 +216,7 @@ export const createExampleDiagrams = function (graph, paper) {
         }
     });
 
-    var t2 = new CustomElement.Element({
+    var t2 = new html.Element({
         template: diagramTitleTemplate,
         customAttrs: {
             entity_title: "Order"
@@ -224,7 +225,7 @@ export const createExampleDiagrams = function (graph, paper) {
         size: { width: 400, height: 35 }
     });
 
-    var sr21 = new CustomElement.Element({
+    var sr21 = new html.Element({
         template: simpleRowTemplate,
         size: { width: 400, height: 35 },
         customAttrs: {
@@ -238,7 +239,7 @@ export const createExampleDiagrams = function (graph, paper) {
         ports: portOptions
     });
 
-    var sr22 = new CustomElement.Element({
+    var sr22 = new html.Element({
         template: simpleRowTemplate,
         size: { width: 400, height: 35 },
         customAttrs: {
@@ -252,7 +253,7 @@ export const createExampleDiagrams = function (graph, paper) {
         ports: portOptions
     });
 
-    var sr23 = new CustomElement.Element({
+    var sr23 = new html.Element({
         template: simpleRowTemplate,
         size: { width: 400, height: 35 },
         customAttrs: {
@@ -266,7 +267,7 @@ export const createExampleDiagrams = function (graph, paper) {
         ports: portOptions
     });
 
-    var sr24 = new CustomElement.Element({
+    var sr24 = new html.Element({
         template: simpleRowTemplate,
         size: { width: 400, height: 35 },
         customAttrs: {
@@ -289,11 +290,11 @@ export const createExampleDiagrams = function (graph, paper) {
 
     var c3 = createCoupled({ text: 'Item', x: 1300, y: 15, width: 400, height: 175 });
 
-    var t3 = createCustomElement({ title: 'Item', template: diagramTitleTemplate, x: 1300, y: 15, width: 400, height: 35 });
+    var t3 = createhtml({ title: 'Item', template: diagramTitleTemplate, x: 1300, y: 15, width: 400, height: 35 });
 
     // console.log(t3.get('id'));
 
-    var sr31 = new CustomElement.Element({
+    var sr31 = new html.Element({
         template: simpleRowTemplate,
         customAttrs: {
             field_name: 'id',
@@ -307,7 +308,7 @@ export const createExampleDiagrams = function (graph, paper) {
         ports: portOptions
     });
 
-    var sr32 = new CustomElement.Element({
+    var sr32 = new html.Element({
         template: simpleRowTemplate,
         size: { width: 400, height: 35 },
         customAttrs: {
@@ -321,7 +322,7 @@ export const createExampleDiagrams = function (graph, paper) {
         ports: portOptions
     });
 
-    var sr33 = new CustomElement.Element({
+    var sr33 = new html.Element({
         template: simpleRowTemplate,
         size: { width: 400, height: 35 },
         customAttrs: {
@@ -335,7 +336,7 @@ export const createExampleDiagrams = function (graph, paper) {
         ports: portOptions
     });
 
-    var sr34 = new CustomElement.Element({
+    var sr34 = new html.Element({
         template: simpleRowTemplate,
         size: { width: 400, height: 35 },
         customAttrs: {

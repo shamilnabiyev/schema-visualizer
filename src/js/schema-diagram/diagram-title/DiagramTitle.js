@@ -1,3 +1,3 @@
-import CustomElement from '../common/CustomHtmlElement';
+import html from '../common/HtmlElement';
 
-export default CustomElement(["entity_title"]);
+export default html(["entity_title"]);

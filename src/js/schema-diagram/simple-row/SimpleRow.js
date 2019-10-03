@@ -1,3 +1,3 @@
-import CustomElement from '../../common/CustomHtmlElement'
+import html from '../../common/HtmlElement'
 
-export default CustomElement( ['field_name', 'field_constraints', 'field_date_type']);
+export default html( ['field_name', 'field_constraints', 'field_date_type']);

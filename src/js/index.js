@@ -17,12 +17,6 @@ import 'fontawesome_solid_min_css';
 import 'jointjs_min_css';
 import '../scss/index.scss';
 
-import CustomElement from './schema-diagram/common/CustomHtmlElement';
-// import simple_row from "./schema-diagram/simple-row/";
-// import diagram_title from "./schema-diagram/diagram-title/";
-import simpleRowTemplate from "./schema-diagram/simple-row/SimpleRow.html";
-import diagramTitleTemplate from "./schema-diagram/diagram-title/DiagramTitle.html";
-
 (function ($) {
     var graph = new dia.Graph();
     var paper = createPaper($('#paper-html-elements'), graph);
