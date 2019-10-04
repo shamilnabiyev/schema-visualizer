@@ -6,12 +6,12 @@ const schema = {
     "type": "object",
     "title": "Book",
     "properties": {
-        "id":     { "type": "string" },
-        "title":  { "type": "string" },
+        "id": { "type": "string" },
+        "title": { "type": "string" },
         "author": { "type": "string" },
-        "year":   { "type": "integer" },
+        "year": { "type": "integer" },
         "publisher": { "type": "string" },
-        "website":   { "type": "string" }
+        "website": { "type": "string" }
     },
     "required": ["id", "title", "author", "year", "publisher"]
 };
@@ -22,13 +22,18 @@ const HEIGHT = 35;
 const HEIGHT_OFFSET = 35;
 const X_START = 700;
 const Y_START = 380;
+const REQ_FRAG = "req";
+const OPT_FLAG = "opt";
+const NULL_TYPE = "null";
 
 const props = schema.properties || {};
 const requiredProps = schema.required || [];
 const propKeys = Object.keys(props);
 
-const diagramRoot = createCoupled({ text: 'Book', x: X_START, y: Y_START, width: WIDTH, height: (HEIGHT * (propKeys.length + 1))});
-const titleRow = createTitleRow({title: 'Book',x: X_START, y: Y_START,width: WIDTH, height: HEIGHT});
+let diagramTitle = "Book";
+
+const diagramRoot = createCoupled({ text: diagramTitle, x: X_START, y: Y_START, width: WIDTH, height: (HEIGHT * (propKeys.length + 1)) });
+const titleRow = createTitleRow({ title: diagramTitle, x: X_START, y: Y_START, width: WIDTH, height: HEIGHT });
 
 let cells = { root: null, child: [] };
 cells.root = diagramRoot;
@@ -36,8 +41,8 @@ cells.child.push(titleRow);
 
 const simpleRows = map(propKeys, (value, index) => createSimpleRow({
     field_name: value,
-    field_constraints: (includes(requiredProps, value)) ? "req" : "opt",
-    field_date_type: props[value][TYPE] || "null",
+    field_constraints: (includes(requiredProps, value)) ? REQ_FRAG : OPT_FLAG,
+    field_date_type: props[value][TYPE] || NULL_TYPE,
     width: WIDTH, height: HEIGHT,
     x: X_START,
     y: Y_START + ((index + 1) * HEIGHT_OFFSET),
@@ -45,8 +50,6 @@ const simpleRows = map(propKeys, (value, index) => createSimpleRow({
 
 cells.child = concat(cells.child, simpleRows);
 
-forEach(cells.child, (item) => {
-    cells.root.embed(item);
-});
+forEach(cells.child, (item) => { cells.root.embed(item); });
 
 export default cells;

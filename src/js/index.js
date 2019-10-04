@@ -3,7 +3,7 @@ import 'bootstrap/dist/js/bootstrap.bundle';
 import './sb-admin-2.js';
 // import _ from 'lodash';
 //import Backbone from 'backbone';
-import { dia, shapes } from 'jointjs';
+import { dia, shapes, linkTools } from 'jointjs';
 // import ulElem from './jointjs-helper/templateGenerator';
 import './fontAwesomeCustom.js';
 import cells from "./jointjs-helper/DiagramGenerator";
@@ -65,6 +65,11 @@ paper.on('cell:mousewheel', (_, event, x, y, delta) => {
     zoomOnMousewheel(delta);
 });
 
+paper.on('link:pointerup', function (linkView) {
+    if (linkView.hasTools()) return;
+    linkView.addTools(new dia.ToolsView({ tools: [new linkTools.Remove()] }));
+});
+
 function zoomOnMousewheel(delta) {
     const scale = paper.scale();
     const newScaleX = scale.sx + (delta * 0.01);
@@ -72,19 +77,23 @@ function zoomOnMousewheel(delta) {
     if (newScaleX >= 0.2 && newScaleX <= 2) paper.scale(newScaleX, newScaleY);
 }
 
-document.getElementById("zoom-in-btn").onclick = function onClickZoomIn() {
+$("#zoom-in-btn").on('click', function () {
     const scale = paper.scale();
     const newScaleX = scale.sx + 0.05;
     const newScaleY = scale.sy + 0.05;
     if (newScaleX >= 0.2 && newScaleX <= 2) paper.scale(newScaleX, newScaleY);
-};
+});
 
-document.getElementById("zoom-out-btn").onclick = function onClickZoomOut(params) {
+$("#zoom-out-btn").on('click', function () {
     const scale = paper.scale();
     const newScaleX = scale.sx - 0.05;
     const newScaleY = scale.sy - 0.05;
     if (newScaleX >= 0.2 && newScaleX <= 2) paper.scale(newScaleX, newScaleY);
-};
+});
+
+$("#zoom-reset-btn").on('click', function () {
+    paper.scale(0.7, 0.7);
+});
 
 $(".object-row-expander").on('click', function name() {
     console.log("Object row expander clicked!");

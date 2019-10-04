@@ -18,12 +18,13 @@ import {
     faSearchPlus,
     faSearchMinus,
     faFolder,
-    faGripHorizontal
+    faGripHorizontal,
+    faExpand
 } from '@fortawesome/free-solid-svg-icons';
 
 
 library.add(faBars, faBorderStyle, faCheck, faFlag, faInfoCircle, faExclamationTriangle,
-    faTrash, faSearchPlus, faSearchMinus, faFolder, faGripHorizontal);
+    faTrash, faSearchPlus, faSearchMinus, faFolder, faGripHorizontal, faExpand);
 
 
 // automatically find any <i> tags in the page and replace those with <svg> elements
