@@ -1,16 +1,7 @@
-import { dia, shapes, linkTools } from 'jointjs';
+import { dia, shapes, linkTools, util } from 'jointjs';
 import html from '../schema-diagram/common/HtmlElement';
 import simpleRowTemplate from "../schema-diagram/simple-row/SimpleRow.html";
 import diagramTitleTemplate from "../schema-diagram/diagram-title/DiagramTitle.html";
-
-const verticesTool = new linkTools.Vertices();
-const segmentsTool = new linkTools.Segments();
-const sourceArrowheadTool = new linkTools.SourceArrowhead();
-const targetArrowheadTool = new linkTools.TargetArrowhead();
-const sourceAnchorTool = new linkTools.SourceAnchor();
-const targetAnchorTool = new linkTools.TargetAnchor();
-const boundaryTool = new linkTools.Boundary();
-const removeButton = new linkTools.Remove();
 
 const getPosition = function (options) {
     return { x: options.x, y: options.y };
@@ -103,6 +94,38 @@ export const createPaper = function createPaper(paperDivElement, graph) {
         }
     });
 
+    var infoButton = new linkTools.Button({
+        markup: [{
+            tagName: 'circle',
+            selector: 'button',
+            attributes: {
+                'r': 11,
+                'fill': '#4682b4',
+                'cursor': 'pointer'
+            }
+        }, {
+            tagName: 'path',
+            selector: 'icon',
+            attributes: {
+                'd': 'M -2 4 2 4 M 0 3 0 0 M -2 -1 1 -1 M -1 -4 1 -4',
+                'fill': 'none',
+                'stroke': '#FFFFFF',
+                'stroke-width': 2,
+                'pointer-events': 'none'
+            }
+        }],
+        distance: -50,
+        offset: 0,
+        action: function(evt, view) {
+            console.log(evt, view);
+            console.log('View id: ' + this.id + '\n' + 'Model id: ' + this.model.id);
+        }
+    });
+    
+    var toolsView = new dia.ToolsView({
+        tools: [infoButton]
+    });
+
     return new dia.Paper({
         el: paperDivElement,
         width: '100%',
@@ -112,6 +135,8 @@ export const createPaper = function createPaper(paperDivElement, graph) {
         cellViewNamespace: shapes,
         defaultLink: defaultLink,
         validateConnection: function (cellViewS, magnetS, cellViewT, magnetT, end, linkView) {
+            linkView.addTools(toolsView);
+            
             // Prevent linking from input ports.
             if (magnetS && magnetS.getAttribute('port-group') === 'in') return false;
             // Prevent linking from output ports to input ports within one element.
@@ -154,8 +179,8 @@ export const createSimpleRow = function createSimpleRow(options) {
             field_constraints: options.field_constraints || 'ID, req, unq, idx',
             field_date_type: options.field_date_type || 'str'
         },
-        size: { width: options.width|| 0, height: options.height || 0},
-        position: { x: options.x || 0, y: options.y || 0},
+        size: { width: options.width || 0, height: options.height || 0 },
+        position: { x: options.x || 0, y: options.y || 0 },
         inPorts: ['in'],
         outPorts: ['out'],
         ports: PORT_OPTIONS
@@ -221,7 +246,7 @@ export const createExampleDiagrams = function (graph, paper) {
     c1.embed(sr1);
     c1.embed(sr2);
     c1.embed(sr3);
-    c1.position({x: 55, y: 255});
+    c1.position({ x: 55, y: 255 });
 
     var c2 = new shapes.devs.Coupled({
         attrs: { text: { text: 'Order' } },
