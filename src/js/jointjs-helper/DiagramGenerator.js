@@ -27,7 +27,7 @@ const props = schema.properties || {};
 const requiredProps = schema.required || [];
 const propKeys = Object.keys(props);
 
-const diagramRoot = createCoupled({ text: 'Book', x: X_START, y: Y_START, width: WIDTH, height: (HEIGHT * propKeys.length) });
+const diagramRoot = createCoupled({ text: 'Book', x: X_START, y: Y_START, width: WIDTH, height: (HEIGHT * (propKeys.length + 1))});
 const titleRow = createTitleRow({title: 'Book',x: X_START, y: Y_START,width: WIDTH, height: HEIGHT});
 
 let cells = { root: null, child: [] };
@@ -40,7 +40,7 @@ const simpleRows = map(propKeys, (value, index) => createSimpleRow({
     field_date_type: props[value][TYPE] || "null",
     width: WIDTH, height: HEIGHT,
     x: X_START,
-    y: Y_START + (index * HEIGHT_OFFSET),
+    y: Y_START + ((index + 1) * HEIGHT_OFFSET),
 }));
 
 cells.child = concat(cells.child, simpleRows);
