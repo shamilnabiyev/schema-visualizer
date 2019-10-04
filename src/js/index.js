@@ -6,7 +6,7 @@ import './sb-admin-2.js';
 import { dia, shapes } from 'jointjs';
 // import ulElem from './jointjs-helper/templateGenerator';
 import './fontAwesomeCustom.js';
-import "./jointjs-helper/DiagramGenerator";
+import cells from "./jointjs-helper/DiagramGenerator";
 
 import {
     portOptions, createLink, createPaper, createCoupled, createCustomElement, createUserSchemaDagram, createExampleDiagrams
@@ -47,6 +47,11 @@ var m1 = new shapes.devs.Model({
 });
 
 graph.addCell(m1);
+
+graph.addCell(cells.root);
+graph.addCells(cells.child);
+
+cells.root.toFront();
 
 
 paper.scale(0.7, 0.7);

@@ -20,7 +20,7 @@ const getSize = function (options) {
     return { width: options.width, height: options.height };
 };
 
-export const portOptions = {
+export const PORT_OPTIONS = {
     groups: {
         'in': {
             label: {
@@ -154,11 +154,11 @@ export const createSimpleRow = function createSimpleRow(options) {
             field_constraints: options.field_constraints || 'ID, req, unq, idx',
             field_date_type: options.field_date_type || 'str'
         },
-        size: { width: options.width, height: options.height },
-        position: { x: options.x, y: options.y },
+        size: { width: options.width|| 0, height: options.height || 0},
+        position: { x: options.x || 0, y: options.y || 0},
         inPorts: ['in'],
         outPorts: ['out'],
-        ports: portOptions
+        ports: PORT_OPTIONS
     });
 };
 
@@ -186,7 +186,7 @@ export const createExampleDiagrams = function (graph, paper) {
         position: { x: 50, y: 50 },
         inPorts: ['in'],
         outPorts: ['out'],
-        ports: portOptions
+        ports: PORT_OPTIONS
     });
 
     var sr2 = new html.Element({
@@ -200,7 +200,7 @@ export const createExampleDiagrams = function (graph, paper) {
         position: { x: 50, y: 85 },
         inPorts: ['in'],
         outPorts: ['out'],
-        ports: portOptions
+        ports: PORT_OPTIONS
     });
 
     var sr3 = new html.Element({
@@ -214,7 +214,7 @@ export const createExampleDiagrams = function (graph, paper) {
         position: { x: 50, y: 120 },
         inPorts: ['in'],
         outPorts: ['out'],
-        ports: portOptions
+        ports: PORT_OPTIONS
     });
 
     c1.embed(t1);
@@ -252,7 +252,7 @@ export const createExampleDiagrams = function (graph, paper) {
         position: { x: 700, y: 50 },
         inPorts: ['in'],
         outPorts: ['out'],
-        ports: portOptions
+        ports: PORT_OPTIONS
     });
 
     var sr22 = new html.Element({
@@ -266,7 +266,7 @@ export const createExampleDiagrams = function (graph, paper) {
         position: { x: 700, y: 85 },
         inPorts: ['in'],
         outPorts: ['out'],
-        ports: portOptions
+        ports: PORT_OPTIONS
     });
 
     var sr23 = new html.Element({
@@ -280,7 +280,7 @@ export const createExampleDiagrams = function (graph, paper) {
         position: { x: 700, y: 120 },
         inPorts: ['in'],
         outPorts: ['out'],
-        ports: portOptions
+        ports: PORT_OPTIONS
     });
 
     var sr24 = new html.Element({
@@ -294,7 +294,7 @@ export const createExampleDiagrams = function (graph, paper) {
         position: { x: 700, y: 155 },
         inPorts: ['in'],
         outPorts: ['out'],
-        ports: portOptions
+        ports: PORT_OPTIONS
     });
 
 
@@ -306,8 +306,7 @@ export const createExampleDiagrams = function (graph, paper) {
 
     var c3 = createCoupled({ text: 'Item', x: 1300, y: 15, width: 400, height: 175 });
 
-    var t3 = createTitleRow
-({ title: 'Item', template: diagramTitleTemplate, x: 1300, y: 15, width: 400, height: 35 });
+    var t3 = createTitleRow({ title: 'Item', template: diagramTitleTemplate, x: 1300, y: 15, width: 400, height: 35 });
 
     // console.log(t3.get('id'));
 
@@ -322,7 +321,7 @@ export const createExampleDiagrams = function (graph, paper) {
         position: { x: 1300, y: 50 },
         inPorts: ['in'],
         outPorts: ['out'],
-        ports: portOptions
+        ports: PORT_OPTIONS
     });
 
     var sr32 = new html.Element({
@@ -336,7 +335,7 @@ export const createExampleDiagrams = function (graph, paper) {
         position: { x: 1300, y: 85 },
         inPorts: ['in'],
         outPorts: ['out'],
-        ports: portOptions
+        ports: PORT_OPTIONS
     });
 
     var sr33 = new html.Element({
@@ -350,7 +349,7 @@ export const createExampleDiagrams = function (graph, paper) {
         position: { x: 1300, y: 120 },
         inPorts: ['in'],
         outPorts: ['out'],
-        ports: portOptions
+        ports: PORT_OPTIONS
     });
 
     var sr34 = new html.Element({
@@ -364,7 +363,7 @@ export const createExampleDiagrams = function (graph, paper) {
         position: { x: 1300, y: 155 },
         inPorts: ['in'],
         outPorts: ['out'],
-        ports: portOptions
+        ports: PORT_OPTIONS
     });
 
     c3.embed(t3);
