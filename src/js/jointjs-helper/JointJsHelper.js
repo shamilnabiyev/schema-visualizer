@@ -128,6 +128,16 @@ const createInfoButton = function createInfoButton() {
     });
 };
 
+function validateConnection(cellViewS, magnetS, cellViewT, magnetT, end, linkView) {
+
+        // Prevent linking from input ports.
+        // if (magnetS && magnetS.getAttribute('port-group') === 'in') return false;
+        // Prevent linking from output ports to input ports within one element.
+        // if (cellViewS === cellViewT) return false;
+        // Prevent linking to input ports.
+        return magnetT; // && magnetT.getAttribute('port-group') === 'in';
+}
+
 export const createPaper = function createPaper(paperDivElement, graph) {
     var Paper = new dia.Paper({
         el: paperDivElement,
@@ -137,20 +147,9 @@ export const createPaper = function createPaper(paperDivElement, graph) {
         model: graph,
         cellViewNamespace: shapes,
         defaultLink: createDefaultLink(),
-        validateConnection:  (cellViewS, magnetS, cellViewT, magnetT, end, linkView) => {
-            // Prevent linking from input ports.
-            // if (magnetS && magnetS.getAttribute('port-group') === 'in') return false;
-            // Prevent linking from output ports to input ports within one element.
-            // if (cellViewS === cellViewT) return false;
-            // Prevent linking to input ports.
-            return magnetT; // && magnetT.getAttribute('port-group') === 'in';
-        },
+        validateConnection:  validateConnection,
         snapLinks: { radius: 75 },
         markAvailable: true
-    });
-
-    var toolsView = new dia.ToolsView({
-        tools: [createInfoButton()]
     });
 
     function zoomOnMousewheel(delta) {
@@ -164,7 +163,8 @@ export const createPaper = function createPaper(paperDivElement, graph) {
 
     Paper.on({
         'link:pointerup': (linkView) => {
-            linkView.addTools(toolsView);
+            if (linkView.hasTools()) return;
+            linkView.addTools(new dia.ToolsView({ tools: [createInfoButton()]}));
         },
         'link:mouseenter': (linkView) => {
             linkView.showTools();
