@@ -23,7 +23,7 @@ const HEIGHT_OFFSET = 35;
 const X_START = 700;
 const Y_START = 380;
 const REQ_FRAG = "req";
-const OPT_FLAG = "opt";
+const OPT_FLAG = " ";
 const NULL_TYPE = "null";
 
 const props = schema.properties || {};

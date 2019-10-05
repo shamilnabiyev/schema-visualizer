@@ -50,7 +50,7 @@ export const createLink = function createLink(sourceId, sourcePort, targetId, ta
      */
     var link = new dia.Link({
         attrs: { '.marker-target': { d: 'M 10 0 L 0 5 L 10 10 z' } },
-        // router: { name: 'manhattan' },
+        router: { name: 'manhattan' },
         connector: { name: 'rounded' },
         source: {
             id: sourceId,
@@ -83,7 +83,9 @@ export const createLink = function createLink(sourceId, sourcePort, targetId, ta
 
 export const createPaper = function createPaper(paperDivElement, graph) {
     const defaultLink = new dia.Link({
-        attrs: { '.marker-target': { d: 'M 10 0 L 0 5 L 10 10 z' } }
+        attrs: { '.marker-target': { d: 'M 10 0 L 0 5 L 10 10 z' } },
+        router: { name: 'manhattan' },
+        connector: { name: 'rounded' },
     });
 
     defaultLink.appendLabel({
@@ -91,6 +93,9 @@ export const createPaper = function createPaper(paperDivElement, graph) {
             text: {
                 text: 'REF'
             }
+        },
+        position: {
+            offset: 15
         }
     });
 
@@ -114,10 +119,10 @@ export const createPaper = function createPaper(paperDivElement, graph) {
                 'pointer-events': 'none'
             }
         }],
-        distance: -50,
+        distance: -60,
         offset: 0,
-        action: function(evt, view) {
-            console.log(evt, view);
+        action: function(evt) {
+            console.log(evt);
             console.log('View id: ' + this.id + '\n' + 'Model id: ' + this.model.id);
         }
     });
@@ -135,14 +140,14 @@ export const createPaper = function createPaper(paperDivElement, graph) {
         cellViewNamespace: shapes,
         defaultLink: defaultLink,
         validateConnection: function (cellViewS, magnetS, cellViewT, magnetT, end, linkView) {
-            linkView.addTools(toolsView);
+            // linkView.addTools(toolsView);
             
             // Prevent linking from input ports.
-            if (magnetS && magnetS.getAttribute('port-group') === 'in') return false;
+            // if (magnetS && magnetS.getAttribute('port-group') === 'in') return false;
             // Prevent linking from output ports to input ports within one element.
-            if (cellViewS === cellViewT) return false;
+            // if (cellViewS === cellViewT) return false;
             // Prevent linking to input ports.
-            return magnetT && magnetT.getAttribute('port-group') === 'in';
+            return magnetT; // && magnetT.getAttribute('port-group') === 'in';
         },
         snapLinks: { radius: 75 },
         markAvailable: true

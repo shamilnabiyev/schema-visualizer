@@ -55,19 +55,28 @@ cells.root.toFront();
 
 
 paper.scale(0.7, 0.7);
-paper.on('blank:mousewheel', (event, x, y, delta) => {
-    event.preventDefault();
-    zoomOnMousewheel(delta);
-});
-
-paper.on('cell:mousewheel', (_, event, x, y, delta) => {
-    event.preventDefault();
-    zoomOnMousewheel(delta);
-});
-
-paper.on('link:pointerup', function (linkView) {
-    if (linkView.hasTools()) return;
-    linkView.addTools(new dia.ToolsView({ tools: [new linkTools.Remove()] }));
+paper.on({
+    'blank:mousewheel': (event, x, y, delta) => {
+        event.preventDefault();
+        zoomOnMousewheel(delta);
+    },
+    'cell:mousewheel': (_, event, x, y, delta) => {
+        event.preventDefault();
+        zoomOnMousewheel(delta);
+    },
+    'link:contextmenu': (linkView, evt, x, y) => {
+        // console.log(linkView);
+    },
+    'link:pointerup': function (linkView) {
+        // if (linkView.hasTools()) return;
+        // linkView.addTools(new dia.ToolsView({ tools: [new linkTools.Remove()] }));
+    },
+    'cell:pointerdblclick': function name(cellView, evt, x, y ) {
+        console.log('cell:pointerdblclick');
+    },
+    'element:pointerdblclick 	': function name(cellView, evt, x, y ) {
+        console.log('element:pointerdblclick 	');
+    }
 });
 
 function zoomOnMousewheel(delta) {
