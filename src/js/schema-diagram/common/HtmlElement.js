@@ -1,5 +1,4 @@
 // @ts-nocheck
-
 import $ from 'jquery';
 import {
     bind as _bind,
@@ -34,7 +33,12 @@ html.ElementView = dia.ElementView.extend({
 
         this.$box.find('.flex-container').on('mousedown', function(evt) {
             evt.stopPropagation();
-            console.log('click');
+        });
+
+        this.$box.find('.flex-container').on('click', function(evt) {
+            evt.stopPropagation();
+            
+            /* Show/hide the clicked row */
         });
 
         const customAttrs = this.model.get("customAttrs");
@@ -46,13 +50,9 @@ html.ElementView = dia.ElementView.extend({
         this.model.on('remove', this.removeBox, this);
 
         this.listenTo(this.model, 'change:template', this.templateOnUpdate);
-
-        // this.updateBox();
     },
     templateOnUpdate: function () {
         console.log('templateOnUpdate fired!');
-        // console.log(this.model.get("template"));
-        // this.$box = $(_template(this.model.get("template"))());
         this.render();
     },
 
