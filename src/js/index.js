@@ -14,6 +14,10 @@ import 'fontawesome_solid_min_css';
 import 'jointjs_min_css';
 import '../scss/index.scss';
 
+$( window ).on( "load", ()=> {
+    $('#loading-icon').remove();
+    $('#wrapper').css("visibility", "initial");
+} );
 
 var graph = new dia.Graph();
 

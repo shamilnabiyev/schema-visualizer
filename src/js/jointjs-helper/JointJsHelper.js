@@ -1,4 +1,5 @@
 import { dia, shapes, linkTools, util } from 'jointjs';
+import {isUndefined, isNull} from 'lodash';
 import html from '../schema-diagram/common/HtmlElement';
 import simpleRowTemplate from "../schema-diagram/simple-row/SimpleRow.html";
 import diagramTitleTemplate from "../schema-diagram/diagram-title/DiagramTitle.html";
@@ -136,19 +137,19 @@ function validateConnection(cellViewS, magnetS, cellViewT, magnetT, end, linkVie
 }
 
 function zoomOnMousewheel(paper, delta) {
-    if (Paper == null) return;
+    if (isNull(paper) || isUndefined(paper)) return;
 
-    const scale = Paper.scale();
+    const scale = paper.scale();
     const newScaleX = scale.sx + (delta * 0.01);
     const newScaleY = scale.sy + (delta * 0.01);
-    if (newScaleX >= 0.2 && newScaleX <= 2) Paper.scale(newScaleX, newScaleY);
+    if (newScaleX >= 0.2 && newScaleX <= 2) paper.scale(newScaleX, newScaleY);
 }
 
 export const createPaper = function createPaper(paperDivElement, graph) {
     var Paper = new dia.Paper({
         el: paperDivElement,
         width: '100%',
-        height: 800,
+        height: '100%',
         gridSize: 1,
         model: graph,
         cellViewNamespace: shapes,
