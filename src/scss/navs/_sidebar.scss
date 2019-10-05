@@ -46,6 +46,7 @@
         min-width: 10rem;
         font-size: $dropdown-font-size;
         margin: 0 0 1rem 0;
+        border: 1px solid $gray-500;
         .collapse-header {
           margin: 0;
           white-space: nowrap;

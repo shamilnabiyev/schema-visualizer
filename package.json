@@ -6,6 +6,7 @@
     "build": "cross-env NODE_ENV=production webpack --config config/webpack.prod.js  --colors",
     "dev": "webpack-dev-server --config config/webpack.dev.js"
   },
+  "license": "MIT",
   "private": true,
   "keywords": [
     "JSON",
