@@ -1,122 +1,81 @@
+/* DEPRECATED */
 import $ from 'jquery';
-import {
-    bind as _bind,
-    bindAll as _bindAll,
-    template as _template
-} from 'lodash';
-import { dia, shapes, util } from 'jointjs';
+import * as joint from 'jointjs';
 
-var xhtml = shapes.xhtml = {};
+// Create a custom element.
+// ------------------------
 
-xhtml.Element = dia.Element.define('xhtml.Element', {
-    attrs: {
-        placeholder: {
-            refWidth: '100%',
-            refHeight: '100%',
-            stroke: 'gray'
+joint.shapes.xhtml = {};
+joint.shapes.xhtml.Element = joint.shapes.basic.Rect.extend({
+    defaults: joint.util.deepSupplement({
+        type: 'xhtml.Element',
+        attrs: {
+            rect: { stroke: 'none', 'fill-opacity': 0 }
         }
-    }
-}, {
-    markup: [{
-        tagName: 'rect',
-        selector: 'placeholder'
-    }]
+    }, joint.shapes.basic.Rect.prototype.defaults)
 });
 
 // Create a custom view for that element that displays an HTML div above it.
 // -------------------------------------------------------------------------
 
-xhtml.ElementView = dia.ElementView.extend({
+joint.shapes.xhtml.ElementView = joint.dia.ElementView.extend({
 
     template: [
         '<div class="html-element">',
-        '<label data-attribute="mylabel"></label>',
-        '<input data-attribute="myinput" type="text"/>',
+        '<button class="delete">x</button>',
+        '<label></label>',
+        '<span></span>', '<br/>',
+        '<select><option>--</option><option>one</option><option>two</option></select>',
+        '<input type="text" value="I\'m HTML input" />',
         '</div>'
     ].join(''),
 
-    init: function() {
+    initialize: function () {
+        _.bindAll(this, 'updateBox');
+        joint.dia.ElementView.prototype.initialize.apply(this, arguments);
 
+        this.$box = $(_.template(this.template)());
+        // Prevent paper from handling pointerdown.
+        this.$box.find('input,select').on('mousedown click', function (evt) {
+            evt.stopPropagation();
+        });
+        // This is an example of reacting on the input change and storing the input data in the cell model.
+        this.$box.find('input').on('change', _.bind(function (evt) {
+            this.model.set('input', $(evt.target).val());
+        }, this));
+        this.$box.find('select').on('change', _.bind(function (evt) {
+            this.model.set('select', $(evt.target).val());
+        }, this));
+        this.$box.find('select').val(this.model.get('select'));
+        this.$box.find('.delete').on('click', _.bind(this.model.remove, this.model));
         // Update the box position whenever the underlying model changes.
-        this.listenTo(this.model, 'change', this.updateBox);
-    },
+        this.model.on('change', this.updateBox, this);
+        // Remove the box when the model gets removed from the graph.
+        this.model.on('remove', this.removeBox, this);
 
-    onBoxChange: function(evt) {
-
-        var input = evt.target;
-        var attribute = input.dataset.attribute;
-        if (attribute) {
-            this.model.set(attribute, input.value);
-        }
-    },
-
-    onRender: function() {
-
-        if (this.$box) this.$box.remove();
-
-        var boxMarkup = util.template(this.template)();
-        var $box = this.$box = $(boxMarkup);
-
-        this.$attributes = $box.find('[data-attribute]');
-
-        // React on all box changes. e.g. input change
-        $box.on('change', this.onBoxChange.bind(this));
-
-        // Update the box size and position whenever the paper transformation changes.
-        // Note: there is no paper yet on `init` method.
-        this.listenTo(this.paper, 'scale translate', this.updateBox);
-
-        $box.appendTo(this.paper.el);
         this.updateBox();
-
+    },
+    render: function () {
+        joint.dia.ElementView.prototype.render.apply(this, arguments);
+        this.paper.$el.prepend(this.$box);
+        this.updateBox();
         return this;
     },
-
-    updateBox: function() {
-
-        // Set the position and the size of the box so that it covers the JointJS element
-        // (taking the paper transformations into account).
-        var bbox = this.getBBox({ useModelGeometry: true });
-        var scale = this.paper.scale();
-
+    updateBox: function () {
+        // Set the position and dimension of the box so that it covers the JointJS element.
+        var bbox = this.model.getBBox();
+        // Example of updating the HTML with a data stored in the cell model.
+        this.$box.find('label').text(this.model.get('label'));
+        this.$box.find('span').text(this.model.get('select'));
         this.$box.css({
-            transform: 'scale(' + scale.sx + ',' + scale.sy + ')',
-            transformOrigin: '0 0',
-            width: bbox.width / scale.sx,
-            height: bbox.height / scale.sy,
+            width: bbox.width,
+            height: bbox.height,
             left: bbox.x,
-            top: bbox.y
-        });
-
-        this.updateAttributes();
-    },
-
-    updateAttributes: function() {
-
-        var model = this.model;
-
-        this.$attributes.each(function() {
-
-            var value = model.get(this.dataset.attribute);
-
-            switch (this.tagName.toUpperCase()) {
-                case 'LABEL':
-                    this.textContent = value;
-                    break;
-                case 'INPUT':
-                    this.value = value;
-                    break;
-            }
+            top: bbox.y,
+            transform: 'rotate(' + (this.model.get('angle') || 0) + 'deg)'
         });
     },
-
-    onRemove: function() {
-
+    removeBox: function (evt) {
         this.$box.remove();
     }
-
 });
-
-// console.log('html', html);
-
-export default xhtml;

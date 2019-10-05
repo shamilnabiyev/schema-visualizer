@@ -4,9 +4,9 @@
   flex-wrap: nowrap;
   justify-content: space-between;
   background-color: #ffffff;
-  border-bottom: 2px solid #cccccc;
-  border-left: 1px solid #cccccc;
-  border-right: 1px solid #cccccc;
+  border-bottom: 1px solid #aaaaaa;
+  border-left: 1px solid #aaaaaa;
+  border-right: 1px solid #aaaaaa;
 }
 
 .in_port {
@@ -40,11 +40,7 @@
   border: 1px solid #00598a;
 }
 
-
-.field_date_type:hover {
-  color: red;
-}
-
-.object-row-expander {
-  position: absolute;
+.html-element .flex-container {
+  /* Enable interacting with inputs only. */
+  pointer-events: auto;
 }

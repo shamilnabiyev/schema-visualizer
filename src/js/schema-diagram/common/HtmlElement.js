@@ -19,7 +19,7 @@ html.Element = shapes.devs.Model.extend({
     defaults: util.deepSupplement({
         type: 'html.Element',
         attrs: {
-            rect: { stroke: 'none', 'fill-opacity': 0 }
+            '.body': { stroke: '#ffffff' }
         }
     }, shapes.devs.Model.prototype.defaults)
 });
@@ -29,11 +29,13 @@ html.ElementView = dia.ElementView.extend({
         _bindAll(this, 'updateBox');
         dia.ElementView.prototype.initialize.apply(this, arguments);
 
-        // console.log('Initial template container: ', this.templateContainer);
-        // console.log('this.template: ', this.template);
-
         this.$box = $(_template(this.model.get("template"))());
         this.$box.find('.delete').on('click', _bind(this.model.remove, this.model));
+
+        this.$box.find('.flex-container').on('mousedown', function(evt) {
+            evt.stopPropagation();
+            console.log('click');
+        });
 
         const customAttrs = this.model.get("customAttrs");
         for (var a in customAttrs) {

@@ -7,6 +7,7 @@ import './fontAwesomeCustom.js';
 /* Import the custom classes */
 import generatetCells from "./jointjs-helper/DiagramGenerator";
 import { addInfoButton, createPaper, createDummyDiagrams } from './jointjs-helper/JointJsHelper';
+// import './diagram/HtmlElement/HtmlElement';
 /* Import the styles */
 import 'typeface-nunito';
 import 'fontawesome_min_css';
@@ -14,21 +15,20 @@ import 'fontawesome_solid_min_css';
 import 'jointjs_min_css';
 import '../scss/index.scss';
 
-$( window ).on( "load", ()=> {
+$(window).on("load", () => {
     $('#loading-icon').remove();
     $('#wrapper').css("visibility", "initial");
-} );
+});
 
 var graph = new dia.Graph();
 
 var paper = createPaper($('#paper-html-elements'), graph);
 paper.scale(0.7, 0.7);
 
-graph.on('add', function(cell) { 
-    if(cell instanceof dia.Link) {
+graph.on('add', (cell) => {
+    if (cell instanceof dia.Link) {
         addInfoButton(cell, paper);
-        // console.log('New link with id ' + cell.id + ' added to the graph.');  
-    } 
+    }
 });
 
 createDummyDiagrams(graph);
@@ -54,24 +54,21 @@ graph.addCells(generatetCells.child);
 
 generatetCells.root.toFront();
 
-$("#zoom-in-btn").on('click', function () {
+$("#zoom-in-btn").on('click', () => {
     const scale = paper.scale();
     const newScaleX = scale.sx + 0.05;
     const newScaleY = scale.sy + 0.05;
     if (newScaleX >= 0.2 && newScaleX <= 2) paper.scale(newScaleX, newScaleY);
 });
 
-$("#zoom-out-btn").on('click', function () {
+$("#zoom-out-btn").on('click', () => {
     const scale = paper.scale();
     const newScaleX = scale.sx - 0.05;
     const newScaleY = scale.sy - 0.05;
     if (newScaleX >= 0.2 && newScaleX <= 2) paper.scale(newScaleX, newScaleY);
 });
 
-$("#zoom-reset-btn").on('click', function () {
+$("#zoom-reset-btn").on('click', () => {
     paper.scale(0.7, 0.7);
 });
 
-$(".object-row-expander").on('click', function name() {
-    console.log("Object row expander clicked!");
-});
