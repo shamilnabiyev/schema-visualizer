@@ -1,5 +1,5 @@
 import { dia, shapes, linkTools, util } from 'jointjs';
-import {isUndefined, isNull} from 'lodash';
+import { isUndefined, isNull } from 'lodash';
 import html from '../schema-diagram/common/HtmlElement';
 import simpleRowTemplate from "../schema-diagram/simple-row/SimpleRow.html";
 import diagramTitleTemplate from "../schema-diagram/diagram-title/DiagramTitle.html";
@@ -45,7 +45,7 @@ const createDefaultLink = function createDefaultLink() {
             }
         },
         position: {
-            offset: 15
+            offset: 20
         }
     });
 
@@ -74,19 +74,6 @@ export const createLink = function createLink(sourceId, sourcePort, targetId, ta
         .target({
             id: targetId,
             port: targetPort
-        })
-        .appendLabel({
-            attrs: {
-                text: {
-                    text: labelText || 'REF'
-                },
-                line: {
-                    strokeWidth: 2,
-                }
-            },
-            position: {
-                offset: 15
-            }
         });
 
     if (cardinalityLabel != null) link.appendLabel(cardinalityLabel);
@@ -125,13 +112,13 @@ const createInfoButton = function createInfoButton() {
 
 function validateConnection(cellViewS, magnetS, cellViewT, magnetT, end, linkView) {
     if (!linkView.hasTools()) linkView.addTools(new dia.ToolsView({ tools: [createInfoButton()] }));
-    
+
     // Prevent linking from input ports.
     // if (magnetS && magnetS.getAttribute('port-group') === 'in') return false;
-    
+
     // Prevent linking from output ports to input ports within one element.
     // if (cellViewS === cellViewT) return false;
-    
+
     // Prevent linking to input ports.
     return magnetT; // && magnetT.getAttribute('port-group') === 'in';
 }
@@ -184,11 +171,11 @@ export const createPaper = function createPaper(paperDivElement, graph) {
 };
 
 export const addInfoButton = function addInfoButton(link, paper) {
-    if(paper == null) return; 
-    
+    if (paper == null) return;
+
     var linkView = link.findView(paper);
-    if(linkView == null) return; 
-    
+    if (linkView == null) return;
+
     linkView.addTools(new dia.ToolsView({ tools: [createInfoButton()] }));
     linkView.hideTools();
 };
@@ -460,7 +447,7 @@ export const createDummyDiagrams = function (graph) {
             },
             position: {
                 distance: 20,
-                offset: 15
+                offset: 20
             }
         };
         createLink(sr23.id, "in", sr1.id, "out", "REF", cardianlityLabel).addTo(graph).reparent();
@@ -476,7 +463,7 @@ export const createDummyDiagrams = function (graph) {
             },
             position: {
                 distance: 20,
-                offset: 15
+                offset: 20
             }
         };
         createLink(sr24.id, "out", sr31.id, "in", "REF", cardianlityLabel2).addTo(graph).reparent();
