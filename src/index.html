@@ -11,8 +11,9 @@
 </head>
 
 <body id="page-top" class="sidebar-toggled">
+  <div id="loading-icon" style="visibility: initial;">LOADING ...</div>
   <!-- Page Wrapper -->
-  <div id="wrapper">
+  <div id="wrapper" style="visibility: hidden;">
 
     <!-- Sidebar -->
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion toggled" id="accordionSidebar">
@@ -35,31 +36,31 @@
       <hr class="sidebar-divider">
 
       <li class="nav-item">
-          <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFileControl" aria-expanded="true"
-            aria-controls="collapseFileControl">
-            <i class="fas fa-grip-horizontal"></i>
-            <span>File</span>
-          </a>
-          <div id="collapseFileControl" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-            <div class="bg-primary py-2 collapse-inner">
-              <div class="collapse-item">
-                <a id="" href="#" class="btn btn-sm btn-light btn-icon-split">
-                  <span class="icon text-gray-600">
-                    <i class="fas fa-search-plus"></i>
-                  </span>
-                  <span class="text">Click me!</span>
-                </a>
-              </div>
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFileControl"
+          aria-expanded="true" aria-controls="collapseFileControl">
+          <i class="fas fa-grip-horizontal"></i>
+          <span>File</span>
+        </a>
+        <div id="collapseFileControl" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+          <div class="bg-primary py-2 collapse-inner">
+            <div class="collapse-item">
+              <a id="" href="#" class="btn btn-sm btn-light btn-icon-split">
+                <span class="icon text-gray-600">
+                  <i class="fas fa-search-plus"></i>
+                </span>
+                <span class="text">Click me!</span>
+              </a>
             </div>
           </div>
-        </li>
+        </div>
+      </li>
 
       <!-- Divider -->
       <hr class="sidebar-divider">
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseViewControl" aria-expanded="true"
-          aria-controls="collapseViewControl">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseViewControl"
+          aria-expanded="true" aria-controls="collapseViewControl">
           <i class="fas fa-grip-horizontal"></i>
           <span>View</span>
         </a>
@@ -103,7 +104,7 @@
     <div id="content-wrapper" class="d-flex flex-column">
 
       <!-- Main Content -->
-      <div id="content">
+      <div id="content-x">
 
         <!-- Topbar -->
         <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
@@ -123,28 +124,35 @@
             <div class="col-12">
               <div class="card mb-4">
                 <div class="card-body">
-                  <span>UI-Elements to add, edit and remove the entities, properties and reference lines on this page</span>
-                  
+                  <span>UI-Elements to add, edit and remove the entities, properties and reference lines on this
+                    page</span>
                 </div>
               </div>
             </div>
           </div>
-          <div class="row">
-            <div class="col-12">
-              <div class="card mb-4">
-                <div id="paper-holder" class="card-body">
+        </div>
+        <!-- /.container-fluid -->
+
+      </div>
+
+      <!-- End of Main Content -->
+
+      <!-- Paper holder -->
+      <div id="paper-holder">
+        <div class="container-fluid h-100">
+          <div class="row h-100">
+            <div class="col-12 h-100">
+              <div class="card mb-4 h-100">
+                <div class="card-body h-100">
                   <!-- JointJs Paper -->
                   <div id="paper-html-elements"></div>
                 </div>
               </div>
             </div>
           </div>
-
         </div>
-        <!-- /.container-fluid -->
-
       </div>
-      <!-- End of Main Content -->
+       <!-- End of Paper holder -->
 
       <!-- Footer -->
       <footer class="sticky-footer bg-white">
