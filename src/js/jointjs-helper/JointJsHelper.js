@@ -63,12 +63,6 @@ const createDefaultLink = function createDefaultLink() {
  * @return {shapes.standard.Link} a new link
  */
 export const createLink = function createLink(sourceId, sourcePort, targetId, targetPort, labelText, cardinalityLabel) {
-    /**
-     * Use link tools to add segments, points and other link control
-     * elements to the link. 
-     * 
-     * Tutorial: https://resources.jointjs.com/tutorial/link-tools
-     */
     var link = createDefaultLink()
         .router({ name: 'manhattan' })
         .connector({ name: 'rounded' })
@@ -130,12 +124,24 @@ const createInfoButton = function createInfoButton() {
 
 function validateConnection(cellViewS, magnetS, cellViewT, magnetT, end, linkView) {
     if (!linkView.hasTools()) linkView.addTools(new dia.ToolsView({ tools: [createInfoButton()] }));
+    
     // Prevent linking from input ports.
     // if (magnetS && magnetS.getAttribute('port-group') === 'in') return false;
+    
     // Prevent linking from output ports to input ports within one element.
     // if (cellViewS === cellViewT) return false;
+    
     // Prevent linking to input ports.
     return magnetT; // && magnetT.getAttribute('port-group') === 'in';
+}
+
+function zoomOnMousewheel(paper, delta) {
+    if (Paper == null) return;
+
+    const scale = Paper.scale();
+    const newScaleX = scale.sx + (delta * 0.01);
+    const newScaleY = scale.sy + (delta * 0.01);
+    if (newScaleX >= 0.2 && newScaleX <= 2) Paper.scale(newScaleX, newScaleY);
 }
 
 export const createPaper = function createPaper(paperDivElement, graph) {
@@ -152,26 +158,14 @@ export const createPaper = function createPaper(paperDivElement, graph) {
         markAvailable: true
     });
 
-    function zoomOnMousewheel(delta) {
-        if (Paper == null) return;
-
-        const scale = Paper.scale();
-        const newScaleX = scale.sx + (delta * 0.01);
-        const newScaleY = scale.sy + (delta * 0.01);
-        if (newScaleX >= 0.2 && newScaleX <= 2) Paper.scale(newScaleX, newScaleY);
-    }
-
     Paper.on({
         'blank:mousewheel': (event, x, y, delta) => {
             event.preventDefault();
-            zoomOnMousewheel(delta);
+            zoomOnMousewheel(Paper, delta);
         },
         'cell:mousewheel': (_, event, x, y, delta) => {
             event.preventDefault();
-            zoomOnMousewheel(delta);
-        },
-        'link:contextmenu': (linkView, evt, x, y) => {
-            // console.log(linkView);
+            zoomOnMousewheel(Paper, delta);
         },
         'link:pointerup': (linkView) => {
             if (linkView.hasTools()) return;
@@ -189,7 +183,11 @@ export const createPaper = function createPaper(paperDivElement, graph) {
 };
 
 export const addInfoButton = function addInfoButton(link, paper) {
+    if(paper == null) return; 
+    
     var linkView = link.findView(paper);
+    if(linkView == null) return; 
+    
     linkView.addTools(new dia.ToolsView({ tools: [createInfoButton()] }));
     linkView.hideTools();
 };
