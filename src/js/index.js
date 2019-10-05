@@ -6,7 +6,7 @@ import './sb-admin-2.js';
 import './fontAwesomeCustom.js';
 /* Import the custom classes */
 import generatetCells from "./jointjs-helper/DiagramGenerator";
-import { createPaper, createDummyDiagrams } from './jointjs-helper/JointJsHelper';
+import { addInfoButton, createPaper, createDummyDiagrams } from './jointjs-helper/JointJsHelper';
 /* Import the styles */
 import 'typeface-nunito';
 import 'fontawesome_min_css';
@@ -16,8 +16,16 @@ import '../scss/index.scss';
 
 
 var graph = new dia.Graph();
+
 var paper = createPaper($('#paper-html-elements'), graph);
 paper.scale(0.7, 0.7);
+
+graph.on('add', function(cell) { 
+    if(cell instanceof dia.Link) {
+        addInfoButton(cell, paper);
+        // console.log('New link with id ' + cell.id + ' added to the graph.');  
+    } 
+});
 
 createDummyDiagrams(graph);
 

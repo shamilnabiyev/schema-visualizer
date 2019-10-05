@@ -3,11 +3,11 @@ import html from '../schema-diagram/common/HtmlElement';
 import simpleRowTemplate from "../schema-diagram/simple-row/SimpleRow.html";
 import diagramTitleTemplate from "../schema-diagram/diagram-title/DiagramTitle.html";
 
-const getPosition =  (options) => {
+const getPosition = (options) => {
     return { x: options.x, y: options.y };
 };
 
-const getSize =  (options) => {
+const getSize = (options) => {
     return { width: options.width, height: options.height };
 };
 
@@ -129,13 +129,13 @@ const createInfoButton = function createInfoButton() {
 };
 
 function validateConnection(cellViewS, magnetS, cellViewT, magnetT, end, linkView) {
-
-        // Prevent linking from input ports.
-        // if (magnetS && magnetS.getAttribute('port-group') === 'in') return false;
-        // Prevent linking from output ports to input ports within one element.
-        // if (cellViewS === cellViewT) return false;
-        // Prevent linking to input ports.
-        return magnetT; // && magnetT.getAttribute('port-group') === 'in';
+    if (!linkView.hasTools()) linkView.addTools(new dia.ToolsView({ tools: [createInfoButton()] }));
+    // Prevent linking from input ports.
+    // if (magnetS && magnetS.getAttribute('port-group') === 'in') return false;
+    // Prevent linking from output ports to input ports within one element.
+    // if (cellViewS === cellViewT) return false;
+    // Prevent linking to input ports.
+    return magnetT; // && magnetT.getAttribute('port-group') === 'in';
 }
 
 export const createPaper = function createPaper(paperDivElement, graph) {
@@ -147,13 +147,13 @@ export const createPaper = function createPaper(paperDivElement, graph) {
         model: graph,
         cellViewNamespace: shapes,
         defaultLink: createDefaultLink(),
-        validateConnection:  validateConnection,
+        validateConnection: validateConnection,
         snapLinks: { radius: 75 },
         markAvailable: true
     });
 
     function zoomOnMousewheel(delta) {
-        if(Paper == null) return;
+        if (Paper == null) return;
 
         const scale = Paper.scale();
         const newScaleX = scale.sx + (delta * 0.01);
@@ -162,16 +162,6 @@ export const createPaper = function createPaper(paperDivElement, graph) {
     }
 
     Paper.on({
-        'link:pointerup': (linkView) => {
-            if (linkView.hasTools()) return;
-            linkView.addTools(new dia.ToolsView({ tools: [createInfoButton()]}));
-        },
-        'link:mouseenter': (linkView) => {
-            linkView.showTools();
-        },
-        'link:mouseleave': (linkView) => {
-            linkView.hideTools();
-        },
         'blank:mousewheel': (event, x, y, delta) => {
             event.preventDefault();
             zoomOnMousewheel(delta);
@@ -183,9 +173,25 @@ export const createPaper = function createPaper(paperDivElement, graph) {
         'link:contextmenu': (linkView, evt, x, y) => {
             // console.log(linkView);
         },
+        'link:pointerup': (linkView) => {
+            if (linkView.hasTools()) return;
+            linkView.addTools(new dia.ToolsView({ tools: [createInfoButton()] }));
+        },
+        'link:mouseenter': (linkView) => {
+            linkView.showTools();
+        },
+        'link:mouseleave': (linkView) => {
+            linkView.hideTools();
+        },
     });
 
     return Paper;
+};
+
+export const addInfoButton = function addInfoButton(link, paper) {
+    var linkView = link.findView(paper);
+    linkView.addTools(new dia.ToolsView({ tools: [createInfoButton()] }));
+    linkView.hideTools();
 };
 
 export const createCoupled = function createCoupled(options) {
