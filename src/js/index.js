@@ -1,17 +1,13 @@
+/* Import the core libs */
 import $ from 'jquery';
+import { dia, shapes } from 'jointjs';
 import 'bootstrap/dist/js/bootstrap.bundle';
 import './sb-admin-2.js';
-// import _ from 'lodash';
-//import Backbone from 'backbone';
-import { dia, shapes, linkTools } from 'jointjs';
-// import ulElem from './jointjs-helper/templateGenerator';
 import './fontAwesomeCustom.js';
-import cells from "./jointjs-helper/DiagramGenerator";
-
-import {
-    portOptions, createLink, createPaper, createCoupled, createCustomElement, createUserSchemaDagram, createExampleDiagrams
-} from './jointjs-helper/JointJsHelper';
-
+/* Import the custom classes */
+import generatetCells from "./jointjs-helper/DiagramGenerator";
+import { createPaper, createDummyDiagrams } from './jointjs-helper/JointJsHelper';
+/* Import the styles */
 import 'typeface-nunito';
 import 'fontawesome_min_css';
 import 'fontawesome_solid_min_css';
@@ -21,16 +17,9 @@ import '../scss/index.scss';
 
 var graph = new dia.Graph();
 var paper = createPaper($('#paper-html-elements'), graph);
+paper.scale(0.7, 0.7);
 
-createExampleDiagrams(graph, paper);
-
-paper.on('link:mouseenter', function (linkView) {
-    linkView.showTools();
-});
-
-paper.on('link:mouseleave', function (linkView) {
-    linkView.hideTools();
-});
+createDummyDiagrams(graph);
 
 /**
  * Model with multiple ports
@@ -48,43 +37,10 @@ var m1 = new shapes.devs.Model({
 
 graph.addCell(m1);
 
-graph.addCell(cells.root);
-graph.addCells(cells.child);
+graph.addCell(generatetCells.root);
+graph.addCells(generatetCells.child);
 
-cells.root.toFront();
-
-
-paper.scale(0.7, 0.7);
-paper.on({
-    'blank:mousewheel': (event, x, y, delta) => {
-        event.preventDefault();
-        zoomOnMousewheel(delta);
-    },
-    'cell:mousewheel': (_, event, x, y, delta) => {
-        event.preventDefault();
-        zoomOnMousewheel(delta);
-    },
-    'link:contextmenu': (linkView, evt, x, y) => {
-        // console.log(linkView);
-    },
-    'link:pointerup': function (linkView) {
-        // if (linkView.hasTools()) return;
-        // linkView.addTools(new dia.ToolsView({ tools: [new linkTools.Remove()] }));
-    },
-    'cell:pointerdblclick': function name(cellView, evt, x, y ) {
-        console.log('cell:pointerdblclick');
-    },
-    'element:pointerdblclick 	': function name(cellView, evt, x, y ) {
-        console.log('element:pointerdblclick 	');
-    }
-});
-
-function zoomOnMousewheel(delta) {
-    const scale = paper.scale();
-    const newScaleX = scale.sx + (delta * 0.01);
-    const newScaleY = scale.sy + (delta * 0.01);
-    if (newScaleX >= 0.2 && newScaleX <= 2) paper.scale(newScaleX, newScaleY);
-}
+generatetCells.root.toFront();
 
 $("#zoom-in-btn").on('click', function () {
     const scale = paper.scale();

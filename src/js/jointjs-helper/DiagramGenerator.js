@@ -11,7 +11,7 @@ const schema = {
         "author": { "type": "string" },
         "year": { "type": "integer" },
         "publisher": { "type": "string" },
-        "website": { "type": "string" }
+        "very_long_attribute_name_0123456789": { "type": "string" }
     },
     "required": ["id", "title", "author", "year", "publisher"]
 };

@@ -3,11 +3,11 @@ import html from '../schema-diagram/common/HtmlElement';
 import simpleRowTemplate from "../schema-diagram/simple-row/SimpleRow.html";
 import diagramTitleTemplate from "../schema-diagram/diagram-title/DiagramTitle.html";
 
-const getPosition = function (options) {
+const getPosition =  (options) => {
     return { x: options.x, y: options.y };
 };
 
-const getSize = function (options) {
+const getSize =  (options) => {
     return { width: options.width, height: options.height };
 };
 
@@ -30,6 +30,27 @@ export const PORT_OPTIONS = {
     }
 };
 
+const createDefaultLink = function createDefaultLink() {
+    const defaultLink = new dia.Link({
+        attrs: { '.marker-target': { d: 'M 10 0 L 0 5 L 10 10 z' } },
+        // router: { name: 'manhattan' },
+        connector: { name: 'rounded' },
+    });
+
+    defaultLink.appendLabel({
+        attrs: {
+            text: {
+                text: 'REF'
+            }
+        },
+        position: {
+            offset: 15
+        }
+    });
+
+    return defaultLink;
+};
+
 /**
  * Creates a new link for the given source and target elements. The new link connects two ports:
  * sourcePort and targetPort
@@ -48,64 +69,44 @@ export const createLink = function createLink(sourceId, sourcePort, targetId, ta
      * 
      * Tutorial: https://resources.jointjs.com/tutorial/link-tools
      */
-    var link = new dia.Link({
-        attrs: { '.marker-target': { d: 'M 10 0 L 0 5 L 10 10 z' } },
-        router: { name: 'manhattan' },
-        connector: { name: 'rounded' },
-        source: {
+    var link = createDefaultLink()
+        .router({ name: 'manhattan' })
+        .connector({ name: 'rounded' })
+        .source({
             id: sourceId,
             port: sourcePort
-        },
-        target: {
+        })
+        .target({
             id: targetId,
             port: targetPort
-        },
-    });
-
-    link.appendLabel({
-        attrs: {
-            text: {
-                text: labelText || 'REF'
+        })
+        .appendLabel({
+            attrs: {
+                text: {
+                    text: labelText || 'REF'
+                },
+                line: {
+                    strokeWidth: 2,
+                }
             },
-            line: {
-                strokeWidth: 2,
+            position: {
+                offset: 15
             }
-        },
-        position: {
-            offset: 15
-        }
-    });
+        });
 
     if (cardinalityLabel != null) link.appendLabel(cardinalityLabel);
 
     return link;
 };
 
-export const createPaper = function createPaper(paperDivElement, graph) {
-    const defaultLink = new dia.Link({
-        attrs: { '.marker-target': { d: 'M 10 0 L 0 5 L 10 10 z' } },
-        router: { name: 'manhattan' },
-        connector: { name: 'rounded' },
-    });
-
-    defaultLink.appendLabel({
-        attrs: {
-            text: {
-                text: 'REF'
-            }
-        },
-        position: {
-            offset: 15
-        }
-    });
-
-    var infoButton = new linkTools.Button({
+const createInfoButton = function createInfoButton() {
+    return new linkTools.Button({
         markup: [{
             tagName: 'circle',
             selector: 'button',
             attributes: {
                 'r': 11,
-                'fill': '#4682b4',
+                'fill': '#0099ee',
                 'cursor': 'pointer'
             }
         }, {
@@ -121,27 +122,22 @@ export const createPaper = function createPaper(paperDivElement, graph) {
         }],
         distance: -60,
         offset: 0,
-        action: function(evt) {
-            console.log(evt);
+        action: function (evt) {
             console.log('View id: ' + this.id + '\n' + 'Model id: ' + this.model.id);
         }
     });
-    
-    var toolsView = new dia.ToolsView({
-        tools: [infoButton]
-    });
+};
 
-    return new dia.Paper({
+export const createPaper = function createPaper(paperDivElement, graph) {
+    var Paper = new dia.Paper({
         el: paperDivElement,
         width: '100%',
         height: 800,
         gridSize: 1,
         model: graph,
         cellViewNamespace: shapes,
-        defaultLink: defaultLink,
-        validateConnection: function (cellViewS, magnetS, cellViewT, magnetT, end, linkView) {
-            // linkView.addTools(toolsView);
-            
+        defaultLink: createDefaultLink(),
+        validateConnection:  (cellViewS, magnetS, cellViewT, magnetT, end, linkView) => {
             // Prevent linking from input ports.
             // if (magnetS && magnetS.getAttribute('port-group') === 'in') return false;
             // Prevent linking from output ports to input ports within one element.
@@ -152,6 +148,44 @@ export const createPaper = function createPaper(paperDivElement, graph) {
         snapLinks: { radius: 75 },
         markAvailable: true
     });
+
+    var toolsView = new dia.ToolsView({
+        tools: [createInfoButton()]
+    });
+
+    function zoomOnMousewheel(delta) {
+        if(Paper == null) return;
+
+        const scale = Paper.scale();
+        const newScaleX = scale.sx + (delta * 0.01);
+        const newScaleY = scale.sy + (delta * 0.01);
+        if (newScaleX >= 0.2 && newScaleX <= 2) Paper.scale(newScaleX, newScaleY);
+    }
+
+    Paper.on({
+        'link:pointerup': (linkView) => {
+            linkView.addTools(toolsView);
+        },
+        'link:mouseenter': (linkView) => {
+            linkView.showTools();
+        },
+        'link:mouseleave': (linkView) => {
+            linkView.hideTools();
+        },
+        'blank:mousewheel': (event, x, y, delta) => {
+            event.preventDefault();
+            zoomOnMousewheel(delta);
+        },
+        'cell:mousewheel': (_, event, x, y, delta) => {
+            event.preventDefault();
+            zoomOnMousewheel(delta);
+        },
+        'link:contextmenu': (linkView, evt, x, y) => {
+            // console.log(linkView);
+        },
+    });
+
+    return Paper;
 };
 
 export const createCoupled = function createCoupled(options) {
@@ -193,7 +227,7 @@ export const createSimpleRow = function createSimpleRow(options) {
 };
 
 
-export const createExampleDiagrams = function (graph, paper) {
+export const createDummyDiagrams = function (graph) {
     var c1 = createCoupled({ text: 'Customer', x: 50, y: 15, width: 400, height: 170 });
 
     var t1 = createTitleRow({
