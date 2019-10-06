@@ -21,21 +21,23 @@ import {
     faGripHorizontal,
     faExpand,
     faArrowsAltH,
-    faPrint
-
+    faPrint, 
+    faCaretRight
 } from '@fortawesome/free-solid-svg-icons';
 
 import {
     faFile,
     faSave,
     faFilePdf, 
-    faImage
+    faImage,
+    faCaretSquareRight
 } from '@fortawesome/free-regular-svg-icons';
 
 
 library.add(faBars, faBorderStyle, faCheck, faFlag, faInfoCircle, faExclamationTriangle,
     faTrash, faSearchPlus, faSearchMinus, faFolder, faGripHorizontal, faExpand,
-    faArrowsAltH, faFile, faSave, faPrint, faFilePdf, faImage);
+    faArrowsAltH, faFile, faSave, faPrint, faFilePdf, faImage, faCaretRight, 
+    faCaretSquareRight);
 
 
 // automatically find any <i> tags in the page and replace those with <svg> elements

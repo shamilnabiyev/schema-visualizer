@@ -7,6 +7,8 @@ import './fontAwesomeCustom.js';
 /* Import the custom classes */
 import generatetCells from "./jointjs-helper/DiagramGenerator";
 import { addInfoButton, createPaper, createDummyDiagrams } from './jointjs-helper/JointJsHelper';
+import SimpleRow from './schema-diagram/simple-row/SimpleRow';
+import ObjectRow from './schema-diagram/object-row/ObjectRow';
 // import './diagram/HtmlElement/HtmlElement';
 /* Import the styles */
 import 'typeface-nunito';
@@ -19,6 +21,9 @@ $(window).on("load", () => {
     $('#loading-icon').remove();
     $('#wrapper').css("visibility", "initial");
 });
+
+
+console.log(shapes);
 
 var graph = new dia.Graph();
 

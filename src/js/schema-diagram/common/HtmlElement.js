@@ -3,7 +3,9 @@ import $ from 'jquery';
 import {
     bind as _bind,
     bindAll as _bindAll,
-    template as _template
+    template as _template,
+    isUndefined as _isUndefined,
+    isNull as _isNull
 } from 'lodash';
 import { dia, shapes, util } from 'jointjs';
 
@@ -41,10 +43,7 @@ html.ElementView = dia.ElementView.extend({
             /* Show/hide the clicked row */
         });
 
-        const customAttrs = this.model.get("customAttrs");
-        for (var a in customAttrs) {
-            this.$box.find('div.' + a + '> span').text(customAttrs[a]);
-        }
+        this.appendValuesToTemplate();
 
         this.model.on('change', this.updateBox, this);
         this.model.on('remove', this.removeBox, this);
@@ -54,6 +53,16 @@ html.ElementView = dia.ElementView.extend({
     templateOnUpdate: function () {
         console.log('templateOnUpdate fired!');
         this.render();
+    },
+
+    appendValuesToTemplate: function name() {
+        const customAttrs = this.model.get("customAttrs");
+        for (var a in customAttrs) {
+            this.$box.find('div.' + a + '> span').text(customAttrs[a]);
+        }
+
+        const isObjectRow = this.model.get("isObjectRow");
+        if(_isUndefined(isObjectRow) || !isObjectRow) this.$box.find(".row-expander").remove();
     },
 
     render: function () {

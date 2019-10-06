@@ -354,6 +354,7 @@ export const createDummyDiagrams = function (graph) {
     var sr24 = new html.Element({
         template: simpleRowTemplate,
         size: { width: 400, height: 35 },
+        isObjectRow: true,
         customAttrs: {
             field_name: 'items',
             field_constraints: 'REF',
