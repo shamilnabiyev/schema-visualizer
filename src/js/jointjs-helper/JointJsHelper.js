@@ -1,7 +1,10 @@
 import { dia, shapes, linkTools, util } from 'jointjs';
 import { isUndefined, isNull } from 'lodash';
 import html from '../schema-diagram/common/HtmlElement';
+import SimpleRow from '../schema-diagram/simple-row/SimpleRow';
+import ObjectRow from "../schema-diagram/object-row/ObjectRow";
 import simpleRowTemplate from "../schema-diagram/simple-row/SimpleRow.html";
+import ObjectRowTemplate from "../schema-diagram/object-row/ObjectRow.html";
 import diagramTitleTemplate from "../schema-diagram/diagram-title/DiagramTitle.html";
 
 const getPosition = (options) => {
@@ -215,7 +218,7 @@ export const createTitleRow = function createTitleRow(options) {
 };
 
 export const createSimpleRow = function createSimpleRow(options) {
-    return new html.Element({
+    return new SimpleRow.Element({
         template: simpleRowTemplate,
         customAttrs: {
             field_name: options.field_name,
@@ -243,7 +246,7 @@ export const createDummyDiagrams = function (graph) {
 
     // console.log(t1.get('id'));
 
-    var sr1 = new html.Element({
+    var sr1 = new SimpleRow.Element({
         template: simpleRowTemplate,
         customAttrs: {
             field_name: 'id',
@@ -257,7 +260,7 @@ export const createDummyDiagrams = function (graph) {
         ports: PORT_OPTIONS
     });
 
-    var sr2 = new html.Element({
+    var sr2 = new SimpleRow.Element({
         template: simpleRowTemplate,
         size: { width: 400, height: 36 },
         customAttrs: {
@@ -271,7 +274,7 @@ export const createDummyDiagrams = function (graph) {
         ports: PORT_OPTIONS
     });
 
-    var sr3 = new html.Element({
+    var sr3 = new SimpleRow.Element({
         template: simpleRowTemplate,
         size: { width: 400, height: 36 },
         customAttrs: {
@@ -300,7 +303,7 @@ export const createDummyDiagrams = function (graph) {
         }
     });
 
-    var t2 = new html.Element({
+    var t2 = new SimpleRow.Element({
         template: diagramTitleTemplate,
         customAttrs: {
             entity_title: "Order"
@@ -309,7 +312,7 @@ export const createDummyDiagrams = function (graph) {
         size: { width: 400, height: 35 }
     });
 
-    var sr21 = new html.Element({
+    var sr21 = new SimpleRow.Element({
         template: simpleRowTemplate,
         size: { width: 400, height: 35 },
         customAttrs: {
@@ -323,7 +326,7 @@ export const createDummyDiagrams = function (graph) {
         ports: PORT_OPTIONS
     });
 
-    var sr22 = new html.Element({
+    var sr22 = new SimpleRow.Element({
         template: simpleRowTemplate,
         size: { width: 400, height: 35 },
         customAttrs: {
@@ -337,7 +340,7 @@ export const createDummyDiagrams = function (graph) {
         ports: PORT_OPTIONS
     });
 
-    var sr23 = new html.Element({
+    var sr23 = new SimpleRow.Element({
         template: simpleRowTemplate,
         size: { width: 400, height: 35 },
         customAttrs: {
@@ -351,8 +354,8 @@ export const createDummyDiagrams = function (graph) {
         ports: PORT_OPTIONS
     });
 
-    var sr24 = new html.Element({
-        template: simpleRowTemplate,
+    var sr24 = new ObjectRow.Element({
+        template: ObjectRowTemplate,
         size: { width: 400, height: 35 },
         isObjectRow: true,
         customAttrs: {
@@ -379,7 +382,7 @@ export const createDummyDiagrams = function (graph) {
 
     // console.log(t3.get('id'));
 
-    var sr31 = new html.Element({
+    var sr31 = new SimpleRow.Element({
         template: simpleRowTemplate,
         customAttrs: {
             field_name: 'id',
@@ -393,7 +396,7 @@ export const createDummyDiagrams = function (graph) {
         ports: PORT_OPTIONS
     });
 
-    var sr32 = new html.Element({
+    var sr32 = new SimpleRow.Element({
         template: simpleRowTemplate,
         size: { width: 400, height: 35 },
         customAttrs: {
@@ -407,7 +410,7 @@ export const createDummyDiagrams = function (graph) {
         ports: PORT_OPTIONS
     });
 
-    var sr33 = new html.Element({
+    var sr33 = new SimpleRow.Element({
         template: simpleRowTemplate,
         size: { width: 400, height: 35 },
         customAttrs: {
@@ -421,7 +424,7 @@ export const createDummyDiagrams = function (graph) {
         ports: PORT_OPTIONS
     });
 
-    var sr34 = new html.Element({
+    var sr34 = new SimpleRow.Element({
         template: simpleRowTemplate,
         size: { width: 400, height: 35 },
         customAttrs: {

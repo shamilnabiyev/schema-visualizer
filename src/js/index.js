@@ -23,7 +23,7 @@ $(window).on("load", () => {
 });
 
 
-console.log(shapes);
+// console.log('shapes.html', shapes.html);
 
 var graph = new dia.Graph();
 

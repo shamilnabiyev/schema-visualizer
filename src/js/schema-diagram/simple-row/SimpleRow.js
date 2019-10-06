@@ -64,9 +64,6 @@ SimpleRow.ElementView = dia.ElementView.extend({
         for (var a in customAttrs) {
             this.$box.find('div.' + a + '> span').text(customAttrs[a]);
         }
-
-        const isObjectRow = this.model.get("isObjectRow");
-        if (_isUndefined(isObjectRow) || !isObjectRow) this.$box.find(".row-expander").remove();
     },
 
     render: function () {
