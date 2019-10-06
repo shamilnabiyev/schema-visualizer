@@ -30,25 +30,25 @@ const props = schema.properties || {};
 const requiredProps = schema.required || [];
 const propKeys = Object.keys(props);
 
-let diagramTitle = "Book";
+const diagramTitle = "Book";
 
 const diagramRoot = createCoupled({ text: diagramTitle, x: X_START, y: Y_START, width: WIDTH, height: (HEIGHT * (propKeys.length + 1)) });
 const titleRow = createTitleRow({ title: diagramTitle, x: X_START, y: Y_START, width: WIDTH, height: HEIGHT });
 
-let cells = { root: null, child: [] };
-cells.root = diagramRoot;
-cells.child.push(titleRow);
+const cells = { root: diagramRoot, child: [titleRow] };
 
-const simpleRows = map(propKeys, (value, index) => createSimpleRow({
+const simpleRow = (value, index) => createSimpleRow({
     field_name: value,
     field_constraints: (includes(requiredProps, value)) ? REQ_FRAG : OPT_FLAG,
     field_date_type: props[value][TYPE] || NULL_TYPE,
     width: WIDTH, height: HEIGHT,
     x: X_START,
     y: Y_START + ((index + 1) * HEIGHT_OFFSET),
-}));
+});
 
-cells.child = concat(cells.child, simpleRows);
+const simpleRowList = map(propKeys, (value, index) => simpleRow(value, index));
+
+cells.child = concat(cells.child, simpleRowList);
 
 forEach(cells.child, (item) => { cells.root.embed(item); });
 

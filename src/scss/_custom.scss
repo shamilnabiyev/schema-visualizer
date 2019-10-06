@@ -1,11 +1,4 @@
 .vertical-divider {
-  background: #aaaaaa;
-  width: 1px;
-  content: "";
-  display: block;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  right: 0;
-  min-height: 10px;
+  display: inline;
+  border-right: 1px solid $gray-900;
 }
