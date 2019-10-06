@@ -146,6 +146,7 @@ export const createPaper = function createPaper(paperDivElement, graph) {
         markAvailable: true
     });
 
+    var highlighted = false;
     Paper.on({
         'blank:mousewheel': (event, x, y, delta) => {
             event.preventDefault();
@@ -165,6 +166,17 @@ export const createPaper = function createPaper(paperDivElement, graph) {
         'link:mouseleave': (linkView) => {
             linkView.hideTools();
         },
+        'cell:pointerclick': (cellView) => {
+            if (!(cellView instanceof dia.LinkView)) {
+                if (highlighted) {
+                    cellView.unhighlight();
+                    highlighted = false;
+                } else {
+                    cellView.highlight();
+                    highlighted = true;
+                }
+            }
+        }
     });
 
     return Paper;
@@ -220,13 +232,13 @@ export const createSimpleRow = function createSimpleRow(options) {
 
 
 export const createDummyDiagrams = function (graph) {
-    var c1 = createCoupled({ text: 'Customer', x: 50, y: 15, width: 400, height: 170 });
+    var c1 = createCoupled({ text: 'Customer', x: 50, y: 15, width: 400, height: 140 });
 
     var t1 = createTitleRow({
         title: 'Customer',
         template: diagramTitleTemplate,
         x: 50, y: 15,
-        width: 400, height: 36
+        width: 400, height: 35
     });
 
     // console.log(t1.get('id'));
@@ -282,7 +294,7 @@ export const createDummyDiagrams = function (graph) {
     var c2 = new shapes.devs.Coupled({
         attrs: { text: { text: 'Order' } },
         position: { x: 700, y: 15 },
-        size: { width: 400, height: 195 },
+        size: { width: 400, height: 175 },
         attrs: {
             rect: { stroke: '#ffffff', 'stroke-width': 1 }
         }

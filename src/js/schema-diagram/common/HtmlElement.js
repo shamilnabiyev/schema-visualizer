@@ -43,7 +43,7 @@ html.ElementView = dia.ElementView.extend({
 
         const customAttrs = this.model.get("customAttrs");
         for (var a in customAttrs) {
-            this.$box.find('div.' + a).text(customAttrs[a]);
+            this.$box.find('div.' + a + '> span').text(customAttrs[a]);
         }
 
         this.model.on('change', this.updateBox, this);
