@@ -54,6 +54,13 @@ graph.addCells(generatetCells.child);
 
 generatetCells.root.toFront();
 
+
+/**
+ * An example showing how to collapse/expand elements in jointjs
+ * 
+ * URL: https://jsfiddle.net/vsd21my5/5/
+ */
+
 $("#zoom-in-btn").on('click', () => {
     const scale = paper.scale();
     const newScaleX = scale.sx + 0.05;
