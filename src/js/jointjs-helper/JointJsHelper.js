@@ -221,7 +221,7 @@ export const createTitleRow = function createTitleRow(options) {
 
 export const createSimpleRow = function createSimpleRow(options) {
     return new SimpleRow.Element({
-        template: simpleRowTemplate,
+        
         customAttrs: {
             field_name: options.field_name,
             field_constraints: options.field_constraints || 'ID, req, unq, idx',
@@ -249,7 +249,7 @@ export const createDummyDiagrams = function (graph) {
     // console.log(t1.get('id'));
 
     var sr1 = new SimpleRow.Element({
-        template: simpleRowTemplate,
+        
         customAttrs: {
             field_name: 'id',
             field_constraints: 'ID, req, unq, idx',
@@ -263,7 +263,7 @@ export const createDummyDiagrams = function (graph) {
     });
 
     var sr2 = new SimpleRow.Element({
-        template: simpleRowTemplate,
+        
         size: { width: 400, height: 36 },
         customAttrs: {
             field_name: 'password',
@@ -277,7 +277,7 @@ export const createDummyDiagrams = function (graph) {
     });
 
     var sr3 = new SimpleRow.Element({
-        template: simpleRowTemplate,
+        
         size: { width: 400, height: 36 },
         customAttrs: {
             field_name: 'email',
@@ -305,17 +305,10 @@ export const createDummyDiagrams = function (graph) {
         }
     });
 
-    var t2 = new SimpleRow.Element({
-        template: diagramTitleTemplate,
-        customAttrs: {
-            entity_title: "Order"
-        },
-        position: { x: 700, y: 15 },
-        size: { width: 400, height: 35 }
-    });
+    var t2 =  createTitleRow({ title: 'Order', template: diagramTitleTemplate, x: 700, y: 15, width: 400, height: 35 });
 
     var sr21 = new SimpleRow.Element({
-        template: simpleRowTemplate,
+        
         size: { width: 400, height: 35 },
         customAttrs: {
             field_name: 'id',
@@ -329,7 +322,7 @@ export const createDummyDiagrams = function (graph) {
     });
 
     var sr22 = new SimpleRow.Element({
-        template: simpleRowTemplate,
+        
         size: { width: 400, height: 35 },
         customAttrs: {
             field_name: 'created_on',
@@ -343,7 +336,7 @@ export const createDummyDiagrams = function (graph) {
     });
 
     var sr23 = new SimpleRow.Element({
-        template: simpleRowTemplate,
+        
         size: { width: 400, height: 35 },
         customAttrs: {
             field_name: 'user_id',
@@ -357,7 +350,7 @@ export const createDummyDiagrams = function (graph) {
     });
 
     var sr24 = new ObjectRow.Element({
-        template: ObjectRowTemplate,
+        
         size: { width: 400, height: 35 },
         isObjectRow: true,
         customAttrs: {
@@ -385,7 +378,7 @@ export const createDummyDiagrams = function (graph) {
     // console.log(t3.get('id'));
 
     var sr31 = new SimpleRow.Element({
-        template: simpleRowTemplate,
+        
         customAttrs: {
             field_name: 'id',
             field_constraints: 'ID, req, unq, idx',
@@ -399,7 +392,7 @@ export const createDummyDiagrams = function (graph) {
     });
 
     var sr32 = new SimpleRow.Element({
-        template: simpleRowTemplate,
+        
         size: { width: 400, height: 35 },
         customAttrs: {
             field_name: 'name',
@@ -413,7 +406,7 @@ export const createDummyDiagrams = function (graph) {
     });
 
     var sr33 = new SimpleRow.Element({
-        template: simpleRowTemplate,
+        
         size: { width: 400, height: 35 },
         customAttrs: {
             field_name: 'description',
@@ -427,7 +420,7 @@ export const createDummyDiagrams = function (graph) {
     });
 
     var sr34 = new SimpleRow.Element({
-        template: simpleRowTemplate,
+        
         size: { width: 400, height: 35 },
         customAttrs: {
             field_name: 'price',

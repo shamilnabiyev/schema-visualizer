@@ -7,6 +7,7 @@ import {
     isNull as _isNull
 } from 'lodash';
 import { dia, shapes, util } from 'jointjs';
+import SimpleRowTemplate from './SimpleRow.html';
 
 /**
  * Use the new custom html element tutorial
@@ -33,19 +34,9 @@ SimpleRow.ElementView = dia.ElementView.extend({
         _bindAll(this, 'updateBox');
         dia.ElementView.prototype.initialize.apply(this, arguments);
 
-        this.$box = $(_template(this.model.get("template"))());
-        this.$box.find('.delete').on('click', _bind(this.model.remove, this.model));
 
-        this.$box.find('.flex-container').on('mousedown', function (evt) {
-            evt.stopPropagation();
-        });
-
-        this.$box.find('.flex-container').on('click', function (evt) {
-            evt.stopPropagation();
-
-            /* Show/hide the clicked row */
-        });
-
+        this.initTemplate();
+        this.initEvents();
         this.appendValuesToTemplate();
 
         this.model.on('change', this.updateBox, this);
@@ -53,6 +44,24 @@ SimpleRow.ElementView = dia.ElementView.extend({
 
         this.listenTo(this.model, 'change:template', this.templateOnUpdate);
     },
+
+    initTemplate: function () {
+        this.$box = $(_template(SimpleRowTemplate)());
+    },
+
+    initEvents: function () {
+        const deleteButton = this.$box.find('.delete');
+        if (!_isUndefined(deleteButton) && !_isNull(deleteButton)) {
+            deleteButton.on('click', _bind(this.model.remove, this.model));
+        }
+
+        const flexContainer = this.$box.find('.flex-container');
+        if (!_isUndefined(flexContainer) && !_isNull(flexContainer)) {
+            flexContainer.on('mousedown', (evt) => { evt.stopPropagation(); });
+            flexContainer.on('click', (evt) => { evt.stopPropagation(); });
+        }
+    },
+
     templateOnUpdate: function () {
         console.log('templateOnUpdate fired!');
         this.render();

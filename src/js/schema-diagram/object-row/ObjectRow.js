@@ -1,4 +1,4 @@
-import SimpleRow from '../simple-row/SimpleRow';
+import $ from 'jquery';
 import {
     bind as _bind,
     bindAll as _bindAll,
@@ -7,6 +7,8 @@ import {
     isNull as _isNull
 } from 'lodash';
 import { shapes, util } from 'jointjs';
+import SimpleRow from '../simple-row/SimpleRow';
+import ObjectRowTemplate from './ObjectRow.html';
 
 if (_isUndefined(shapes.html)) {
     throw Error("joint.shapes.html is not undefined");
@@ -21,6 +23,10 @@ ObjectRow.Element = SimpleRow.Element.extend({
 });
 
 ObjectRow.ElementView = SimpleRow.ElementView.extend({
+    initTemplate: function () {
+        this.$box = $(_template(ObjectRowTemplate)());    
+    },
+
     appendValuesToTemplate: function () {
         const customAttrs = this.model.get("customAttrs");
         for (var a in customAttrs) {
