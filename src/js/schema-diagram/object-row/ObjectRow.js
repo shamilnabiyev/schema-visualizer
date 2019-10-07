@@ -1,5 +1,3 @@
-'use strict';
-import $ from 'jquery';
 import SimpleRow from '../simple-row/SimpleRow';
 import {
     bind as _bind,
@@ -8,7 +6,7 @@ import {
     isUndefined as _isUndefined,
     isNull as _isNull
 } from 'lodash';
-import { dia, shapes, util } from 'jointjs';
+import { shapes, util } from 'jointjs';
 
 if (_isUndefined(shapes.html)) {
     throw Error("joint.shapes.html is not undefined");

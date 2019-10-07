@@ -40,6 +40,10 @@
   border: 1px solid #00598a;
 }
 
+.row-expander {
+  cursor: pointer;
+}
+
 .html-element .flex-container {
   /* Enable interacting with inputs only. */
   pointer-events: auto;

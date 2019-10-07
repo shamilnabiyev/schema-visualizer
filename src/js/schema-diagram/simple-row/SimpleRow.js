@@ -1,4 +1,3 @@
-// @ts-nocheck
 import $ from 'jquery';
 import {
     bind as _bind,
@@ -15,7 +14,7 @@ import { dia, shapes, util } from 'jointjs';
  * URL: https://github.com/clientIO/joint/blob/master/demo/shapes/src/html.js
  */
 
-if(_isUndefined(shapes.html)) {
+if (_isUndefined(shapes.html)) {
     shapes.html = {};
 }
 

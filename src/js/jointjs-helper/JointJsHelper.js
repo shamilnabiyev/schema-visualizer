@@ -171,6 +171,8 @@ export const createPaper = function createPaper(paperDivElement, graph) {
         },
         'cell:pointerclick': (cellView) => {
             if (!(cellView instanceof dia.LinkView)) {
+                return;
+                /* highlighting disabled */
                 if (highlighted) {
                     cellView.unhighlight();
                     highlighted = false;
