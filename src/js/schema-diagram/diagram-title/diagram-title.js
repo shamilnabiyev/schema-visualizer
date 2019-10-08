@@ -1,6 +1,6 @@
 import { isUndefined as _isUndefined } from 'lodash';
 import { shapes, util } from 'jointjs';
-import SimpleRow from '../simple-row/simple-row';
+import CustomHtml from '../common/html-element';
 import DiagramTitleTemplate from './diagram-title.html';
 
 if (_isUndefined(shapes.html)) {
@@ -9,13 +9,13 @@ if (_isUndefined(shapes.html)) {
 
 const DiagramTitle = shapes.html.DiagramTitle = {};
 
-DiagramTitle.Element = SimpleRow.Element.extend({
+DiagramTitle.Element = CustomHtml.Element.extend({
     defaults: util.defaultsDeep({
         type: 'html.DiagramTitle.Element',
-    }, SimpleRow.Element.prototype.defaults)
+    }, CustomHtml.Element.prototype.defaults)
 });
 
-DiagramTitle.ElementView = SimpleRow.ElementView.extend({
+DiagramTitle.ElementView = CustomHtml.ElementView.extend({
     htmlTemplate: DiagramTitleTemplate,
 
     appendValuesToTemplate: function () {
