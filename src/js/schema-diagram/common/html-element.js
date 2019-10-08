@@ -7,6 +7,7 @@ import {
     isNull as _isNull
 } from 'lodash';
 import { dia, shapes, util } from 'jointjs';
+import {text} from "@fortawesome/fontawesome-svg-core";
 
 if (_isUndefined(shapes.html)) {
     shapes.html = {};
@@ -43,6 +44,7 @@ CustomHtml.ElementView = dia.ElementView.extend({
         }
 
         this.appendValuesToTemplate();
+        this.addAdditionalEvents();
 
         this.model.on('change', this.updateBox, this);
         this.model.on('remove', this.removeBox, this);
@@ -50,15 +52,21 @@ CustomHtml.ElementView = dia.ElementView.extend({
         this.listenTo(this.model, 'change:template', this.templateOnUpdate);
     },
 
+    addAdditionalEvents: function() {
+
+    },
+
     templateOnUpdate: function () {
         console.log('templateOnUpdate fired!');
-        this.render();
+        // this.render();
     },
 
     appendValuesToTemplate: function name() {
         const customAttrs = this.model.get("customAttrs");
+        let textValue = "";
         for (let a in customAttrs) {
-            this.$box.find('div.' + a + '> span').text(customAttrs[a]);
+            textValue = (!_isUndefined(customAttrs[a]) && !_isNull(customAttrs[a])) ? customAttrs[a] : "";
+            this.$box.find('div.' + a + '> span').text(textValue);
         }
     },
 

@@ -38,9 +38,9 @@ export const PORT_OPTIONS = {
  */
 const createDefaultLink = function createDefaultLink() {
     const defaultLink = new dia.Link({
-        attrs: {'.marker-target': {d: 'M 10 0 L 0 5 L 10 10 z'}},
-        // router: { name: 'manhattan' },
+        router: {name: 'manhattan'},
         connector: {name: 'rounded'},
+        attrs: {'.marker-target': {d: 'M 10 0 L 0 5 L 10 10 z'}},
     });
 
     defaultLink.appendLabel({
@@ -143,16 +143,18 @@ function zoomOnMousewheel(paper, delta) {
 
 export const createPaper = function createPaper(paperDivElement, graph) {
     const paper = new dia.Paper({
-        el: paperDivElement,
+        gridSize: 1,
         width: '100%',
         height: '100%',
-        gridSize: 1,
+        markAvailable: true,
         model: graph,
+        el: paperDivElement,
         cellViewNamespace: shapes,
+        snapLinks: {radius: 75},
+        defaultAnchor: {name: 'center'},
+        defaultConnectionPoint: {name: 'anchor'},
         defaultLink: createDefaultLink(),
         validateConnection: validateConnection,
-        snapLinks: {radius: 75},
-        markAvailable: true
     });
 
     let highlighted = false;
@@ -175,9 +177,13 @@ export const createPaper = function createPaper(paperDivElement, graph) {
         'link:mouseleave': (linkView) => {
             linkView.hideTools();
         },
+        'element:collapse': (elementView, evt) => {
+            evt.stopPropagation();
+            console.log('element:collapse');
+        },
         'cell:pointerclick': (cellView) => {
             if (!(cellView instanceof dia.LinkView)) {
-                return;
+                // return;
                 /* highlighting disabled */
                 if (highlighted) {
                     cellView.unhighlight();
@@ -205,7 +211,10 @@ export const addInfoButton = function addInfoButton(link, paper) {
 
 export const createCoupled = function createCoupled(options) {
     return new shapes.devs.Coupled({
-        attrs: {text: {text: options.text}, rect: {stroke: '#ffffff', 'stroke-width': 1}},
+        attrs: {
+            text: {text: options.text},
+            rect: {stroke: '#ffffff', 'stroke-width': 1}
+        },
         position: getPosition(options),
         size: getSize(options),
     });
@@ -223,7 +232,6 @@ export const createTitleRow = function createTitleRow(options) {
 
 export const createSimpleRow = function createSimpleRow(options) {
     return new SimpleRow.Element({
-
         customAttrs: {
             field_name: options.field_name,
             field_constraints: options.field_constraints || 'ID, req, unq, idx',
@@ -263,7 +271,6 @@ export const createDummyDiagrams = function (graph) {
     });
 
     const sr2 = new SimpleRow.Element({
-
         size: {width: 400, height: 36},
         customAttrs: {
             field_name: 'password',
@@ -277,7 +284,6 @@ export const createDummyDiagrams = function (graph) {
     });
 
     const sr3 = new SimpleRow.Element({
-
         size: {width: 400, height: 36},
         customAttrs: {
             field_name: 'email',
@@ -308,7 +314,6 @@ export const createDummyDiagrams = function (graph) {
     const t2 = createTitleRow({title: 'Order', template: diagramTitleTemplate, x: 700, y: 15, width: 400, height: 35});
 
     const sr21 = new SimpleRow.Element({
-
         size: {width: 400, height: 35},
         customAttrs: {
             field_name: 'id',
@@ -322,7 +327,6 @@ export const createDummyDiagrams = function (graph) {
     });
 
     const sr22 = new SimpleRow.Element({
-
         size: {width: 400, height: 35},
         customAttrs: {
             field_name: 'created_on',
@@ -336,7 +340,6 @@ export const createDummyDiagrams = function (graph) {
     });
 
     const sr23 = new SimpleRow.Element({
-
         size: {width: 400, height: 35},
         customAttrs: {
             field_name: 'user_id',
@@ -350,7 +353,6 @@ export const createDummyDiagrams = function (graph) {
     });
 
     const sr24 = new ObjectRow.Element({
-
         size: {width: 400, height: 35},
         isObjectRow: true,
         customAttrs: {
@@ -378,7 +380,6 @@ export const createDummyDiagrams = function (graph) {
     // console.log(t3.get('id'));
 
     const sr31 = new SimpleRow.Element({
-
         customAttrs: {
             field_name: 'id',
             field_constraints: 'ID, req, unq, idx',
@@ -392,7 +393,6 @@ export const createDummyDiagrams = function (graph) {
     });
 
     const sr32 = new SimpleRow.Element({
-
         size: {width: 400, height: 35},
         customAttrs: {
             field_name: 'name',
@@ -406,7 +406,6 @@ export const createDummyDiagrams = function (graph) {
     });
 
     const sr33 = new SimpleRow.Element({
-
         size: {width: 400, height: 35},
         customAttrs: {
             field_name: 'description',
@@ -420,7 +419,6 @@ export const createDummyDiagrams = function (graph) {
     });
 
     const sr34 = new SimpleRow.Element({
-
         size: {width: 400, height: 35},
         customAttrs: {
             field_name: 'price',
@@ -447,7 +445,7 @@ export const createDummyDiagrams = function (graph) {
     c3.toFront();
 
     try {
-        const cardianlityLabel = {
+        const cardinalityLabel = {
             attrs: {
                 text: {
                     text: '1:1'
@@ -461,7 +459,7 @@ export const createDummyDiagrams = function (graph) {
                 offset: 20
             }
         };
-        createLink(sr23.id, "in", sr1.id, "out", "REF", cardianlityLabel).addTo(graph).reparent();
+        createLink(sr23.id, "in", sr1.id, "out", "REF", cardinalityLabel).addTo(graph).reparent();
 
         const cardinalityLabel2 = {
             attrs: {
