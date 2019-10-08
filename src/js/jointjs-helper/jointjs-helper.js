@@ -1,10 +1,8 @@
 import {dia, shapes, linkTools, util} from 'jointjs';
 import {isUndefined, isNull} from 'lodash';
-import html from '../schema-diagram/common/html-element';
 import SimpleRow from '../schema-diagram/simple-row/simple-row';
+import DiagramTitle from '../schema-diagram/diagram-title/diagram-title';
 import ObjectRow from "../schema-diagram/object-row/object-row";
-import simpleRowTemplate from "../schema-diagram/simple-row/simple-row.html";
-import ObjectRowTemplate from "../schema-diagram/object-row/object-row.html";
 import diagramTitleTemplate from "../schema-diagram/diagram-title/diagram-title.html";
 
 const getPosition = (options) => {
@@ -144,7 +142,7 @@ function zoomOnMousewheel(paper, delta) {
 }
 
 export const createPaper = function createPaper(paperDivElement, graph) {
-    const Paper = new dia.Paper({
+    const paper = new dia.Paper({
         el: paperDivElement,
         width: '100%',
         height: '100%',
@@ -158,14 +156,14 @@ export const createPaper = function createPaper(paperDivElement, graph) {
     });
 
     let highlighted = false;
-    Paper.on({
+    paper.on({
         'blank:mousewheel': (event, x, y, delta) => {
             event.preventDefault();
-            zoomOnMousewheel(Paper, delta);
+            zoomOnMousewheel(paper, delta);
         },
         'cell:mousewheel': (_, event, x, y, delta) => {
             event.preventDefault();
-            zoomOnMousewheel(Paper, delta);
+            zoomOnMousewheel(paper, delta);
         },
         'link:pointerup': (linkView) => {
             if (linkView.hasTools()) return;
@@ -192,7 +190,7 @@ export const createPaper = function createPaper(paperDivElement, graph) {
         }
     });
 
-    return Paper;
+    return paper;
 };
 
 export const addInfoButton = function addInfoButton(link, paper) {
@@ -214,8 +212,7 @@ export const createCoupled = function createCoupled(options) {
 };
 
 export const createTitleRow = function createTitleRow(options) {
-    return new html.Element({
-        template: diagramTitleTemplate,
+    return new DiagramTitle.Element({
         customAttrs: {
             entity_title: options.title
         },
@@ -250,8 +247,6 @@ export const createDummyDiagrams = function (graph) {
         x: 50, y: 15,
         width: 400, height: 35
     });
-
-    // console.log(t1.get('id'));
 
     const sr1 = new SimpleRow.Element({
 

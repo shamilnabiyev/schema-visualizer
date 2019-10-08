@@ -1,11 +1,4 @@
-import $ from 'jquery';
-import {
-    bind as _bind,
-    bindAll as _bindAll,
-    template as _template,
-    isUndefined as _isUndefined,
-    isNull as _isNull
-} from 'lodash';
+import { isUndefined as _isUndefined } from 'lodash';
 import { shapes, util } from 'jointjs';
 import SimpleRow from '../simple-row/simple-row';
 import ObjectRowTemplate from './object-row.html';
@@ -17,19 +10,17 @@ if (_isUndefined(shapes.html)) {
 const ObjectRow = shapes.html.ObjectRow = {};
 
 ObjectRow.Element = SimpleRow.Element.extend({
-    defaults: util.deepSupplement({
+    defaults: util.defaultsDeep({
         type: 'html.ObjectRow.Element',
     }, SimpleRow.Element.prototype.defaults)
 });
 
 ObjectRow.ElementView = SimpleRow.ElementView.extend({
-    initTemplate: function () {
-        this.$box = $(_template(ObjectRowTemplate)());    
-    },
+    htmlTemplate: ObjectRowTemplate,
 
     appendValuesToTemplate: function () {
         const customAttrs = this.model.get("customAttrs");
-        for (var a in customAttrs) {
+        for (let a in customAttrs) {
             this.$box.find('div.' + a + '> span').text(customAttrs[a]);
         }
     }

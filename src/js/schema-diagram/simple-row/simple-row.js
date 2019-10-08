@@ -21,7 +21,7 @@ if (_isUndefined(shapes.html)) {
 
 const SimpleRow = shapes.html.SimpleRow = {};
 SimpleRow.Element = shapes.devs.Model.extend({
-    defaults: util.deepSupplement({
+    defaults: util.defaultsDeep({
         type: 'html.SimpleRow.Element',
         attrs: {
             '.body': { stroke: '#ffffff' }
@@ -30,26 +30,13 @@ SimpleRow.Element = shapes.devs.Model.extend({
 });
 
 SimpleRow.ElementView = dia.ElementView.extend({
+    htmlTemplate: SimpleRowTemplate,
+
     initialize: function () {
         _bindAll(this, 'updateBox');
         dia.ElementView.prototype.initialize.apply(this, arguments);
 
-
-        this.initTemplate();
-        this.initEvents();
-        this.appendValuesToTemplate();
-
-        this.model.on('change', this.updateBox, this);
-        this.model.on('remove', this.removeBox, this);
-
-        this.listenTo(this.model, 'change:template', this.templateOnUpdate);
-    },
-
-    initTemplate: function () {
-        this.$box = $(_template(SimpleRowTemplate)());
-    },
-
-    initEvents: function () {
+        this.$box = $(_template(this.htmlTemplate)());
         const deleteButton = this.$box.find('.delete');
         if (!_isUndefined(deleteButton) && !_isNull(deleteButton)) {
             deleteButton.on('click', _bind(this.model.remove, this.model));
@@ -60,6 +47,13 @@ SimpleRow.ElementView = dia.ElementView.extend({
             flexContainer.on('mousedown', (evt) => { evt.stopPropagation(); });
             flexContainer.on('click', (evt) => { evt.stopPropagation(); });
         }
+
+        this.appendValuesToTemplate();
+
+        this.model.on('change', this.updateBox, this);
+        this.model.on('remove', this.removeBox, this);
+
+        this.listenTo(this.model, 'change:template', this.templateOnUpdate);
     },
 
     templateOnUpdate: function () {
@@ -69,7 +63,7 @@ SimpleRow.ElementView = dia.ElementView.extend({
 
     appendValuesToTemplate: function name() {
         const customAttrs = this.model.get("customAttrs");
-        for (var a in customAttrs) {
+        for (let a in customAttrs) {
             this.$box.find('div.' + a + '> span').text(customAttrs[a]);
         }
     },
