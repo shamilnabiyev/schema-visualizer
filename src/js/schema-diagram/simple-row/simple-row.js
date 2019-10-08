@@ -12,20 +12,11 @@ const SimpleRow = CustomHtml.SimpleRow = {};
 SimpleRow.Element = shapes.html.Element.extend({
     defaults: util.defaultsDeep({
         type: 'html.SimpleRow.Element',
-        attrs: {
-            '.body': { stroke: '#ffffff' }
-        }
-    }, shapes.devs.Model.prototype.defaults)
+    }, CustomHtml.Element.prototype.defaults)
 });
 
 SimpleRow.ElementView = CustomHtml.ElementView.extend({
     htmlTemplate: SimpleRowTemplate,
-
-    appendValuesToTemplate: function () {
-        const customAttrs = this.model.get("customAttrs");
-        for (let a in customAttrs) {
-            this.$box.find('div.' + a + '> span').text(customAttrs[a]);
-        }
-    }
 });
+
 export default SimpleRow;

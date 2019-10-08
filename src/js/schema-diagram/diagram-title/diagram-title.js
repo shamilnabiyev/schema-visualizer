@@ -17,13 +17,6 @@ DiagramTitle.Element = CustomHtml.Element.extend({
 
 DiagramTitle.ElementView = CustomHtml.ElementView.extend({
     htmlTemplate: DiagramTitleTemplate,
-
-    appendValuesToTemplate: function () {
-        const customAttrs = this.model.get("customAttrs");
-        for (let a in customAttrs) {
-            this.$box.find('div.' + a + '> span').text(customAttrs[a]);
-        }
-    }
 });
 
 export default DiagramTitle;

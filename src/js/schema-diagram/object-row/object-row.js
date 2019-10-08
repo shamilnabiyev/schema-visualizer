@@ -18,12 +18,6 @@ ObjectRow.Element = CustomHtml.Element.extend({
 ObjectRow.ElementView = CustomHtml.ElementView.extend({
     htmlTemplate: ObjectRowTemplate,
 
-    appendValuesToTemplate: function () {
-        const customAttrs = this.model.get("customAttrs");
-        for (let a in customAttrs) {
-            this.$box.find('div.' + a + '> span').text(customAttrs[a]);
-        }
-    }
 });
 
 export default ObjectRow;
