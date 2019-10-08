@@ -2,13 +2,13 @@
 import $ from 'jquery';
 import { dia, shapes } from 'jointjs';
 import 'bootstrap/dist/js/bootstrap.bundle';
-import './sb-admin-2.js';
-import './fontAwesomeCustom.js';
+import './ui-script.js';
+import './font-awesome-custom.js';
 /* Import the custom classes */
-import generatetCells from "./jointjs-helper/DiagramGenerator";
-import { addInfoButton, createPaper, createDummyDiagrams } from './jointjs-helper/JointJsHelper';
-import SimpleRow from './schema-diagram/simple-row/SimpleRow';
-import ObjectRow from './schema-diagram/object-row/ObjectRow';
+import generatetCells from "./jointjs-helper/diagram-generator";
+import { addInfoButton, createPaper, createDummyDiagrams } from './jointjs-helper/jointjs-helper';
+import SimpleRow from './schema-diagram/simple-row/simple-row';
+import ObjectRow from './schema-diagram/object-row/object-row';
 // import './diagram/HtmlElement/HtmlElement';
 /* Import the styles */
 import 'typeface-nunito';

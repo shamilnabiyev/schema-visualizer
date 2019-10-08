@@ -1,18 +1,18 @@
-import { dia, shapes, linkTools, util } from 'jointjs';
-import { isUndefined, isNull } from 'lodash';
-import html from '../schema-diagram/common/HtmlElement';
-import SimpleRow from '../schema-diagram/simple-row/SimpleRow';
-import ObjectRow from "../schema-diagram/object-row/ObjectRow";
-import simpleRowTemplate from "../schema-diagram/simple-row/SimpleRow.html";
-import ObjectRowTemplate from "../schema-diagram/object-row/ObjectRow.html";
-import diagramTitleTemplate from "../schema-diagram/diagram-title/DiagramTitle.html";
+import {dia, shapes, linkTools, util} from 'jointjs';
+import {isUndefined, isNull} from 'lodash';
+import html from '../schema-diagram/common/html-element';
+import SimpleRow from '../schema-diagram/simple-row/simple-row';
+import ObjectRow from "../schema-diagram/object-row/object-row";
+import simpleRowTemplate from "../schema-diagram/simple-row/simple-row.html";
+import ObjectRowTemplate from "../schema-diagram/object-row/object-row.html";
+import diagramTitleTemplate from "../schema-diagram/diagram-title/diagram-title.html";
 
 const getPosition = (options) => {
-    return { x: options.x, y: options.y };
+    return {x: options.x, y: options.y};
 };
 
 const getSize = (options) => {
-    return { width: options.width, height: options.height };
+    return {width: options.width, height: options.height};
 };
 
 export const PORT_OPTIONS = {
@@ -34,11 +34,15 @@ export const PORT_OPTIONS = {
     }
 };
 
+/**
+ *
+ * @returns {dia.Link}
+ */
 const createDefaultLink = function createDefaultLink() {
     const defaultLink = new dia.Link({
-        attrs: { '.marker-target': { d: 'M 10 0 L 0 5 L 10 10 z' } },
+        attrs: {'.marker-target': {d: 'M 10 0 L 0 5 L 10 10 z'}},
         // router: { name: 'manhattan' },
-        connector: { name: 'rounded' },
+        connector: {name: 'rounded'},
     });
 
     defaultLink.appendLabel({
@@ -58,18 +62,18 @@ const createDefaultLink = function createDefaultLink() {
 /**
  * Creates a new link for the given source and target elements. The new link connects two ports:
  * sourcePort and targetPort
- *  
- * @param {string} sourceId 
- * @param {string} sourcePort 
- * @param {string} targetId 
- * @param {string} targetPort 
- * @param {string} label 
- * @return {shapes.standard.Link} a new link
+ *
+ * @param {string} sourceId
+ * @param {string} sourcePort
+ * @param {string} targetId
+ * @param {string} targetPort
+ * @param {string} label
+ * @return {dia.Link} a new link
  */
 export const createLink = function createLink(sourceId, sourcePort, targetId, targetPort, labelText, cardinalityLabel) {
-    var link = createDefaultLink()
-        .router({ name: 'manhattan' })
-        .connector({ name: 'rounded' })
+    const link = createDefaultLink()
+        .router({name: 'manhattan'})
+        .connector({name: 'rounded'})
         .source({
             id: sourceId,
             port: sourcePort
@@ -84,6 +88,10 @@ export const createLink = function createLink(sourceId, sourcePort, targetId, ta
     return link;
 };
 
+/**
+ *
+ * @returns {linkTools.Button}
+ */
 const createInfoButton = function createInfoButton() {
     return new linkTools.Button({
         markup: [{
@@ -114,7 +122,7 @@ const createInfoButton = function createInfoButton() {
 };
 
 function validateConnection(cellViewS, magnetS, cellViewT, magnetT, end, linkView) {
-    if (!linkView.hasTools()) linkView.addTools(new dia.ToolsView({ tools: [createInfoButton()] }));
+    if (!linkView.hasTools()) linkView.addTools(new dia.ToolsView({tools: [createInfoButton()]}));
 
     // Prevent linking from input ports.
     // if (magnetS && magnetS.getAttribute('port-group') === 'in') return false;
@@ -136,7 +144,7 @@ function zoomOnMousewheel(paper, delta) {
 }
 
 export const createPaper = function createPaper(paperDivElement, graph) {
-    var Paper = new dia.Paper({
+    const Paper = new dia.Paper({
         el: paperDivElement,
         width: '100%',
         height: '100%',
@@ -145,11 +153,11 @@ export const createPaper = function createPaper(paperDivElement, graph) {
         cellViewNamespace: shapes,
         defaultLink: createDefaultLink(),
         validateConnection: validateConnection,
-        snapLinks: { radius: 75 },
+        snapLinks: {radius: 75},
         markAvailable: true
     });
 
-    var highlighted = false;
+    let highlighted = false;
     Paper.on({
         'blank:mousewheel': (event, x, y, delta) => {
             event.preventDefault();
@@ -161,7 +169,7 @@ export const createPaper = function createPaper(paperDivElement, graph) {
         },
         'link:pointerup': (linkView) => {
             if (linkView.hasTools()) return;
-            linkView.addTools(new dia.ToolsView({ tools: [createInfoButton()] }));
+            linkView.addTools(new dia.ToolsView({tools: [createInfoButton()]}));
         },
         'link:mouseenter': (linkView) => {
             linkView.showTools();
@@ -190,21 +198,18 @@ export const createPaper = function createPaper(paperDivElement, graph) {
 export const addInfoButton = function addInfoButton(link, paper) {
     if (paper == null) return;
 
-    var linkView = link.findView(paper);
+    const linkView = link.findView(paper);
     if (linkView == null) return;
 
-    linkView.addTools(new dia.ToolsView({ tools: [createInfoButton()] }));
+    linkView.addTools(new dia.ToolsView({tools: [createInfoButton()]}));
     linkView.hideTools();
 };
 
 export const createCoupled = function createCoupled(options) {
     return new shapes.devs.Coupled({
-        attrs: { text: { text: options.text } },
+        attrs: {text: {text: options.text}, rect: {stroke: '#ffffff', 'stroke-width': 1}},
         position: getPosition(options),
         size: getSize(options),
-        attrs: {
-            rect: { stroke: '#ffffff', 'stroke-width': 1 }
-        }
     });
 };
 
@@ -221,14 +226,14 @@ export const createTitleRow = function createTitleRow(options) {
 
 export const createSimpleRow = function createSimpleRow(options) {
     return new SimpleRow.Element({
-        
+
         customAttrs: {
             field_name: options.field_name,
             field_constraints: options.field_constraints || 'ID, req, unq, idx',
             field_date_type: options.field_date_type || 'str'
         },
-        size: { width: options.width || 0, height: options.height || 0 },
-        position: { x: options.x || 0, y: options.y || 0 },
+        size: {width: options.width || 0, height: options.height || 0},
+        position: {x: options.x || 0, y: options.y || 0},
         inPorts: ['in'],
         outPorts: ['out'],
         ports: PORT_OPTIONS
@@ -237,9 +242,9 @@ export const createSimpleRow = function createSimpleRow(options) {
 
 
 export const createDummyDiagrams = function (graph) {
-    var c1 = createCoupled({ text: 'Customer', x: 50, y: 15, width: 400, height: 140 });
+    const c1 = createCoupled({text: 'Customer', x: 50, y: 15, width: 400, height: 140});
 
-    var t1 = createTitleRow({
+    const t1 = createTitleRow({
         title: 'Customer',
         template: diagramTitleTemplate,
         x: 50, y: 15,
@@ -248,43 +253,43 @@ export const createDummyDiagrams = function (graph) {
 
     // console.log(t1.get('id'));
 
-    var sr1 = new SimpleRow.Element({
-        
+    const sr1 = new SimpleRow.Element({
+
         customAttrs: {
             field_name: 'id',
             field_constraints: 'ID, req, unq, idx',
             field_date_type: 'str'
         },
-        size: { width: 400, height: 36 },
-        position: { x: 50, y: 50 },
+        size: {width: 400, height: 36},
+        position: {x: 50, y: 50},
         inPorts: ['in'],
         outPorts: ['out'],
         ports: PORT_OPTIONS
     });
 
-    var sr2 = new SimpleRow.Element({
-        
-        size: { width: 400, height: 36 },
+    const sr2 = new SimpleRow.Element({
+
+        size: {width: 400, height: 36},
         customAttrs: {
             field_name: 'password',
             field_constraints: 'req',
             field_date_type: 'str',
         },
-        position: { x: 50, y: 85 },
+        position: {x: 50, y: 85},
         inPorts: ['in'],
         outPorts: ['out'],
         ports: PORT_OPTIONS
     });
 
-    var sr3 = new SimpleRow.Element({
-        
-        size: { width: 400, height: 36 },
+    const sr3 = new SimpleRow.Element({
+
+        size: {width: 400, height: 36},
         customAttrs: {
             field_name: 'email',
             field_constraints: 'req, unq, idx',
             field_date_type: 'str',
         },
-        position: { x: 50, y: 120 },
+        position: {x: 50, y: 120},
         inPorts: ['in'],
         outPorts: ['out'],
         ports: PORT_OPTIONS
@@ -294,71 +299,71 @@ export const createDummyDiagrams = function (graph) {
     c1.embed(sr1);
     c1.embed(sr2);
     c1.embed(sr3);
-    c1.position({ x: 55, y: 255 });
+    c1.position({x: 55, y: 255});
 
-    var c2 = new shapes.devs.Coupled({
-        attrs: { text: { text: 'Order' } },
-        position: { x: 700, y: 15 },
-        size: { width: 400, height: 175 },
+    const c2 = new shapes.devs.Coupled({
         attrs: {
-            rect: { stroke: '#ffffff', 'stroke-width': 1 }
-        }
+            text: {text: 'Order'},
+            rect: {stroke: '#ffffff', 'stroke-width': 1}
+        },
+        position: {x: 700, y: 15},
+        size: {width: 400, height: 175},
     });
 
-    var t2 =  createTitleRow({ title: 'Order', template: diagramTitleTemplate, x: 700, y: 15, width: 400, height: 35 });
+    const t2 = createTitleRow({title: 'Order', template: diagramTitleTemplate, x: 700, y: 15, width: 400, height: 35});
 
-    var sr21 = new SimpleRow.Element({
-        
-        size: { width: 400, height: 35 },
+    const sr21 = new SimpleRow.Element({
+
+        size: {width: 400, height: 35},
         customAttrs: {
             field_name: 'id',
             field_constraints: 'ID, req, unq, idx',
             field_date_type: 'str',
         },
-        position: { x: 700, y: 50 },
+        position: {x: 700, y: 50},
         inPorts: ['in'],
         outPorts: ['out'],
         ports: PORT_OPTIONS
     });
 
-    var sr22 = new SimpleRow.Element({
-        
-        size: { width: 400, height: 35 },
+    const sr22 = new SimpleRow.Element({
+
+        size: {width: 400, height: 35},
         customAttrs: {
             field_name: 'created_on',
             field_constraints: 'req',
             field_date_type: 'str',
         },
-        position: { x: 700, y: 85 },
+        position: {x: 700, y: 85},
         inPorts: ['in'],
         outPorts: ['out'],
         ports: PORT_OPTIONS
     });
 
-    var sr23 = new SimpleRow.Element({
-        
-        size: { width: 400, height: 35 },
+    const sr23 = new SimpleRow.Element({
+
+        size: {width: 400, height: 35},
         customAttrs: {
             field_name: 'user_id',
             field_constraints: 'REF, req',
             field_date_type: 'str',
         },
-        position: { x: 700, y: 120 },
+        position: {x: 700, y: 120},
         inPorts: ['in'],
         outPorts: ['out'],
         ports: PORT_OPTIONS
     });
 
-    var sr24 = new ObjectRow.Element({
-        
-        size: { width: 400, height: 35 },
+    const sr24 = new ObjectRow.Element({
+
+        size: {width: 400, height: 35},
         isObjectRow: true,
         customAttrs: {
             field_name: 'items',
             field_constraints: 'REF',
             field_date_type: 'arr',
         },
-        position: { x: 700, y: 155 },
+        position: {x: 700, y: 155},
         inPorts: ['in'],
         outPorts: ['out'],
         ports: PORT_OPTIONS
@@ -371,63 +376,63 @@ export const createDummyDiagrams = function (graph) {
     c2.embed(sr23);
     c2.embed(sr24);
 
-    var c3 = createCoupled({ text: 'Item', x: 1300, y: 15, width: 400, height: 175 });
+    const c3 = createCoupled({text: 'Item', x: 1300, y: 15, width: 400, height: 175});
 
-    var t3 = createTitleRow({ title: 'Item', template: diagramTitleTemplate, x: 1300, y: 15, width: 400, height: 35 });
+    const t3 = createTitleRow({title: 'Item', template: diagramTitleTemplate, x: 1300, y: 15, width: 400, height: 35});
 
     // console.log(t3.get('id'));
 
-    var sr31 = new SimpleRow.Element({
-        
+    const sr31 = new SimpleRow.Element({
+
         customAttrs: {
             field_name: 'id',
             field_constraints: 'ID, req, unq, idx',
             field_date_type: 'str'
         },
-        size: { width: 400, height: 35 },
-        position: { x: 1300, y: 50 },
+        size: {width: 400, height: 35},
+        position: {x: 1300, y: 50},
         inPorts: ['in'],
         outPorts: ['out'],
         ports: PORT_OPTIONS
     });
 
-    var sr32 = new SimpleRow.Element({
-        
-        size: { width: 400, height: 35 },
+    const sr32 = new SimpleRow.Element({
+
+        size: {width: 400, height: 35},
         customAttrs: {
             field_name: 'name',
             field_constraints: 'req',
             field_date_type: 'str',
         },
-        position: { x: 1300, y: 85 },
+        position: {x: 1300, y: 85},
         inPorts: ['in'],
         outPorts: ['out'],
         ports: PORT_OPTIONS
     });
 
-    var sr33 = new SimpleRow.Element({
-        
-        size: { width: 400, height: 35 },
+    const sr33 = new SimpleRow.Element({
+
+        size: {width: 400, height: 35},
         customAttrs: {
             field_name: 'description',
             field_constraints: 'req',
             field_date_type: 'str',
         },
-        position: { x: 1300, y: 120 },
+        position: {x: 1300, y: 120},
         inPorts: ['in'],
         outPorts: ['out'],
         ports: PORT_OPTIONS
     });
 
-    var sr34 = new SimpleRow.Element({
-        
-        size: { width: 400, height: 35 },
+    const sr34 = new SimpleRow.Element({
+
+        size: {width: 400, height: 35},
         customAttrs: {
             field_name: 'price',
             field_constraints: 'req',
             field_date_type: 'num',
         },
-        position: { x: 1300, y: 155 },
+        position: {x: 1300, y: 155},
         inPorts: ['in'],
         outPorts: ['out'],
         ports: PORT_OPTIONS
@@ -447,7 +452,7 @@ export const createDummyDiagrams = function (graph) {
     c3.toFront();
 
     try {
-        var cardianlityLabel = {
+        const cardianlityLabel = {
             attrs: {
                 text: {
                     text: '1:1'
@@ -463,7 +468,7 @@ export const createDummyDiagrams = function (graph) {
         };
         createLink(sr23.id, "in", sr1.id, "out", "REF", cardianlityLabel).addTo(graph).reparent();
 
-        var cardianlityLabel2 = {
+        const cardinalityLabel2 = {
             attrs: {
                 text: {
                     text: '1:N'
@@ -477,7 +482,7 @@ export const createDummyDiagrams = function (graph) {
                 offset: 20
             }
         };
-        createLink(sr24.id, "out", sr31.id, "in", "REF", cardianlityLabel2).addTo(graph).reparent();
+        createLink(sr24.id, "out", sr31.id, "in", "REF", cardinalityLabel2).addTo(graph).reparent();
 
     } catch (error) {
         console.log(error);

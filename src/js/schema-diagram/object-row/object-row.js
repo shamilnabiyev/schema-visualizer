@@ -7,8 +7,8 @@ import {
     isNull as _isNull
 } from 'lodash';
 import { shapes, util } from 'jointjs';
-import SimpleRow from '../simple-row/SimpleRow';
-import ObjectRowTemplate from './ObjectRow.html';
+import SimpleRow from '../simple-row/simple-row';
+import ObjectRowTemplate from './object-row.html';
 
 if (_isUndefined(shapes.html)) {
     throw Error("joint.shapes.html is not undefined");

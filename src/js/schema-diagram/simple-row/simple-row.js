@@ -7,7 +7,7 @@ import {
     isNull as _isNull
 } from 'lodash';
 import { dia, shapes, util } from 'jointjs';
-import SimpleRowTemplate from './SimpleRow.html';
+import SimpleRowTemplate from './simple-row.html';
 
 /**
  * Use the new custom html element tutorial

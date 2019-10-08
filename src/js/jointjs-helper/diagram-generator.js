@@ -1,4 +1,4 @@
-import { createCoupled, createTitleRow, createSimpleRow } from './JointJsHelper';
+import { createCoupled, createTitleRow, createSimpleRow } from './jointjs-helper';
 import { concat, forEach, includes, map } from 'lodash';
 
 const schema = {
