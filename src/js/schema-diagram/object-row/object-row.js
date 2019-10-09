@@ -73,6 +73,8 @@ ObjectRow.ElementView = CustomHtml.ElementView.extend({
 
                 child1.position(modelPosition.x, modelPosition.y + 35);
                 graph.addCell(child1);
+                parentCell.embed(child1);
+
                 view.isCollapsed = false;
             } else if (!view.isCollapsed) {
                 // graph.removeCells(view.model.simpleRowList);
@@ -88,7 +90,7 @@ function expandRow(view, parentCell) {
 
     parentCell.transition("size/height", parentHeight + 35, {
         delay: 0,
-        duration: 200
+        duration: 150
     });
 }
 
@@ -102,7 +104,7 @@ function collapseRow(view, parentCell) {
 
     parentCell.transition("size/height", parentHeight - 35, {
         delay: 0,
-        duration: 200
+        duration: 150
     });
 
     // view.isCollapsed = true;
