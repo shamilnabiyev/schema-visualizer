@@ -46,7 +46,6 @@
     "webpack-merge": "^4.2.1"
   },
   "dependencies": {
-    "@babel/polyfill": "^7.4.0",
     "@fortawesome/fontawesome-free": "^5.11.2",
     "backbone": "^1.4.0",
     "bootstrap": "^4.3.1",

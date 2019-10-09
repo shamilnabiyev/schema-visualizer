@@ -183,7 +183,7 @@ export const createPaper = function createPaper(paperDivElement, graph) {
         },
         'cell:pointerclick': (cellView) => {
             if (!(cellView instanceof dia.LinkView)) {
-                // return;
+                return;
                 /* highlighting disabled */
                 if (highlighted) {
                     cellView.unhighlight();
@@ -303,10 +303,7 @@ export const createDummyDiagrams = function (graph) {
     c1.position({x: 55, y: 255});
 
     const c2 = new shapes.devs.Coupled({
-        attrs: {
-            text: {text: 'Order'},
-            rect: {stroke: '#ffffff', 'stroke-width': 1}
-        },
+
         position: {x: 700, y: 15},
         size: {width: 400, height: 175},
     });
@@ -365,6 +362,21 @@ export const createDummyDiagrams = function (graph) {
         outPorts: ['out'],
         ports: PORT_OPTIONS
     });
+
+    const sr241 = new SimpleRow.Element({
+        size: {width: 400, height: 35},
+        customAttrs: {
+            field_name: '[0]',
+            field_constraints: 'REF',
+            field_date_type: 'str',
+        },
+        inPorts: ['in'],
+        outPorts: ['out'],
+        ports: PORT_OPTIONS
+    });
+
+    sr24.addSimpleRow(sr241);
+
 
 
     c2.embed(t2);

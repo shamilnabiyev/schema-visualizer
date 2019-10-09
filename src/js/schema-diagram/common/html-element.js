@@ -7,7 +7,6 @@ import {
     isNull as _isNull
 } from 'lodash';
 import { dia, shapes, util } from 'jointjs';
-import {text} from "@fortawesome/fontawesome-svg-core";
 
 if (_isUndefined(shapes.html)) {
     shapes.html = {};
