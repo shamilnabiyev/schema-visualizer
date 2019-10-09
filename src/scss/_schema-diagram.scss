@@ -44,6 +44,19 @@
   cursor: pointer;
 }
 
+
+.fa-caret-right {
+  -moz-transition: all 200ms linear;
+  -webkit-transition: all 200ms linear;
+  transition: all 200ms linear;
+}
+
+.fa-caret-right.down {
+  -moz-transform: rotate(90deg);
+  -webkit-transform: rotate(90deg);
+  transform: rotate(90deg);
+}
+
 .html-element .flex-container {
   /* Enable interacting with inputs only. */
   pointer-events: auto;

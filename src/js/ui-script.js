@@ -44,4 +44,3 @@ $(document).on('click', 'a.scroll-to-top', (e) => {
     }, 1000, 'easeInOutExpo');
     e.preventDefault();
 });
-

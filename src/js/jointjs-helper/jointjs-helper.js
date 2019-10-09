@@ -303,7 +303,7 @@ export const createDummyDiagrams = function (graph) {
     c1.position({x: 55, y: 255});
 
     const c2 = new shapes.devs.Coupled({
-
+        // attrs: {rect: {stroke: '#ffffff', 'stroke-width': 1}},
         position: {x: 700, y: 15},
         size: {width: 400, height: 175},
     });

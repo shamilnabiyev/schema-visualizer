@@ -5,6 +5,7 @@ import {
 import {shapes, util} from 'jointjs';
 import CustomHtml from '../common/html-element';
 import ObjectRowTemplate from './object-row.html';
+import $ from "jquery";
 
 if (_isUndefined(shapes.html)) {
     throw Error("joint.shapes.html is not undefined");
@@ -47,65 +48,78 @@ ObjectRow.ElementView = CustomHtml.ElementView.extend({
     isCollapsed: true,
 
     addAdditionalEvents: function () {
-        console.log('addAdditionalEvents');
-        const graph = this.model.graph;
-        const parentId = this.model.get('parent');
-        const parentCell = graph.getCell(parentId);
-        const rowExpander = this.$box.find('.row-expander');
+        let view = this;
+        const parentId = view.model.get('parent');
+        const parentCell = view.model.graph.getCell(parentId);
 
-        if (!_isUndefined(rowExpander)) {
-            rowExpander.on('click', (evt) => {
-                toggleCollapse(this, parentCell);
-            });
-        }
+        const rowExpander = view.$box.find('.row-expander');
+        if (_isUndefined(rowExpander)) return;
+        const graph = view.model.graph;
+
+        rowExpander.on('click', (evt) => {
+            $('.fa-caret-right ').toggleClass('down');
+
+            if (view.isCollapsed) {
+                expandRow(view, parentCell);
+            } else if (!view.isCollapsed) {
+                collapseRow(view, parentCell);
+            }
+        });
+
+        parentCell.on('transition:end', function (element, pathToAttribute) {
+            if (view.isCollapsed) {
+                const modelPosition = view.model.get('position');
+                const child1 = view.model.simpleRowList[0];
+
+                child1.position(modelPosition.x, modelPosition.y + 35);
+                graph.addCell(child1);
+                view.isCollapsed = false;
+            } else if (!view.isCollapsed) {
+                // graph.removeCells(view.model.simpleRowList);
+                view.isCollapsed = true;
+            }
+        });
     }
 });
 
-/**
- * Toggle the sub cells on mouse click
- * @param view
- * @param parentCell
- */
-function toggleCollapse(view, parentCell) {
-    console.log('view.model', view.model.simpleRowList);
-
-    const modelPosition = view.model.get('position');
-    const child1 = view.model.simpleRowList[0];
-    child1.position(modelPosition.x, modelPosition.y + 35);
-
-    const graph = view.model.graph;
-    graph.addCell(child1);
-
+function expandRow(view, parentCell) {
     const parentWidth = parentCell.size()["width"];
     const parentHeight = parentCell.size()["height"];
 
-    /**
-     * get all child nodes of the parent
-     */
-    /*
-    var subtree = [];
-    function collectDeepEmbedded(cell) {
-        _.each(cell.getEmbeddedCells(), function(c) {
-            subtree.push(c);
-            collectDeepEmbedded(c);
-        })
-    }
-    collectDeepEmbedded(myCell);
-    */
+    parentCell.transition("size/height", parentHeight + 35, {
+        delay: 0,
+        duration: 200
+    });
+}
 
-    if (view.isCollapsed) {
-        parentCell.transition("size/height", parentHeight + 35, {
-            delay: 0,
-            duration: 200
-        });
-        view.isCollapsed = false;
-    } else if (!view.isCollapsed) {
-        parentCell.transition("size/height", parentHeight - 35, {
-            delay: 0,
-            duration: 200
-        });
-        view.isCollapsed = true;
-    }
+function collapseRow(view, parentCell) {
+    const graph = view.model.graph;
+    const parentWidth = parentCell.size()["width"];
+    const parentHeight = parentCell.size()["height"];
+
+    if (parentHeight <= 35) return;
+    graph.removeCells(view.model.simpleRowList);
+
+    parentCell.transition("size/height", parentHeight - 35, {
+        delay: 0,
+        duration: 200
+    });
+
+    // view.isCollapsed = true;
 }
 
 export default ObjectRow;
+
+/**
+ * get all child nodes of the parent
+ */
+/*
+var subtree = [];
+function collectDeepEmbedded(cell) {
+    _.each(cell.getEmbeddedCells(), function(c) {
+        subtree.push(c);
+        collectDeepEmbedded(c);
+    })
+}
+collectDeepEmbedded(myCell);
+*/
