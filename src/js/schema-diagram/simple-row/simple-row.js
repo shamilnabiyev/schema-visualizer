@@ -12,11 +12,11 @@ const SimpleRow = CustomHtml.SimpleRow = {};
 SimpleRow.Element = shapes.html.Element.extend({
     defaults: util.defaultsDeep({
         type: 'html.SimpleRow.Element',
-    }, CustomHtml.Element.prototype.defaults)
+    }, CustomHtml.Element.prototype.defaults),
 });
 
 SimpleRow.ElementView = CustomHtml.ElementView.extend({
-    htmlTemplate: SimpleRowTemplate,
+    htmlTemplate: SimpleRowTemplate
 });
 
 export default SimpleRow;

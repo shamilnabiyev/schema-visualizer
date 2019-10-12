@@ -1,19 +1,40 @@
-import { createCoupled, createTitleRow, createSimpleRow } from './jointjs-helper';
-import { concat, forEach, includes, map } from 'lodash';
+import {createCoupled, createTitleRow, createSimpleRow} from './jointjs-helper';
+import {concat, forEach, includes, map} from 'lodash';
+import {dereference} from "@jdw/jst";
 
 const schema = {
     "$schema": "http://json-schema.org/draft-04/schema#",
     "type": "object",
     "title": "Book",
     "properties": {
-        "id": { "type": "string" },
-        "title": { "type": "string" },
-        "author": { "type": "string" },
-        "year": { "type": "integer" },
-        "publisher": { "type": "string" },
-        "website": { "type": "string" }
+        "id": {"type": "string"},
+        "title": {"type": "string"},
+        "author": {"type": "string"},
+        "year": {"type": "integer"},
+        "publisher": {"type": "string"},
+        "website": {"type": "string"}
     },
     "required": ["id", "title", "author", "year", "publisher"]
+};
+
+const complexSchema = {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+        "billing_address": {"$ref": "#/definitions/address"},
+        "shipping_address": {"$ref": "#/definitions/address"}
+    },
+    "definitions": {
+        "address": {
+            "type": "object",
+            "properties": {
+                "street_address": {"type": "string"},
+                "city": {"type": "string"},
+                "state": {"type": "string"}
+            },
+            "required": ["street_address", "city", "state"]
+        }
+    },
 };
 
 const TYPE = "type";
@@ -32,11 +53,23 @@ const propKeys = Object.keys(props);
 
 const diagramTitle = "Book";
 
-const diagramRoot = createCoupled({ text: diagramTitle, x: X_START, y: Y_START, width: WIDTH, height: (HEIGHT * (propKeys.length + 1)) });
-const titleRow = createTitleRow({ title: diagramTitle, x: X_START, y: Y_START, width: WIDTH, height: HEIGHT });
+const diagramRoot = createCoupled({
+    text: diagramTitle,
+    x: X_START,
+    y: Y_START,
+    width: WIDTH,
+    height: (HEIGHT * (propKeys.length + 1))
+});
+const titleRow = createTitleRow({title: diagramTitle, x: X_START, y: Y_START, width: WIDTH, height: HEIGHT});
 
-const cells = { root: diagramRoot, child: [titleRow] };
+const cells = {root: diagramRoot, child: [titleRow]};
 
+/**
+ *
+ * @param value
+ * @param index
+ * @returns {*}
+ */
 const simpleRow = (value, index) => createSimpleRow({
     field_name: value,
     field_constraints: (includes(requiredProps, value)) ? REQ_FRAG : OPT_FLAG,
@@ -50,6 +83,10 @@ const simpleRowList = map(propKeys, (value, index) => simpleRow(value, index));
 
 cells.child = concat(cells.child, simpleRowList);
 
-forEach(cells.child, (item) => { cells.root.embed(item); });
+forEach(cells.child, (item) => {
+    cells.root.embed(item);
+});
+
+// console.log('jst.dereference', dereference(complexSchema) );
 
 export default cells;

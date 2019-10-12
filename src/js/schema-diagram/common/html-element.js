@@ -20,7 +20,8 @@ CustomHtml.Element = shapes.devs.Model.extend({
         attrs: {
             '.body': { stroke: '#ffffff' }
         }
-    }, shapes.devs.Model.prototype.defaults)
+    }, shapes.devs.Model.prototype.defaults),
+    rowLevel: 0
 });
 
 CustomHtml.ElementView = dia.ElementView.extend({
@@ -30,7 +31,9 @@ CustomHtml.ElementView = dia.ElementView.extend({
         _bindAll(this, 'updateBox');
         dia.ElementView.prototype.initialize.apply(this, arguments);
 
-        this.$box = $(_template(this.htmlTemplate)());
+        let rowLevel = this.model.get("rowLevel");
+        this.$box = $(_template(this.htmlTemplate)({'rowLevel': rowLevel}));
+
         const deleteButton = this.$box.find('.delete');
         if (!_isUndefined(deleteButton) && !_isNull(deleteButton)) {
             deleteButton.on('click', _bind(this.model.remove, this.model));
@@ -57,7 +60,6 @@ CustomHtml.ElementView = dia.ElementView.extend({
 
     templateOnUpdate: function () {
         console.log('templateOnUpdate fired!');
-        // this.render();
     },
 
     appendValuesToTemplate: function name() {
