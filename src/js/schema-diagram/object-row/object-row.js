@@ -60,7 +60,6 @@ ObjectRow.ElementView = CustomHtml.ElementView.extend({
         const view = this;
         removeAllSimpleRows(view);
 
-        const graph = view.model.graph;
         const parentId = view.model.get('parent');
         const parentCell = view.model.graph.getCell(parentId);
 
@@ -164,7 +163,8 @@ function removeAllSimpleRows(view) {
 function sliceEmbeds(model, parentCell) {
     if(_isUndefined(model) || _isUndefined(parentCell)) return [];
 
-    const embeddedCells = parentCell.getEmbeddedCells();
+    let embeddedCells = parentCell.getEmbeddedCells();
+    embeddedCells = embeddedCells.filter((cell) => _isUndefined(cell.prop("rowLevel")) || cell.prop("rowLevel") < 1);
     const modelCellIndex = _findIndex(embeddedCells, (cell) => cell.get("id") === model.get("id"));
     const slicedCells = embeddedCells.slice(modelCellIndex + 1);
     return slicedCells;

@@ -419,6 +419,21 @@ export const createDummyDiagrams = function (graph) {
 
     sr25.addSimpleRow(sr251);
 
+    const sr243 = new SimpleRow.Element({
+        size: {width: 400, height: 35},
+        customAttrs: {
+            field_name: '[2]',
+            field_constraints: 'REF',
+            field_date_type: 'bool',
+        },
+        rowLevel: 1,
+        inPorts: ['in'],
+        outPorts: ['out'],
+        ports: PORT_OPTIONS
+    });
+
+    sr24.addSimpleRow(sr243);
+
     c2.embed(t2);
     c2.embed(sr21);
     c2.embed(sr22);

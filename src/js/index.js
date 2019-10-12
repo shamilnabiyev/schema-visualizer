@@ -7,10 +7,6 @@ import './font-awesome-custom.js';
 /* Import the custom classes */
 import generatetCells from "./jointjs-helper/diagram-generator";
 import { addInfoButton, createPaper, createDummyDiagrams } from './jointjs-helper/jointjs-helper';
-import SimpleRow from './schema-diagram/simple-row/simple-row';
-import ObjectRow from './schema-diagram/object-row/object-row';
-// import './diagram/HtmlElement/HtmlElement';
-/* Import the styles */
 import 'typeface-nunito';
 import 'fontawesome_min_css';
 import 'fontawesome_solid_min_css';
@@ -25,9 +21,9 @@ $(window).on("load", () => {
 
 // console.log('shapes.html', shapes.html);
 
-var graph = new dia.Graph();
+const graph = new dia.Graph();
 
-var paper = createPaper($('#paper-html-elements'), graph);
+const paper = createPaper($('#paper-html-elements'), graph);
 paper.scale(0.7, 0.7);
 
 graph.on('add', (cell) => {
@@ -41,7 +37,7 @@ createDummyDiagrams(graph);
 /**
  * Model with multiple ports
  */
-var m1 = new shapes.devs.Model({
+const m1 = new shapes.devs.Model({
     position: { x: 80, y: 380 },
     size: { width: 180, height: 180 },
     inPorts: ['in1', 'in2', 'in3', 'in4'],
