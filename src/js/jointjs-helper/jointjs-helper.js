@@ -405,6 +405,20 @@ export const createDummyDiagrams = function (graph) {
         ports: PORT_OPTIONS
     });
 
+    const sr251 = new SimpleRow.Element({
+        size: {width: 400, height: 35},
+        customAttrs: {
+            field_name: 'log',
+            field_constraints: 'opt',
+            field_date_type: 'str',
+        },
+        inPorts: ['in'],
+        outPorts: ['out'],
+        ports: PORT_OPTIONS
+    });
+
+    sr25.addSimpleRow(sr251);
+
     c2.embed(t2);
     c2.embed(sr21);
     c2.embed(sr22);
@@ -482,6 +496,8 @@ export const createDummyDiagrams = function (graph) {
         outPorts: ['out'],
         ports: PORT_OPTIONS
     });
+
+
 
     c3.embed(t3);
     c3.embed(sr31);

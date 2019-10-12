@@ -6,11 +6,15 @@ import {
 import {shapes, util} from 'jointjs';
 import CustomHtml from '../common/html-element';
 import ObjectRowTemplate from './object-row.html';
-import $ from "jquery";
+
 
 if (_isUndefined(shapes.html)) {
     throw Error("joint.shapes.html is not undefined");
 }
+
+const HEIGHT = 35;
+const TRANSITION_DELAY = 0;
+const TRANSITION_DURATION = 50;
 
 const ObjectRow = shapes.html.ObjectRow = {};
 
@@ -53,7 +57,9 @@ ObjectRow.ElementView = CustomHtml.ElementView.extend({
     },
 
     addAdditionalEvents: function () {
-        let view = this;
+        const view = this;
+        removeAllSimpleRows(view);
+
         const graph = view.model.graph;
         const parentId = view.model.get('parent');
         const parentCell = view.model.graph.getCell(parentId);
@@ -74,85 +80,94 @@ ObjectRow.ElementView = CustomHtml.ElementView.extend({
             }
         });
 
-        parentCell.on('transition:end', function (element, pathToAttribute) {
+        /* parentCell.on('xyz', function (element, pathToAttribute) {
             if (view.isCollapsed) {
                 const modelPosition = view.model.get('position');
                 let offset = 0;
                 view.model.simpleRowList.forEach((simpleRow, index) => {
-                    offset = 35 * (index + 1);
+                    offset = HEIGHT * (index + 1);
                     simpleRow.position(modelPosition.x, modelPosition.y + offset);
                     graph.addCell(simpleRow);
                     parentCell.embed(simpleRow);
                 });
-                // const child1 = view.model.simpleRowList[0];
-
-                // child1.position(modelPosition.x, modelPosition.y + 35);
-                // graph.addCell(child1);
-                // parentCell.embed(child1);
-
                 view.isCollapsed = false;
             } else if (!view.isCollapsed) {
                 // graph.removeCells(view.model.simpleRowList);
                 view.isCollapsed = true;
             }
-        });
+        }); */
     }
 });
 
 function expandRow(view, parentCell) {
-    const parentWidth = parentCell.size()["width"];
-    const parentHeight = parentCell.size()["height"];
+    const parentHeight = parentCell.prop("size/height");
 
-    const offset = 35 * view.simpleRowListLength();
-
-    const embeddedCells = parentCell.getEmbeddedCells();
-    const modelCellIndex = _findIndex(embeddedCells, (cell) => cell.get("id") === view.model.get("id"));
-    const slicedEmbeds = embeddedCells.slice(modelCellIndex + 1);
-    console.log('embeddedCells:', embeddedCells);
-    console.log('sliced embeds:', slicedEmbeds);
+    let offset = HEIGHT * view.simpleRowListLength();
+    if(offset === 0) return;
 
     parentCell.transition("size/height", parentHeight + offset, {
-        delay: 0,
-        duration: 150
+        delay: TRANSITION_DELAY,
+        duration: TRANSITION_DURATION
     });
 
+    const slicedEmbeds = sliceEmbeds(view.model, parentCell);
     slicedEmbeds.forEach((cell) => {
-        let cellPosition = cell.get("position");
-        cell.transition("position/y", cellPosition.y + offset, {
-            delay: 0,
-            duration: 150
+        let cellPositionY = cell.prop("position/y");
+        cell.transition("position/y", cellPositionY + offset, {
+            delay: TRANSITION_DELAY,
+            duration: TRANSITION_DURATION
         });
     });
+
+    const modelPosition = view.model.get('position');
+    offset = 0;
+    view.model.simpleRowList.forEach((simpleRow, index) => {
+        offset = HEIGHT * (index + 1);
+        simpleRow.position(modelPosition.x, modelPosition.y + offset);
+        view.model.graph.addCell(simpleRow);
+        parentCell.embed(simpleRow);
+    });
+    view.isCollapsed = false;
 }
 
 function collapseRow(view, parentCell) {
-    const graph = view.model.graph;
-    const parentWidth = parentCell.size()["width"];
-    const parentHeight = parentCell.size()["height"];
+    const parentHeight = parentCell.prop("size/height");
+    if (parentHeight <= HEIGHT) return;
 
-    if (parentHeight <= 35) return;
-    graph.removeCells(view.model.simpleRowList);
+    removeAllSimpleRows(view);
 
-    let offset = 35 * view.simpleRowListLength();
-
-    const embeddedCells = parentCell.getEmbeddedCells();
-    const modelCellIndex = _findIndex(embeddedCells, (cell) => cell.get("id") === view.model.get("id"));
-    const slicedEmbeds = embeddedCells.slice(modelCellIndex + 1);
-    console.log('embeddedCells:', embeddedCells);
-    console.log('sliced embeds:', slicedEmbeds);
+    let offset = HEIGHT * view.simpleRowListLength();
+    if(offset === 0) return;
 
     parentCell.transition("size/height", parentHeight - offset, {
-        delay: 0,
-        duration: 150
+        delay: TRANSITION_DELAY,
+        duration: TRANSITION_DURATION
     });
 
+    const slicedEmbeds = sliceEmbeds(view.model, parentCell);
     slicedEmbeds.forEach((cell) => {
-        let cellPosition = cell.get("position");
-        cell.transition("position/y", cellPosition.y - offset, {
-            delay: 0,
-            duration: 150
+        let cellPositionY = cell.prop("position/y");
+        cell.transition("position/y", cellPositionY - offset, {
+            delay: TRANSITION_DELAY,
+            duration: TRANSITION_DURATION
         });
     });
+
+    view.isCollapsed = true;
+}
+
+function removeAllSimpleRows(view) {
+    const graph = view.model.graph;
+    graph.removeCells(view.model.simpleRowList);
+}
+
+function sliceEmbeds(model, parentCell) {
+    if(_isUndefined(model) || _isUndefined(parentCell)) return [];
+
+    const embeddedCells = parentCell.getEmbeddedCells();
+    const modelCellIndex = _findIndex(embeddedCells, (cell) => cell.get("id") === model.get("id"));
+    const slicedCells = embeddedCells.slice(modelCellIndex + 1);
+    return slicedCells;
 }
 
 export default ObjectRow;
