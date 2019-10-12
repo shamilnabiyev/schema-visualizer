@@ -305,7 +305,7 @@ export const createDummyDiagrams = function (graph) {
     const c2 = new shapes.devs.Coupled({
         attrs: {rect: {stroke: '#7d7d7d', 'stroke-width': 1}},
         position: {x: 700, y: 15},
-        size: {width: 400, height: 175},
+        size: {width: 400, height: 210},
     });
 
     const t2 = createTitleRow({title: 'Order', template: diagramTitleTemplate, x: 700, y: 15, width: 400, height: 35});
@@ -376,13 +376,41 @@ export const createDummyDiagrams = function (graph) {
         ports: PORT_OPTIONS
     });
 
-    sr24.addSimpleRow(sr241);
+    const sr242 = new SimpleRow.Element({
+        size: {width: 400, height: 35},
+        customAttrs: {
+            field_name: '[1]',
+            field_constraints: 'REF',
+            field_date_type: 'int',
+        },
+        rowLevel: 1,
+        inPorts: ['in'],
+        outPorts: ['out'],
+        ports: PORT_OPTIONS
+    });
+
+    sr24.addSimpleRows([sr241, sr242]);
+
+    const sr25 = new ObjectRow.Element({
+        size: {width: 400, height: 35},
+        isObjectRow: true,
+        customAttrs: {
+            field_name: 'meta',
+            field_constraints: 'opt',
+            field_date_type: 'obj',
+        },
+        position: {x: 700, y: 190},
+        inPorts: ['in'],
+        outPorts: ['out'],
+        ports: PORT_OPTIONS
+    });
 
     c2.embed(t2);
     c2.embed(sr21);
     c2.embed(sr22);
     c2.embed(sr23);
     c2.embed(sr24);
+    c2.embed(sr25);
 
     const c3 = createCoupled({text: 'Item', x: 1300, y: 15, width: 400, height: 175});
 
@@ -463,7 +491,7 @@ export const createDummyDiagrams = function (graph) {
     c3.embed(sr35);
 
 
-    graph.addCells([c1, t1, sr1, sr2, sr3, c2, t2, sr21, sr22, sr23, sr24, c3, t3, sr31, sr32, sr33, sr34, sr35]);
+    graph.addCells([c1, t1, sr1, sr2, sr3, c2, t2, sr21, sr22, sr23, sr24, sr25, c3, t3, sr31, sr32, sr33, sr34, sr35]);
 
     c1.toFront();
     c2.toFront();

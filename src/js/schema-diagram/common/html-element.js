@@ -50,16 +50,10 @@ CustomHtml.ElementView = dia.ElementView.extend({
 
         this.model.on('change', this.updateBox, this);
         this.model.on('remove', this.removeBox, this);
-
-        this.listenTo(this.model, 'change:template', this.templateOnUpdate);
     },
 
     addAdditionalEvents: function() {
 
-    },
-
-    templateOnUpdate: function () {
-        console.log('templateOnUpdate fired!');
     },
 
     appendValuesToTemplate: function name() {

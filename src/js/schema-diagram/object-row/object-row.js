@@ -1,5 +1,6 @@
 import {
     concat as _concat,
+    findIndex as _findIndex,
     isUndefined as _isUndefined
 } from 'lodash';
 import {shapes, util} from 'jointjs';
@@ -47,17 +48,24 @@ ObjectRow.ElementView = CustomHtml.ElementView.extend({
     htmlTemplate: ObjectRowTemplate,
     isCollapsed: true,
 
+    simpleRowListLength: function () {
+        return this.model.simpleRowList.length;
+    },
+
     addAdditionalEvents: function () {
         let view = this;
+        const graph = view.model.graph;
         const parentId = view.model.get('parent');
         const parentCell = view.model.graph.getCell(parentId);
 
         const rowExpander = view.$box.find('.row-expander');
         if (_isUndefined(rowExpander)) return;
-        const graph = view.model.graph;
+
+        const caretRight = view.$box.find('.fa-caret-right');
+        if (_isUndefined(caretRight)) return;
 
         rowExpander.on('click', (evt) => {
-            $('.fa-caret-right ').toggleClass('down');
+            caretRight.toggleClass('down');
 
             if (view.isCollapsed) {
                 expandRow(view, parentCell);
@@ -69,11 +77,18 @@ ObjectRow.ElementView = CustomHtml.ElementView.extend({
         parentCell.on('transition:end', function (element, pathToAttribute) {
             if (view.isCollapsed) {
                 const modelPosition = view.model.get('position');
-                const child1 = view.model.simpleRowList[0];
+                let offset = 0;
+                view.model.simpleRowList.forEach((simpleRow, index) => {
+                    offset = 35 * (index + 1);
+                    simpleRow.position(modelPosition.x, modelPosition.y + offset);
+                    graph.addCell(simpleRow);
+                    parentCell.embed(simpleRow);
+                });
+                // const child1 = view.model.simpleRowList[0];
 
-                child1.position(modelPosition.x, modelPosition.y + 35);
-                graph.addCell(child1);
-                parentCell.embed(child1);
+                // child1.position(modelPosition.x, modelPosition.y + 35);
+                // graph.addCell(child1);
+                // parentCell.embed(child1);
 
                 view.isCollapsed = false;
             } else if (!view.isCollapsed) {
@@ -88,9 +103,25 @@ function expandRow(view, parentCell) {
     const parentWidth = parentCell.size()["width"];
     const parentHeight = parentCell.size()["height"];
 
-    parentCell.transition("size/height", parentHeight + 35, {
+    const offset = 35 * view.simpleRowListLength();
+
+    const embeddedCells = parentCell.getEmbeddedCells();
+    const modelCellIndex = _findIndex(embeddedCells, (cell) => cell.get("id") === view.model.get("id"));
+    const slicedEmbeds = embeddedCells.slice(modelCellIndex + 1);
+    console.log('embeddedCells:', embeddedCells);
+    console.log('sliced embeds:', slicedEmbeds);
+
+    parentCell.transition("size/height", parentHeight + offset, {
         delay: 0,
         duration: 150
+    });
+
+    slicedEmbeds.forEach((cell) => {
+        let cellPosition = cell.get("position");
+        cell.transition("position/y", cellPosition.y + offset, {
+            delay: 0,
+            duration: 150
+        });
     });
 }
 
@@ -102,12 +133,26 @@ function collapseRow(view, parentCell) {
     if (parentHeight <= 35) return;
     graph.removeCells(view.model.simpleRowList);
 
-    parentCell.transition("size/height", parentHeight - 35, {
+    let offset = 35 * view.simpleRowListLength();
+
+    const embeddedCells = parentCell.getEmbeddedCells();
+    const modelCellIndex = _findIndex(embeddedCells, (cell) => cell.get("id") === view.model.get("id"));
+    const slicedEmbeds = embeddedCells.slice(modelCellIndex + 1);
+    console.log('embeddedCells:', embeddedCells);
+    console.log('sliced embeds:', slicedEmbeds);
+
+    parentCell.transition("size/height", parentHeight - offset, {
         delay: 0,
         duration: 150
     });
 
-    // view.isCollapsed = true;
+    slicedEmbeds.forEach((cell) => {
+        let cellPosition = cell.get("position");
+        cell.transition("position/y", cellPosition.y - offset, {
+            delay: 0,
+            duration: 150
+        });
+    });
 }
 
 export default ObjectRow;

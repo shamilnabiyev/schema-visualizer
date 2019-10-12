@@ -1,5 +1,5 @@
 import {createCoupled, createTitleRow, createSimpleRow} from './jointjs-helper';
-import {concat, forEach, includes, map} from 'lodash';
+import {includes} from 'lodash';
 import {dereference} from "@jdw/jst";
 
 const schema = {
@@ -79,11 +79,11 @@ const simpleRow = (value, index) => createSimpleRow({
     y: Y_START + ((index + 1) * HEIGHT_OFFSET),
 });
 
-const simpleRowList = map(propKeys, (value, index) => simpleRow(value, index));
+const simpleRowList = propKeys.map((value, index) => simpleRow(value, index));
 
-cells.child = concat(cells.child, simpleRowList);
+cells.child = cells.child.concat(simpleRowList);
 
-forEach(cells.child, (item) => {
+cells.child.forEach((item) => {
     cells.root.embed(item);
 });
 
