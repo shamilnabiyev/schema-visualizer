@@ -1,6 +1,11 @@
-import {createCoupled, createTitleRow, createSimpleRow} from './jointjs-helper';
-import {includes} from 'lodash';
+import {createCoupled, createTitleRow, createSimpleRow, createObjectRow} from './jointjs-helper';
+import {
+    isEqual as _isEqual,
+    forEach as _forEach,
+    includes as _includes
+} from 'lodash';
 import {dereference} from "@jdw/jst";
+import ObjectRow from "../schema-diagram/object-row/object-row";
 
 const schema = {
     "$schema": "http://json-schema.org/draft-04/schema#",
@@ -12,7 +17,26 @@ const schema = {
         "author": {"type": "string"},
         "year": {"type": "integer"},
         "publisher": {"type": "string"},
-        "website": {"type": "string"}
+        "website": {"type": "string"},
+        "meta": {
+            "type": "object",
+            "properties": {
+                "internal": {
+                    "type": "object",
+                    "properties": {
+                        "ean": {
+                            "type": "integer"
+                        }
+                    },
+                    "required": [
+                        "ean"
+                    ]
+                }
+            },
+            "required": [
+                "internal"
+            ]
+        }
     },
     "required": ["id", "title", "author", "year", "publisher"]
 };
@@ -48,8 +72,8 @@ const OPT_FLAG = " ";
 const NULL_TYPE = "null";
 
 const props = schema.properties || {};
-const requiredProps = schema.required || [];
 const propKeys = Object.keys(props);
+const requiredProps = schema.required || [];
 
 const diagramTitle = "Book";
 
@@ -70,23 +94,59 @@ const cells = {root: diagramRoot, child: [titleRow]};
  * @param index
  * @returns {*}
  */
+/*
 const simpleRow = (value, index) => createSimpleRow({
     field_name: value,
-    field_constraints: (includes(requiredProps, value)) ? REQ_FRAG : OPT_FLAG,
+    field_constraints: (_includes(requiredProps, value)) ? REQ_FRAG : OPT_FLAG,
+    field_date_type: props[value][TYPE] || NULL_TYPE,
+    width: WIDTH, height: HEIGHT,
+    x: X_START,
+    y: Y_START + ((index + 1) * HEIGHT_OFFSET),
+});
+*/
+
+/**
+ *
+ * @param {String} key The json schema property name
+ * @param {Object} value The property itself containing key value pairs such as data type, properties etc.
+ */
+const simpleRow = (key, value) => createSimpleRow({
+    field_name: key,
+    field_constraints: (_includes(requiredProps, key)) ? REQ_FRAG : OPT_FLAG,
+    field_date_type: value[TYPE],
+    width: WIDTH, height: HEIGHT,
+    x: X_START,
+});
+
+const objectRow = (value, index) => new createObjectRow({
+    field_name: value,
+    field_constraints: (_includes(requiredProps, value)) ? REQ_FRAG : OPT_FLAG,
     field_date_type: props[value][TYPE] || NULL_TYPE,
     width: WIDTH, height: HEIGHT,
     x: X_START,
     y: Y_START + ((index + 1) * HEIGHT_OFFSET),
 });
 
-const simpleRowList = propKeys.map((value, index) => simpleRow(value, index));
+// const simpleRowList = propKeys.map((value, index) => simpleRow(value, index));
+// cells.child = cells.child.concat(simpleRowList);
+// console.log('jst.dereference', dereference(complexSchema) );
 
-cells.child = cells.child.concat(simpleRowList);
+const simpleDataTypes = ["boolean", "integer", "null", "number", "string"];
 
-cells.child.forEach((item) => {
-    cells.root.embed(item);
+function iterateOverProps(properties) {
+    _forEach(properties, (value, key) => {
+        if (_includes(simpleDataTypes, value[TYPE])) {
+            cells.child = cells.child.concat(simpleRow(key, value));
+        }
+    });
+}
+
+iterateOverProps(schema.properties);
+
+_forEach(cells.child, (element, index) => {
+    if(index > 0) element.prop('position/y', (Y_START + (index * HEIGHT_OFFSET)));
+    cells.root.embed(element);
 });
 
-// console.log('jst.dereference', dereference(complexSchema) );
 
 export default cells;

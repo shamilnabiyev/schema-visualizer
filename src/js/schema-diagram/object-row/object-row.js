@@ -14,7 +14,7 @@ if (_isUndefined(shapes.html)) {
 
 const HEIGHT = 35;
 const TRANSITION_DELAY = 0;
-const TRANSITION_DURATION = 50;
+const TRANSITION_DURATION = 100;
 
 const ObjectRow = shapes.html.ObjectRow = {};
 
@@ -164,7 +164,7 @@ function sliceEmbeds(model, parentCell) {
     if(_isUndefined(model) || _isUndefined(parentCell)) return [];
 
     let embeddedCells = parentCell.getEmbeddedCells();
-    embeddedCells = embeddedCells.filter((cell) => _isUndefined(cell.prop("rowLevel")) || cell.prop("rowLevel") < 1);
+    embeddedCells = embeddedCells.filter((cell) => _isUndefined(cell.prop("rowLevel")) || cell.prop("rowLevel") < model.prop("rowLevel"));
     const modelCellIndex = _findIndex(embeddedCells, (cell) => cell.get("id") === model.get("id"));
     const slicedCells = embeddedCells.slice(modelCellIndex + 1);
     return slicedCells;

@@ -239,6 +239,24 @@ export const createSimpleRow = function createSimpleRow(options) {
         },
         size: {width: options.width || 0, height: options.height || 0},
         position: {x: options.x || 0, y: options.y || 0},
+        rowLevel: options.rowLevel || 0,
+        inPorts: ['in'],
+        outPorts: ['out'],
+        ports: PORT_OPTIONS
+    });
+};
+
+export const createObjectRow = function createObjectRow (options) {
+    return  new ObjectRow.Element({
+        isObjectRow: true,
+        customAttrs: {
+            field_name: options.field_name,
+            field_constraints: options.field_constraints || 'ID, req, unq, idx',
+            field_date_type: options.field_date_type || 'obj'
+        },
+        size: {width: options.width || 0, height: options.height || 0},
+        position: {x: options.x || 0, y: options.y || 0},
+        rowLevel: options.rowLevel || 0,
         inPorts: ['in'],
         outPorts: ['out'],
         ports: PORT_OPTIONS
