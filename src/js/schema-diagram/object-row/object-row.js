@@ -31,6 +31,8 @@ ObjectRow.Element = CustomHtml.Element.extend({
      */
     simpleRowList: [],
 
+    objectRowList: [],
+
     /**
      * Adds a new child element to the list 'simpleRowList'
      * @param {Object} simpleRow

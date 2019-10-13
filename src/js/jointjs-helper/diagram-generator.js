@@ -1,8 +1,11 @@
 import {createCoupled, createTitleRow, createSimpleRow, createObjectRow} from './jointjs-helper';
 import {
     isEqual as _isEqual,
+    isUndefined as _isUndefined,
     forEach as _forEach,
-    includes as _includes
+    includes as _includes,
+    toLower as _toLower,
+    has as _has
 } from 'lodash';
 import {dereference} from "@jdw/jst";
 import ObjectRow from "../schema-diagram/object-row/object-row";
@@ -118,35 +121,101 @@ const simpleRow = (key, value) => createSimpleRow({
     x: X_START,
 });
 
-const objectRow = (value, index) => new createObjectRow({
-    field_name: value,
-    field_constraints: (_includes(requiredProps, value)) ? REQ_FRAG : OPT_FLAG,
-    field_date_type: props[value][TYPE] || NULL_TYPE,
+const objectRow = (key, value) => new createObjectRow({
+    field_name: key,
+    field_constraints: (_includes(requiredProps, key)) ? REQ_FRAG : OPT_FLAG,
+    field_date_type: value[TYPE],
     width: WIDTH, height: HEIGHT,
     x: X_START,
-    y: Y_START + ((index + 1) * HEIGHT_OFFSET),
 });
 
 // const simpleRowList = propKeys.map((value, index) => simpleRow(value, index));
 // cells.child = cells.child.concat(simpleRowList);
 // console.log('jst.dereference', dereference(complexSchema) );
 
-const simpleDataTypes = ["boolean", "integer", "null", "number", "string"];
+const SIMPLE_TYPES = ["boolean", "integer", "null", "number", "string"];
+const OBJECT_TYPE = "object";
+const ARRAY_TYPE = "array";
+const MULTI_TYPE = 'multi';
+const ANY_OF = 'anyOf';
 
-function iterateOverProps(properties) {
+/**
+ *
+ * @param {Object} properties
+ * @param {Array} cellsAccumulator
+ */
+function iterateOverProps(properties, cellsAccumulator) {
     _forEach(properties, (value, key) => {
-        if (_includes(simpleDataTypes, value[TYPE])) {
-            cells.child = cells.child.concat(simpleRow(key, value));
+        if (_includes(SIMPLE_TYPES, _toLower(value[TYPE]))) {
+            /* Simple rows */
+            cellsAccumulator = cellsAccumulator.concat(simpleRow(key, value));
+        } else if (OBJECT_TYPE === _toLower(value[TYPE])) {
+            /* ObjectRows */
+            let newObjectRow = objectRow(key, value);
+            let simpleRowList = [];
+            iterateOverProps(value.properties, simpleRowList);
+            newObjectRow.addSimpleRows(simpleRowList);
         }
     });
 }
 
-iterateOverProps(schema.properties);
+let cellsAccumulator = [];
+iterateOverProps(schema.properties, cellsAccumulator);
 
+console.log(cellsAccumulator);
+
+const initialDoc = {simpleRowList: [], objectRowList: [], arrayRows: []};
+generateRow(schema.properties, initialDoc, requiredProps);
+
+function generateRow(properties, doc, required) {
+    _forEach(properties,  (property, key) => {
+        if (_includes(SIMPLE_TYPES, property.type)) {
+            addSimpleRow(property, doc, key, required);
+        }
+        if (_isEqual(property.type, OBJECT_TYPE)) {
+            addDocumentRow(property, doc, key, required);
+        }
+        /*
+        if (_isEqual(property.type, ARRAY_TYPE)) {
+            addArrayRow(property, doc, key, required);
+        }
+
+        if (_isEqual(property.type, MULTI_TYPE)) {
+            addMultiTypeRow(property, doc, key);
+        }
+        */
+    });
+}
+
+function getConstraints(property, key, required) {
+    if (_isUndefined(required)) {
+        return (_has(property, "constraints")) ? property["constraints"] : undefined;
+    }
+
+    let constraints = [];
+    (_includes(required, key)) ? constraints.push("req") : constraints.push("opt");
+    return constraints;
+}
+
+function addSimpleRow(property, doc, key, required) {
+    let constraintsPrimitives = getConstraints(property, key, required);
+    doc.simpleRowList.push(simpleRow(key, property));
+}
+
+function addDocumentRow(property, doc, key, required) {
+    const constraints = getConstraints(property, key, required);
+    const subDoc = objectRow(key, property);
+    doc.objectRowList.push(subDoc);
+    generateRow(property.properties, subDoc);
+}
+
+/*
 _forEach(cells.child, (element, index) => {
-    if(index > 0) element.prop('position/y', (Y_START + (index * HEIGHT_OFFSET)));
+    if (index > 0) element.prop('position/y', (Y_START + (index * HEIGHT_OFFSET)));
     cells.root.embed(element);
 });
+*/
 
+console.log(initialDoc.objectRowList[0]);
 
 export default cells;
