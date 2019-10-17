@@ -64,7 +64,7 @@ ObjectRow.ElementView = CustomHtml.ElementView.extend({
 
         removeAllSimpleRows(view);
 
-        const parentCell =  view.model.getParentCell();
+        let parentCell =  view.model.getParentCell();
 
         const rowExpander = view.$box.find('.row-expander');
         if (_isUndefined(rowExpander)) return;
@@ -73,6 +73,9 @@ ObjectRow.ElementView = CustomHtml.ElementView.extend({
         if (_isUndefined(caretRight)) return;
 
         rowExpander.on('click', (evt) => {
+            /* workaround to get the parent cell */
+            parentCell = parentCell || view.model.getParentCell();
+
             caretRight.toggleClass('down');
 
             if (view.isCollapsed) {
@@ -85,7 +88,7 @@ ObjectRow.ElementView = CustomHtml.ElementView.extend({
 });
 
 function expandRow(view, parentCell) {
-    parentCell = parentCell || view.model.getParentCell();
+
     if(_isUndefined(view)) return;
     if(_isUndefined(parentCell)) return;
 

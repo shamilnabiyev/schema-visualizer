@@ -1,6 +1,7 @@
-import {createCoupled, createTitleRow, createSimpleRow, PORT_OPTIONS} from './jointjs-helper';
+import {createCoupled, createTitleRow, createSimpleRow, createObjectRow} from './jointjs-helper';
 import {
     isEqual as _isEqual,
+    isFunction as _isFunction,
     isUndefined as _isUndefined,
     forEach as _forEach,
     includes as _includes,
@@ -12,9 +13,9 @@ import {
     pickBy as _pickBy,
     concat as _concat
 } from 'lodash';
-import traverse from 'json-schema-traverse';
-import {dereference} from "@jdw/jst";
-import ObjectRow from "../schema-diagram/object-row/object-row";
+// import traverse from 'json-schema-traverse';
+// import traverse from 'traverse';
+// import {dereference} from "@jdw/jst";
 
 const schema = {
     "$schema": "http://json-schema.org/draft-04/schema#",
@@ -102,23 +103,6 @@ const cells = {rootCell: diagramRoot, childCells: [titleRow]};
 
 /**
  *
- * @param value
- * @param index
- * @returns {*}
- */
-/*
-const simpleRow = (value, index) => createSimpleRow({
-    field_name: value,
-    field_constraints: (_includes(requiredProps, value)) ? REQ_FRAG : OPT_FLAG,
-    field_date_type: props[value][TYPE] || NULL_TYPE,
-    width: WIDTH, height: HEIGHT,
-    x: X_START,
-    y: Y_START + ((index + 1) * HEIGHT_OFFSET),
-});
-*/
-
-/**
- *
  * @param {String} key The json schema property name
  * @param {Object} value The property itself containing key value pairs such as data type, properties etc.
  */
@@ -130,23 +114,6 @@ const simpleRow = (value, key) => createSimpleRow({
     x: X_START,
 });
 
-function createObjectRow(options) {
-    return new ObjectRow.Element({
-        isObjectRow: true,
-        customAttrs: {
-            field_name: options.field_name,
-            field_constraints: options.field_constraints || 'ID, req, unq, idx',
-            field_date_type: options.field_date_type || 'obj'
-        },
-        size: {width: options.width || 0, height: options.height || 0},
-        position: {x: options.x || 0, y: options.y || 0},
-        rowLevel: options.rowLevel || 0,
-        inPorts: ['in'],
-        outPorts: ['out'],
-        ports: PORT_OPTIONS
-    });
-}
-
 const objectRow = (value, key) => createObjectRow({
     field_name: key,
     field_constraints: (_includes(requiredProps, key)) ? REQ_FRAG : OPT_FLAG,
@@ -155,26 +122,19 @@ const objectRow = (value, key) => createObjectRow({
     x: X_START,
 });
 
-// const simpleRowList = propKeys.map((value, index) => simpleRow(value, index));
-// cells.child = cells.child.concat(simpleRowList);
-// console.log('jst.dereference', dereference(complexSchema) );
-
 const SIMPLE_TYPES = ["boolean", "integer", "null", "number", "string"];
 const OBJECT_TYPE = "object";
 const ARRAY_TYPE = "array";
 const MULTI_TYPE = 'multi';
 const ANY_OF = 'anyOf';
 
-const initialDoc = {simpleRowList: [], objectRowList: [], arrayRows: []};
-// generateRow(schema.properties, initialDoc, requiredProps);
-
-function generateRow(properties, doc, required) {
+function generateRow(properties, doc) {
     _forEach(properties,  (property, key) => {
         if (_includes(SIMPLE_TYPES, property.type)) {
-            addSimpleRow(property, doc, key, required);
+            addSimpleRow(doc, key, property);
         }
         if (_isEqual(property.type, OBJECT_TYPE)) {
-            addDocumentRow(property, doc, key, required);
+            addDocumentRow(doc, key, property);
         }
         /*
         if (_isEqual(property.type, ARRAY_TYPE)) {
@@ -188,27 +148,23 @@ function generateRow(properties, doc, required) {
     });
 }
 
-function getConstraints(property, key, required) {
-    if (_isUndefined(required)) {
-        return (_has(property, "constraints")) ? property["constraints"] : undefined;
-    }
-
-    let constraints = [];
-    (_includes(required, key)) ? constraints.push("req") : constraints.push("opt");
-    return constraints;
-}
-
-function addSimpleRow(property, doc, key, required) {
+function addSimpleRow(doc, key, property) {
     doc.simpleRowList.push(simpleRow(property, key));
+    //doc.simpleRowList.push({key: key, property: property});
 }
 
-function addDocumentRow(property, doc, key, required) {
-    const subDoc = objectRow(property, key);
+function addDocumentRow(doc, key, property) {
+    // const subDoc = objectRow(property, key);
+    const subDoc = {key: key, property: property, simpleRowList: [], objectRowList: [], arrayRows: []};
     doc.objectRowList.push(subDoc);
     generateRow(property.properties, subDoc);
 }
+const initialDoc = {key: "", property: {}, simpleRowList: [], objectRowList: [], arrayRows: []};
+generateRow(schema.properties, initialDoc, requiredProps);
+cells.childCells = cells.childCells.concat(initialDoc.simpleRowList);
+cells.childCells.forEach((cell) => {cells.rootCell.embed(cell);});
 
-// cells.childCells = cells.childCells.concat(initialDoc.simpleRowList);
+// console.log(cells.childCells);
 
 /*
 _forEach(cells.child, (element, index) => {
@@ -217,6 +173,7 @@ _forEach(cells.child, (element, index) => {
 });
 */
 
+/*
 const isSimpleType = (property) => _isUndefined(property.type) ? false : _includes(SIMPLE_TYPES, property.type);
 const isObjectType = (property) => _isUndefined(property.type) ? false : _includes(OBJECT_TYPE, property.type);
 
@@ -227,6 +184,6 @@ const objectTypeProps = _pickBy(schema.properties, (property, key) => isObjectTy
 const objectRowList = _map(objectTypeProps, (value, key) => objectRow(value, key));
 
 cells.childCells = _concat(cells.childCells, simpleRowList, objectRowList);
-// cells.childCells = _concat(cells.childCells, );
+*/
 
 export default cells;
