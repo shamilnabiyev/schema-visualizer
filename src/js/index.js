@@ -5,13 +5,14 @@ import 'bootstrap/dist/js/bootstrap.bundle';
 import './ui-script.js';
 import './font-awesome-custom.js';
 /* Import the custom classes */
-import generatetCells from "./jointjs-helper/diagram-generator";
+import generatedCells from "./jointjs-helper/diagram-generator";
 import { addInfoButton, createPaper, createDummyDiagrams } from './jointjs-helper/jointjs-helper';
 import 'typeface-nunito';
 import 'fontawesome_min_css';
 import 'fontawesome_solid_min_css';
 import 'jointjs_min_css';
 import '../scss/index.scss';
+import {forEach as _forEach} from "lodash";
 
 $(window).on("load", () => {
     $('#loading-icon').remove();
@@ -44,17 +45,26 @@ const m1 = new shapes.devs.Model({
     outPorts: ['out1', 'out2', 'out3', 'out4'],
     attrs: {
         '.label': { text: 'Model', 'ref-x': .5, 'ref-y': .2 },
-        rect: { fill: '#2ECC71' }
+        rect: { fill: '#5AB6FF' }
     }
 });
 
 graph.addCell(m1);
 
-graph.addCell(generatetCells.root);
-graph.addCells(generatetCells.child);
+// graph.addCell(generatedCells.root);
+graph.addCells([generatedCells.rootCell, generatedCells.childCells]);
 
-generatetCells.root.toFront();
+_forEach(generatedCells.childCells, (element, index) => {
+    generatedCells.rootCell.embed(element);
+    element.position(0, index * 35, {parentRelative: true});
+});
 
+_forEach(generatedCells.childCells, (element) => {
+    console.log(element.getParentCell());
+});
+
+generatedCells.rootCell.fitEmbeds();
+generatedCells.rootCell.toFront();
 
 /**
  * An example showing how to collapse/expand elements in jointjs

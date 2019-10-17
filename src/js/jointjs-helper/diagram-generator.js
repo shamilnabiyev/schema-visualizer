@@ -1,12 +1,18 @@
-import {createCoupled, createTitleRow, createSimpleRow, createObjectRow} from './jointjs-helper';
+import {createCoupled, createTitleRow, createSimpleRow, PORT_OPTIONS} from './jointjs-helper';
 import {
     isEqual as _isEqual,
     isUndefined as _isUndefined,
     forEach as _forEach,
     includes as _includes,
     toLower as _toLower,
-    has as _has
+    has as _has,
+    filter as _filter,
+    map as _map,
+    noop as _noop,
+    pickBy as _pickBy,
+    concat as _concat
 } from 'lodash';
+import traverse from 'json-schema-traverse';
 import {dereference} from "@jdw/jst";
 import ObjectRow from "../schema-diagram/object-row/object-row";
 
@@ -21,7 +27,7 @@ const schema = {
         "year": {"type": "integer"},
         "publisher": {"type": "string"},
         "website": {"type": "string"},
-        "meta": {
+        "subDoc": {
             "type": "object",
             "properties": {
                 "internal": {
@@ -29,6 +35,9 @@ const schema = {
                     "properties": {
                         "ean": {
                             "type": "integer"
+                        },
+                        "sn": {
+                            "type": "string"
                         }
                     },
                     "required": [
@@ -41,7 +50,7 @@ const schema = {
             ]
         }
     },
-    "required": ["id", "title", "author", "year", "publisher"]
+    "required": ["id", "title", "author", "year", "publisher", "subDoc"]
 };
 
 const complexSchema = {
@@ -84,12 +93,12 @@ const diagramRoot = createCoupled({
     text: diagramTitle,
     x: X_START,
     y: Y_START,
-    width: WIDTH,
-    height: (HEIGHT * (propKeys.length + 1))
+    // width: WIDTH,
+    // height: (HEIGHT * (propKeys.length + 1))
 });
 const titleRow = createTitleRow({title: diagramTitle, x: X_START, y: Y_START, width: WIDTH, height: HEIGHT});
 
-const cells = {root: diagramRoot, child: [titleRow]};
+const cells = {rootCell: diagramRoot, childCells: [titleRow]};
 
 /**
  *
@@ -113,7 +122,7 @@ const simpleRow = (value, index) => createSimpleRow({
  * @param {String} key The json schema property name
  * @param {Object} value The property itself containing key value pairs such as data type, properties etc.
  */
-const simpleRow = (key, value) => createSimpleRow({
+const simpleRow = (value, key) => createSimpleRow({
     field_name: key,
     field_constraints: (_includes(requiredProps, key)) ? REQ_FRAG : OPT_FLAG,
     field_date_type: value[TYPE],
@@ -121,7 +130,24 @@ const simpleRow = (key, value) => createSimpleRow({
     x: X_START,
 });
 
-const objectRow = (key, value) => new createObjectRow({
+function createObjectRow(options) {
+    return new ObjectRow.Element({
+        isObjectRow: true,
+        customAttrs: {
+            field_name: options.field_name,
+            field_constraints: options.field_constraints || 'ID, req, unq, idx',
+            field_date_type: options.field_date_type || 'obj'
+        },
+        size: {width: options.width || 0, height: options.height || 0},
+        position: {x: options.x || 0, y: options.y || 0},
+        rowLevel: options.rowLevel || 0,
+        inPorts: ['in'],
+        outPorts: ['out'],
+        ports: PORT_OPTIONS
+    });
+}
+
+const objectRow = (value, key) => createObjectRow({
     field_name: key,
     field_constraints: (_includes(requiredProps, key)) ? REQ_FRAG : OPT_FLAG,
     field_date_type: value[TYPE],
@@ -139,33 +165,8 @@ const ARRAY_TYPE = "array";
 const MULTI_TYPE = 'multi';
 const ANY_OF = 'anyOf';
 
-/**
- *
- * @param {Object} properties
- * @param {Array} cellsAccumulator
- */
-function iterateOverProps(properties, cellsAccumulator) {
-    _forEach(properties, (value, key) => {
-        if (_includes(SIMPLE_TYPES, _toLower(value[TYPE]))) {
-            /* Simple rows */
-            cellsAccumulator = cellsAccumulator.concat(simpleRow(key, value));
-        } else if (OBJECT_TYPE === _toLower(value[TYPE])) {
-            /* ObjectRows */
-            let newObjectRow = objectRow(key, value);
-            let simpleRowList = [];
-            iterateOverProps(value.properties, simpleRowList);
-            newObjectRow.addSimpleRows(simpleRowList);
-        }
-    });
-}
-
-let cellsAccumulator = [];
-iterateOverProps(schema.properties, cellsAccumulator);
-
-console.log(cellsAccumulator);
-
 const initialDoc = {simpleRowList: [], objectRowList: [], arrayRows: []};
-generateRow(schema.properties, initialDoc, requiredProps);
+// generateRow(schema.properties, initialDoc, requiredProps);
 
 function generateRow(properties, doc, required) {
     _forEach(properties,  (property, key) => {
@@ -198,24 +199,34 @@ function getConstraints(property, key, required) {
 }
 
 function addSimpleRow(property, doc, key, required) {
-    let constraintsPrimitives = getConstraints(property, key, required);
-    doc.simpleRowList.push(simpleRow(key, property));
+    doc.simpleRowList.push(simpleRow(property, key));
 }
 
 function addDocumentRow(property, doc, key, required) {
-    const constraints = getConstraints(property, key, required);
-    const subDoc = objectRow(key, property);
+    const subDoc = objectRow(property, key);
     doc.objectRowList.push(subDoc);
     generateRow(property.properties, subDoc);
 }
 
+// cells.childCells = cells.childCells.concat(initialDoc.simpleRowList);
+
 /*
 _forEach(cells.child, (element, index) => {
-    if (index > 0) element.prop('position/y', (Y_START + (index * HEIGHT_OFFSET)));
+    element.prop('position/y', (index * HEIGHT_OFFSET), {parentRelative: true});
     cells.root.embed(element);
 });
 */
 
-console.log(initialDoc.objectRowList[0]);
+const isSimpleType = (property) => _isUndefined(property.type) ? false : _includes(SIMPLE_TYPES, property.type);
+const isObjectType = (property) => _isUndefined(property.type) ? false : _includes(OBJECT_TYPE, property.type);
+
+const simpleTypeProps = _pickBy(schema.properties, (property, key) => isSimpleType(property));
+const simpleRowList = _map(simpleTypeProps, simpleRow);
+
+const objectTypeProps = _pickBy(schema.properties, (property, key) => isObjectType(property));
+const objectRowList = _map(objectTypeProps, (value, key) => objectRow(value, key));
+
+cells.childCells = _concat(cells.childCells, simpleRowList, objectRowList);
+// cells.childCells = _concat(cells.childCells, );
 
 export default cells;

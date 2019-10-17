@@ -246,8 +246,8 @@ export const createSimpleRow = function createSimpleRow(options) {
     });
 };
 
-export const createObjectRow = function createObjectRow (options) {
-    return  new ObjectRow.Element({
+export const createObjectRow = function createObjectRow(options) {
+    return new ObjectRow.Element({
         isObjectRow: true,
         customAttrs: {
             field_name: options.field_name,
@@ -531,7 +531,6 @@ export const createDummyDiagrams = function (graph) {
     });
 
 
-
     c3.embed(t3);
     c3.embed(sr31);
     c3.embed(sr32);
@@ -583,3 +582,8 @@ export const createDummyDiagrams = function (graph) {
         console.log(error);
     }
 };
+
+/*
+    c1.set('inPorts', ['in']);
+    c1.set('outPorts', ['out 1', 'out 2']);
+ */

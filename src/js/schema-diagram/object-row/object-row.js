@@ -60,10 +60,11 @@ ObjectRow.ElementView = CustomHtml.ElementView.extend({
 
     addAdditionalEvents: function () {
         const view = this;
+        if(_isUndefined(view)) return;
+
         removeAllSimpleRows(view);
 
-        const parentId = view.model.get('parent');
-        const parentCell = view.model.graph.getCell(parentId);
+        const parentCell =  view.model.getParentCell();
 
         const rowExpander = view.$box.find('.row-expander');
         if (_isUndefined(rowExpander)) return;
@@ -80,27 +81,14 @@ ObjectRow.ElementView = CustomHtml.ElementView.extend({
                 collapseRow(view, parentCell);
             }
         });
-
-        /* parentCell.on('xyz', function (element, pathToAttribute) {
-            if (view.isCollapsed) {
-                const modelPosition = view.model.get('position');
-                let offset = 0;
-                view.model.simpleRowList.forEach((simpleRow, index) => {
-                    offset = HEIGHT * (index + 1);
-                    simpleRow.position(modelPosition.x, modelPosition.y + offset);
-                    graph.addCell(simpleRow);
-                    parentCell.embed(simpleRow);
-                });
-                view.isCollapsed = false;
-            } else if (!view.isCollapsed) {
-                // graph.removeCells(view.model.simpleRowList);
-                view.isCollapsed = true;
-            }
-        }); */
     }
 });
 
 function expandRow(view, parentCell) {
+    parentCell = parentCell || view.model.getParentCell();
+    if(_isUndefined(view)) return;
+    if(_isUndefined(parentCell)) return;
+
     const parentHeight = parentCell.prop("size/height");
 
     let offset = HEIGHT * view.simpleRowListLength();
@@ -132,6 +120,9 @@ function expandRow(view, parentCell) {
 }
 
 function collapseRow(view, parentCell) {
+    if(_isUndefined(view)) return;
+    if(_isUndefined(parentCell)) return;
+
     const parentHeight = parentCell.prop("size/height");
     if (parentHeight <= HEIGHT) return;
 
