@@ -97,7 +97,13 @@ const diagramRoot = createCoupled({
     // width: WIDTH,
     // height: (HEIGHT * (propKeys.length + 1))
 });
-const titleRow = createTitleRow({title: diagramTitle, x: X_START, y: Y_START, width: WIDTH, height: HEIGHT});
+const titleRow = createTitleRow({
+    title: diagramTitle,
+    x: X_START,
+    y: Y_START,
+    width: WIDTH,
+    height: HEIGHT
+});
 
 const cells = {rootCell: diagramRoot, childCells: [titleRow]};
 
@@ -129,7 +135,7 @@ const MULTI_TYPE = 'multi';
 const ANY_OF = 'anyOf';
 
 function generateRow(properties, doc) {
-    _forEach(properties,  (property, key) => {
+    _forEach(properties, (property, key) => {
         if (_includes(SIMPLE_TYPES, property.type)) {
             addSimpleRow(doc, key, property);
         }
@@ -150,19 +156,20 @@ function generateRow(properties, doc) {
 
 function addSimpleRow(doc, key, property) {
     doc.simpleRowList = _concat(doc.simpleRowList, simpleRow(property, key));
-    //doc.simpleRowList.push({key: key, property: property});
 }
 
 function addDocumentRow(doc, key, property) {
     const subDoc = objectRow(property, key);
-    // const subDoc = {key: key, property: property, simpleRowList: [], objectRowList: [], arrayRows: []};
-    doc.objectRowList.push(subDoc);
+    doc.objectRowList = _concat(doc.objectRowList, subDoc);
     generateRow(property.properties, subDoc);
 }
+
 const initialDoc = {key: "", property: {}, simpleRowList: [], objectRowList: [], arrayRows: []};
 generateRow(schema.properties, initialDoc, requiredProps);
 cells.childCells = cells.childCells.concat(initialDoc.simpleRowList, initialDoc.objectRowList);
-cells.childCells.forEach((cell) => {cells.rootCell.embed(cell);});
+cells.childCells.forEach((cell) => {
+    cells.rootCell.embed(cell);
+});
 
 // console.log(cells.childCells);
 

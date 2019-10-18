@@ -94,7 +94,7 @@ function expandRow(view, parentCell) {
 
     const parentHeight = parentCell.prop("size/height");
 
-    let offset = HEIGHT * view.simpleRowListLength();
+    let offset = HEIGHT * (view.simpleRowListLength() + view.model.objectRowList.length);
     if(offset === 0) return;
 
     parentCell.transition("size/height", parentHeight + offset, {
@@ -119,6 +119,13 @@ function expandRow(view, parentCell) {
         view.model.graph.addCell(simpleRow);
         parentCell.embed(simpleRow);
     });
+
+    view.model.objectRowList.forEach((objectRow, index) => {
+        offset = HEIGHT * (index + 1);
+        objectRow.position(modelPosition.x, modelPosition.y + offset);
+        view.model.graph.addCell(objectRow);
+        parentCell.embed(objectRow);
+    });
     view.isCollapsed = false;
 }
 
@@ -130,8 +137,9 @@ function collapseRow(view, parentCell) {
     if (parentHeight <= HEIGHT) return;
 
     removeAllSimpleRows(view);
+    removeAllObjectRows(view);
 
-    let offset = HEIGHT * view.simpleRowListLength();
+    let offset = HEIGHT * (view.simpleRowListLength() + view.model.objectRowList.length);
     if(offset === 0) return;
 
     parentCell.transition("size/height", parentHeight - offset, {
@@ -156,11 +164,16 @@ function removeAllSimpleRows(view) {
     graph.removeCells(view.model.simpleRowList);
 }
 
+function removeAllObjectRows(view) {
+    const graph = view.model.graph;
+    graph.removeCells(view.model.objectRowList);
+}
+
 function sliceEmbeds(model, parentCell) {
     if(_isUndefined(model) || _isUndefined(parentCell)) return [];
 
     let embeddedCells = parentCell.getEmbeddedCells();
-    embeddedCells = embeddedCells.filter((cell) => _isUndefined(cell.prop("rowLevel")) || cell.prop("rowLevel") < model.prop("rowLevel"));
+    embeddedCells = embeddedCells.filter((cell) => _isUndefined(cell.prop("rowLevel")) || cell.prop("rowLevel") <= model.prop("rowLevel"));
     const modelCellIndex = _findIndex(embeddedCells, (cell) => cell.get("id") === model.get("id"));
     const slicedCells = embeddedCells.slice(modelCellIndex + 1);
     return slicedCells;
