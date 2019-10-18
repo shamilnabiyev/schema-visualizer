@@ -149,19 +149,19 @@ function generateRow(properties, doc) {
 }
 
 function addSimpleRow(doc, key, property) {
-    doc.simpleRowList.push(simpleRow(property, key));
+    doc.simpleRowList = _concat(doc.simpleRowList, simpleRow(property, key));
     //doc.simpleRowList.push({key: key, property: property});
 }
 
 function addDocumentRow(doc, key, property) {
-    // const subDoc = objectRow(property, key);
-    const subDoc = {key: key, property: property, simpleRowList: [], objectRowList: [], arrayRows: []};
+    const subDoc = objectRow(property, key);
+    // const subDoc = {key: key, property: property, simpleRowList: [], objectRowList: [], arrayRows: []};
     doc.objectRowList.push(subDoc);
     generateRow(property.properties, subDoc);
 }
 const initialDoc = {key: "", property: {}, simpleRowList: [], objectRowList: [], arrayRows: []};
 generateRow(schema.properties, initialDoc, requiredProps);
-cells.childCells = cells.childCells.concat(initialDoc.simpleRowList);
+cells.childCells = cells.childCells.concat(initialDoc.simpleRowList, initialDoc.objectRowList);
 cells.childCells.forEach((cell) => {cells.rootCell.embed(cell);});
 
 // console.log(cells.childCells);

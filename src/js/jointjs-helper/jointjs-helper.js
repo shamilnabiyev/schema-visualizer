@@ -517,29 +517,14 @@ export const createDummyDiagrams = function (graph) {
         ports: PORT_OPTIONS
     });
 
-    const sr35 = new ObjectRow.Element({
-        size: {width: 400, height: 35},
-        customAttrs: {
-            field_name: 'meta',
-            field_constraints: 'req',
-            field_date_type: 'obj',
-        },
-        position: {x: 1300, y: 190},
-        inPorts: ['in'],
-        outPorts: ['out'],
-        ports: PORT_OPTIONS
-    });
-
-
     c3.embed(t3);
     c3.embed(sr31);
     c3.embed(sr32);
     c3.embed(sr33);
     c3.embed(sr34);
-    c3.embed(sr35);
 
 
-    graph.addCells([c1, t1, sr1, sr2, sr3, c2, t2, sr21, sr22, sr23, sr24, sr25, c3, t3, sr31, sr32, sr33, sr34, sr35]);
+    graph.addCells([c1, t1, sr1, sr2, sr3, c2, t2, sr21, sr22, sr23, sr24, sr25, c3, t3, sr31, sr32, sr33, sr34]);
 
     c1.toFront();
     c2.toFront();
