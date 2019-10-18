@@ -14,7 +14,7 @@ import {
     concat as _concat
 } from 'lodash';
 // import traverse from 'json-schema-traverse';
-// import traverse from 'traverse';
+import traverse from 'traverse';
 // import {dereference} from "@jdw/jst";
 
 const schema = {
@@ -112,20 +112,22 @@ const cells = {rootCell: diagramRoot, childCells: [titleRow]};
  * @param {String} key The json schema property name
  * @param {Object} value The property itself containing key value pairs such as data type, properties etc.
  */
-const simpleRow = (value, key) => createSimpleRow({
+const simpleRow = (value, key, rowLevel) => createSimpleRow({
     field_name: key,
     field_constraints: (_includes(requiredProps, key)) ? REQ_FRAG : OPT_FLAG,
     field_date_type: value[TYPE],
     width: WIDTH, height: HEIGHT,
     x: X_START,
+    rowLevel: rowLevel
 });
 
-const objectRow = (value, key) => createObjectRow({
+const objectRow = (value, key, rowLevel) => createObjectRow({
     field_name: key,
     field_constraints: (_includes(requiredProps, key)) ? REQ_FRAG : OPT_FLAG,
     field_date_type: value[TYPE],
     width: WIDTH, height: HEIGHT,
     x: X_START,
+    rowLevel: rowLevel
 });
 
 const SIMPLE_TYPES = ["boolean", "integer", "null", "number", "string"];
@@ -134,13 +136,13 @@ const ARRAY_TYPE = "array";
 const MULTI_TYPE = 'multi';
 const ANY_OF = 'anyOf';
 
-function generateRow(properties, doc) {
+function generateRow(properties, doc, rowLevel) {
     _forEach(properties, (property, key) => {
         if (_includes(SIMPLE_TYPES, property.type)) {
-            addSimpleRow(doc, key, property);
+            addSimpleRow(doc, key, property, rowLevel);
         }
         if (_isEqual(property.type, OBJECT_TYPE)) {
-            addDocumentRow(doc, key, property);
+            addDocumentRow(doc, key, property, rowLevel);
         }
         /*
         if (_isEqual(property.type, ARRAY_TYPE)) {
@@ -154,18 +156,24 @@ function generateRow(properties, doc) {
     });
 }
 
-function addSimpleRow(doc, key, property) {
-    doc.simpleRowList = _concat(doc.simpleRowList, simpleRow(property, key));
+function addSimpleRow(doc, key, property, rowLevel) {
+    doc.simpleRowList = _concat(doc.simpleRowList, simpleRow(property, key, rowLevel.value));
 }
 
-function addDocumentRow(doc, key, property) {
-    const subDoc = objectRow(property, key);
+function addDocumentRow(doc, key, property, rowLevel) {
+    const subDoc = objectRow(property, key, rowLevel.value);
     doc.objectRowList = _concat(doc.objectRowList, subDoc);
-    generateRow(property.properties, subDoc);
+
+    rowLevel.value += 1;
+    generateRow(property.properties, subDoc, rowLevel);
+
+    rowLevel.value -= 1;
 }
 
 const initialDoc = {key: "", property: {}, simpleRowList: [], objectRowList: [], arrayRows: []};
-generateRow(schema.properties, initialDoc, requiredProps);
+const rowLevel = {value: 0};
+generateRow(schema.properties, initialDoc, rowLevel);
+
 cells.childCells = cells.childCells.concat(initialDoc.simpleRowList, initialDoc.objectRowList);
 cells.childCells.forEach((cell) => {
     cells.rootCell.embed(cell);
@@ -192,5 +200,13 @@ const objectRowList = _map(objectTypeProps, (value, key) => objectRow(value, key
 
 cells.childCells = _concat(cells.childCells, simpleRowList, objectRowList);
 */
+
+traverse(schema.properties).forEach(function (node) {
+    if(this.isRoot) {
+        //console.log(this);
+    } else if(this.notRoot && this.notLeaf /* && (this.keys && this.keys.length) === 1 && this.keys[0] === "type" */) {
+        //console.log(this);
+    }
+});
 
 export default cells;
