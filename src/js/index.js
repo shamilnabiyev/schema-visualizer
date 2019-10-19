@@ -13,6 +13,7 @@ import 'fontawesome_solid_min_css';
 import 'jointjs_min_css';
 import '../scss/index.scss';
 import {forEach as _forEach} from "lodash";
+import DiagramRoot from "./schema-diagram/diagram-root/diagram-root";
 
 $(window).on("load", () => {
     $('#loading-icon').remove();
@@ -86,6 +87,14 @@ coupledParent.fitEmbeds({
     },
     deep: true
 });
+
+const diagramRoot1 = new DiagramRoot.Element({
+    attrs: {
+        text: {text: 'Diagram Root'},
+    },
+    position: {x: 500, y: 500}
+});
+graph.addCell(diagramRoot1);
 
 // console.log(coupledParent.getEmbeddedCells({deep: true}));
 

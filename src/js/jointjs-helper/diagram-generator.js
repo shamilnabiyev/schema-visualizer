@@ -49,7 +49,8 @@ const schema = {
             "required": [
                 "internal"
             ]
-        }
+        },
+        "meta_data": {"type": "string"},
     },
     "required": ["id", "title", "author", "year", "publisher", "subDoc"]
 };

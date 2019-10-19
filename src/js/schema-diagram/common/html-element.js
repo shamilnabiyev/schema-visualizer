@@ -7,6 +7,7 @@ import {
     isNull as _isNull
 } from 'lodash';
 import { dia, shapes, util } from 'jointjs';
+import {renderBox, updateBox, removeBox} from '../utils';
 
 if (_isUndefined(shapes.html)) {
     shapes.html = {};
@@ -65,34 +66,9 @@ CustomHtml.ElementView = dia.ElementView.extend({
         }
     },
 
-    render: function () {
-        dia.ElementView.prototype.render.apply(this, arguments);
-        this.listenTo(this.paper, 'scale', this.updateBox);
-        this.listenTo(this.paper, 'translate', this.updateBox);
-        this.paper.$el.prepend(this.$box);
-        this.updateBox();
-        return this;
-    },
-
-    updateBox: function () {
-        if (!this.paper) return;
-
-        const bbox = this.getBBox({ useModelGeometry: true });
-        const scale = this.paper.scale();
-
-        this.$box.css({
-            transform: `scale(${scale.sx},${scale.sy})`,
-            transformOrigin: '0 0',
-            width: bbox.width / scale.sx,
-            height: bbox.height / scale.sy,
-            left: bbox.x,
-            top: bbox.y,
-        });
-    },
-
-    removeBox: function (evt) {
-        this.$box.remove();
-    }
+    render: renderBox,
+    updateBox: updateBox,
+    removeBox: removeBox
 });
 
 export default CustomHtml;
