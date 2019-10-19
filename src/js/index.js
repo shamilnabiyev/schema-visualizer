@@ -13,7 +13,9 @@ import 'fontawesome_solid_min_css';
 import 'jointjs_min_css';
 import '../scss/index.scss';
 import {forEach as _forEach} from "lodash";
-import DiagramRoot from "./schema-diagram/diagram-root/diagram-root";
+/* contains DiagramRoot.Element and DiagramRoot.ElementView */
+import DiagramRoot from "./schema-diagram/diagram-root";
+import DiagramTitle from "./schema-diagram/diagram-title";
 
 $(window).on("load", () => {
     $('#loading-icon').remove();
@@ -92,9 +94,32 @@ const diagramRoot1 = new DiagramRoot.Element({
     attrs: {
         text: {text: 'Diagram Root'},
     },
-    position: {x: 500, y: 500}
+    position: {x: 400, y: 500}
 });
-graph.addCell(diagramRoot1);
+
+const diagramTitle1 = new DiagramTitle.Element({
+    customAttrs: {
+        entity_title: "<< Entity Name >>",
+    },
+    size: {width: 400, height: 35}
+});
+
+/* embed cells and set positions */
+diagramRoot1.setDiagramTitle(diagramTitle1);
+diagramRoot1.embed(diagramTitle1);
+graph.addCells([diagramRoot1, diagramTitle1]);
+diagramTitle1.position(0, 0, {parentRelative: true});
+diagramRoot1.fitEmbeds({
+    padding: {
+        top: 50,
+        right: 20,
+        bottom: 20,
+        left: 20
+    },
+    deep: true
+});
+
+console.log("shapes.html: ", shapes.html);
 
 // console.log(coupledParent.getEmbeddedCells({deep: true}));
 

@@ -13,6 +13,7 @@ import {
     pickBy as _pickBy,
     concat as _concat
 } from 'lodash';
+import DiagramRoot from "../schema-diagram/diagram-root/diagram-root";
 // import traverse from 'json-schema-traverse';
 import traverse from 'traverse';
 // import {dereference} from "@jdw/jst";
@@ -50,7 +51,13 @@ const schema = {
                 "internal"
             ]
         },
-        "meta_data": {"type": "string"},
+        "meta_data": {
+            "type": "object",
+            "properties": {
+                "serial_number" : {"type": "string"},
+            },
+            "required": ["serial_number"]
+        },
     },
     "required": ["id", "title", "author", "year", "publisher", "subDoc"]
 };
@@ -89,17 +96,16 @@ const props = schema.properties || {};
 const propKeys = Object.keys(props);
 const requiredProps = schema.required || [];
 
-const diagramTitle = "Book";
 
 const diagramRoot = createCoupled({
-    text: diagramTitle,
+    text: "Book",
     x: X_START,
     y: Y_START,
     // width: WIDTH,
     // height: (HEIGHT * (propKeys.length + 1))
 });
 const titleRow = createTitleRow({
-    title: diagramTitle,
+    title: "Book",
     x: X_START,
     y: Y_START,
     width: WIDTH,

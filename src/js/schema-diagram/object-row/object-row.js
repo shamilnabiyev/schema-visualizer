@@ -167,6 +167,19 @@ function removeAllSimpleRows(view) {
 function removeAllObjectRows(view) {
     const graph = view.model.graph;
     graph.removeCells(view.model.objectRowList);
+    view.model.objectRowList.forEach((objectRow) => {
+        removeObjectRow(view, objectRow);
+    });
+}
+
+function removeObjectRow(view, objectRow) {
+    const graph = view.model.graph;
+    graph.removeCells(objectRow.simpleRowList);
+    graph.removeCells(objectRow.objectRowList);
+
+    objectRow.objectRowList.forEach((row) => {
+        removeObjectRow(view, row);
+    });
 }
 
 function sliceEmbeds(model, parentCell) {

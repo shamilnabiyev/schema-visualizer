@@ -430,6 +430,7 @@ export const createDummyDiagrams = function (graph) {
             field_constraints: 'opt',
             field_date_type: 'str',
         },
+        rowLevel: 1,
         inPorts: ['in'],
         outPorts: ['out'],
         ports: PORT_OPTIONS

@@ -1,5 +1,8 @@
 const updateBox = function () {
     if (!this.paper) return;
+    if (!this.$box) return;
+    if (!this.$box.css) return;
+    if (!this.getBBox) return;
 
     const bbox = this.getBBox({ useModelGeometry: true });
     const scale = this.paper.scale();
