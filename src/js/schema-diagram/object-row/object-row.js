@@ -7,6 +7,7 @@ import {
 } from 'lodash';
 import {dia, shapes, util} from 'jointjs';
 import ObjectRowTemplate from './object-row.html';
+import DiagramRoot from "../diagram-root";
 import $ from "jquery";
 import {removeBox, renderBox, updateBox, initializeBox, appendValuesToTemplate} from "../utils";
 
@@ -21,65 +22,36 @@ const TRANSITION_DURATION = 100;
 
 const ObjectRow = shapes.html.ObjectRow = {};
 
-ObjectRow.Element = shapes.devs.Coupled.extend((function () {
+ObjectRow.Element = DiagramRoot.Element.extend((function () {
     /**
      * Model defaults
      */
     const defaults = util.defaultsDeep({
         type: 'html.ObjectRow.Element',
-    }, shapes.devs.Coupled.prototype.defaults);
+    }, DiagramRoot.Element.prototype.defaults);
 
     let rowLevel = 0;
+    /**
+     * Sign the undefined value to prevent the inheritance
+     * @type {undefined}
+     */
+    let diagramTitle = undefined;
 
     /**
-     * Adds a new child element to the list 'simpleRowList'
-     * @param {Object} simpleRow
+     * Sign the undefined value to prevent the inheritance
+     * @type {undefined}
      */
-    const addSimpleRow = function (simpleRow) {
-        if (_isUndefined(this.get('simpleRowList'))) this.prop('simpleRowList', []);
-
-        this.get('simpleRowList').push(simpleRow);
-    };
-
-    const addObjectRow = function (objectRow) {
-        if (_isUndefined(this.get('objectRowList'))) this.prop('objectRowList', []);
-
-        this.get('objectRowList').push(objectRow);
-    };
-
-    const simpleRowListLength = function () {
-        return this.get('simpleRowList').length;
-    };
-
-    const objectRowListLength = function () {
-        return this.get('objectRowList').length;
-    };
-
-    const getSimpleRowList = function () {
-        return this.get('simpleRowList');
-    };
-
-    const getObjectRowList = function () {
-        return this.get('objectRowList');
-    };
+    const setDiagramTitle = undefined;
 
     return {
         defaults: defaults,
         rowLevel: rowLevel,
-        addSimpleRow: addSimpleRow,
-        addObjectRow: addObjectRow,
-        simpleRowListLength: simpleRowListLength,
-        objectRowListLength: objectRowListLength,
-        getSimpleRowList: getSimpleRowList,
-        getObjectRowList: getObjectRowList,
     };
 })());
 
-ObjectRow.ElementView = dia.ElementView.extend({
+ObjectRow.ElementView = DiagramRoot.ElementView.extend({
     htmlTemplate: ObjectRowTemplate,
     isCollapsed: true,
-
-    initialize: initializeBox,
 
     appendValuesToTemplate: appendValuesToTemplate,
 
@@ -125,9 +97,6 @@ ObjectRow.ElementView = dia.ElementView.extend({
         });
     },
 
-    render: renderBox,
-    updateBox: updateBox,
-    removeBox: removeBox
 });
 
 function expandRow(view, parentCell) {

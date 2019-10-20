@@ -62,6 +62,14 @@ DiagramRoot.Element = shapes.devs.Coupled.extend((function () {
         return this.get('objectRowList');
     };
 
+    const simpleRowListLength = function () {
+        return this.get('simpleRowList').length;
+    };
+
+    const objectRowListLength = function () {
+        return this.get('objectRowList').length;
+    };
+
     /**
      * TODO: create the following attributes and their getter/setter methods
      * - arrayRowList
