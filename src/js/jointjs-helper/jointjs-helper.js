@@ -407,7 +407,8 @@ export const createDummyDiagrams = function (graph) {
         ports: PORT_OPTIONS
     });
 
-    sr24.addSimpleRows([sr241, sr242]);
+    sr24.addSimpleRow(sr241);
+    sr24.addSimpleRow(sr242);
 
     const sr25 = new ObjectRow.Element({
         size: {width: 400, height: 35},

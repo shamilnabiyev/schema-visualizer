@@ -3,6 +3,7 @@ import {
     isEqual as _isEqual,
     isFunction as _isFunction,
     isUndefined as _isUndefined,
+    isNull as _isNull,
     forEach as _forEach,
     includes as _includes,
     toLower as _toLower,
@@ -14,9 +15,6 @@ import {
     concat as _concat
 } from 'lodash';
 import DiagramRoot from "../schema-diagram/diagram-root/diagram-root";
-// import traverse from 'json-schema-traverse';
-import traverse from 'traverse';
-// import {dereference} from "@jdw/jst";
 
 const schema = {
     "$schema": "http://json-schema.org/draft-04/schema#",
@@ -54,7 +52,7 @@ const schema = {
         "meta_data": {
             "type": "object",
             "properties": {
-                "serial_number" : {"type": "string"},
+                "serial_number": {"type": "string"},
             },
             "required": ["serial_number"]
         },
@@ -82,6 +80,7 @@ const complexSchema = {
     },
 };
 
+let GRAPH = null;
 const TYPE = "type";
 const WIDTH = 400;
 const HEIGHT = 35;
@@ -95,24 +94,6 @@ const NULL_TYPE = "null";
 const props = schema.properties || {};
 const propKeys = Object.keys(props);
 const requiredProps = schema.required || [];
-
-
-const diagramRoot = createCoupled({
-    text: "Book",
-    x: X_START,
-    y: Y_START,
-    // width: WIDTH,
-    // height: (HEIGHT * (propKeys.length + 1))
-});
-const titleRow = createTitleRow({
-    title: "Book",
-    x: X_START,
-    y: Y_START,
-    width: WIDTH,
-    height: HEIGHT
-});
-
-const cells = {rootCell: diagramRoot, childCells: [titleRow]};
 
 /**
  *
@@ -164,19 +145,81 @@ function generateRow(properties, doc, rowLevel) {
 }
 
 function addSimpleRow(doc, key, property, rowLevel) {
-    doc.simpleRowList = _concat(doc.simpleRowList, simpleRow(property, key, rowLevel.value));
+    const newSimpleRow = simpleRow(property, key, rowLevel.value);
+    doc.addSimpleRow(newSimpleRow);
+    if (!_isNull(GRAPH)) GRAPH.addCell(newSimpleRow);
+    doc.embed(newSimpleRow);
+    newSimpleRow.position(0, 0, {parentRelative: true});
 }
 
 function addDocumentRow(doc, key, property, rowLevel) {
     const subDoc = objectRow(property, key, rowLevel.value);
-    doc.objectRowList = _concat(doc.objectRowList, subDoc);
+    doc.addObjectRow(subDoc);
+    if (!_isNull(GRAPH)) GRAPH.addCell(subDoc);
+
+    doc.embed(subDoc);
+    subDoc.position(0, 0, {parentRelative: true});
 
     rowLevel.value += 1;
     generateRow(property.properties, subDoc, rowLevel);
-
     rowLevel.value -= 1;
 }
 
+const generateCells = function (graph) {
+    GRAPH = graph;
+
+    const titleText = "Book";
+
+    const diagramRoot = new DiagramRoot.Element({
+        attrs: {
+            text: {text: titleText},
+        },
+        position: {x: X_START, y: Y_START}
+    });
+    GRAPH.addCell(diagramRoot);
+
+    const diagramTitle = createTitleRow({
+        title: "Book",
+        width: WIDTH,
+        height: HEIGHT
+    });
+    GRAPH.addCell(diagramTitle);
+    diagramRoot.embed(diagramTitle);
+    diagramTitle.position(0, 0, {parentRelative: true});
+
+    diagramRoot.setDiagramTitle(diagramTitle);
+    const rowLevel = {value: 0};
+    generateRow(schema.properties, diagramRoot, rowLevel);
+
+    // console.log('embeds: ', diagramRoot.getEmbeddedCells());
+    diagramRoot.fitEmbeds({deep: true});
+
+    let diagramRootHeight = diagramRoot.prop('size/height');
+
+    _forEach(diagramRoot.getSimpleRowList(), (simpleRow, index) => {
+        simpleRow.position(0, diagramRootHeight + (index * HEIGHT), {parentRelative: true});
+    });
+
+    diagramRoot.fitEmbeds({deep: true});
+
+    diagramRootHeight = diagramRoot.prop('size/height');
+
+    _forEach(diagramRoot.getObjectRowList(), (objectRow, index) => {
+        objectRow.position(0, diagramRootHeight + (index * HEIGHT), {parentRelative: true});
+    });
+
+    diagramRoot.fitEmbeds({
+        padding: {
+            top: 50
+        }, deep: true
+    });
+
+    diagramRoot.toFront();
+};
+
+export default generateCells;
+
+/*
 const initialDoc = {key: "", property: {}, simpleRowList: [], objectRowList: [], arrayRows: []};
 const rowLevel = {value: 0};
 generateRow(schema.properties, initialDoc, rowLevel);
@@ -185,6 +228,8 @@ cells.childCells = cells.childCells.concat(initialDoc.simpleRowList, initialDoc.
 cells.childCells.forEach((cell) => {
     cells.rootCell.embed(cell);
 });
+
+*/
 
 // console.log(cells.childCells);
 
@@ -207,13 +252,3 @@ const objectRowList = _map(objectTypeProps, (value, key) => objectRow(value, key
 
 cells.childCells = _concat(cells.childCells, simpleRowList, objectRowList);
 */
-
-traverse(schema.properties).forEach(function (node) {
-    if(this.isRoot) {
-        //console.log(this);
-    } else if(this.notRoot && this.notLeaf /* && (this.keys && this.keys.length) === 1 && this.keys[0] === "type" */) {
-        //console.log(this);
-    }
-});
-
-export default cells;

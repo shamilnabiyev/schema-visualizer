@@ -5,14 +5,17 @@ import 'bootstrap/dist/js/bootstrap.bundle';
 import './ui-script.js';
 import './font-awesome-custom.js';
 /* Import the custom classes */
-import generatedCells from "./jointjs-helper/diagram-generator";
+import generateCells from "./jointjs-helper/diagram-generator";
 import {addInfoButton, createPaper, createDummyDiagrams} from './jointjs-helper/jointjs-helper';
 import 'typeface-nunito';
 import 'fontawesome_min_css';
 import 'fontawesome_solid_min_css';
 import 'jointjs_min_css';
 import '../scss/index.scss';
-import {forEach as _forEach} from "lodash";
+import {
+    forEach as _forEach,
+    isUndefined as _isUndefined
+} from "lodash";
 /* contains DiagramRoot.Element and DiagramRoot.ElementView */
 import DiagramRoot from "./schema-diagram/diagram-root";
 import DiagramTitle from "./schema-diagram/diagram-title";
@@ -54,76 +57,7 @@ const m1 = new shapes.devs.Model({
 
 graph.addCell(m1);
 
-// graph.addCell(generatedCells.root);
-graph.addCells([generatedCells.rootCell, generatedCells.childCells]);
-
-_forEach(generatedCells.childCells, (element, index) => {
-    element.position(0, index * 35, {parentRelative: true});
-});
-
-generatedCells.rootCell.fitEmbeds();
-generatedCells.rootCell.toFront();
-
-const coupledParent = new shapes.devs.Coupled({
-    attrs: {rect: {stroke: '#1E90FF', 'stroke-width': 3}},
-    position: {x: 400, y: 300},
-});
-
-const coupledSubParent = new shapes.devs.Coupled();
-
-const atomicChild1 = new shapes.devs.Atomic();
-
-coupledSubParent.embed(atomicChild1);
-coupledParent.embed(coupledSubParent);
-
-graph.addCells([coupledParent, coupledSubParent, atomicChild1]);
-
-coupledSubParent.position(10, 10, {parentRelative: true});
-atomicChild1.position(10, 10, {parentRelative: true});
-coupledParent.fitEmbeds({
-    padding: {
-        top: 50,
-        right: 20,
-        bottom: 20,
-        left: 20
-    },
-    deep: true
-});
-
-const diagramRoot1 = new DiagramRoot.Element({
-    attrs: {
-        text: {text: 'Diagram Root'},
-    },
-    position: {x: 400, y: 500}
-});
-
-const diagramTitle1 = new DiagramTitle.Element({
-    customAttrs: {
-        entity_title: "<< Entity Name >>",
-    },
-    size: {width: 400, height: 35}
-});
-
-/* embed cells and set positions */
-diagramRoot1.setDiagramTitle(diagramTitle1);
-diagramRoot1.embed(diagramTitle1);
-graph.addCells([diagramRoot1, diagramTitle1]);
-diagramTitle1.position(0, 0, {parentRelative: true});
-diagramRoot1.fitEmbeds({
-    padding: {
-        top: 50,
-        right: 20,
-        bottom: 20,
-        left: 20
-    },
-    deep: true
-});
-
-diagramRoot1.toFront();
-
-// console.log("shapes.html: ", shapes.html);
-
-// console.log(coupledParent.getEmbeddedCells({deep: true}));
+generateCells(graph);
 
 /**
  * An example showing how to collapse/expand elements in jointjs

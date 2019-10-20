@@ -1,11 +1,14 @@
 import {
     concat as _concat,
+    isFunction as _isFunction
 } from 'lodash';
 import {shapes, util} from 'jointjs';
 
 const DiagramRoot = shapes.html.DiagramRoot = {};
 
 DiagramRoot.Element = shapes.devs.Coupled.extend((function () {
+    const model = this;
+
     /**
      * Default attributes
      * @type {object}
@@ -41,6 +44,7 @@ DiagramRoot.Element = shapes.devs.Coupled.extend((function () {
      */
     const setDiagramTitle = function (title) {
       diagramTitle = title;
+      // if(_isFunction(this.embed)) this.embed(title);
     };
 
     /**
@@ -49,6 +53,7 @@ DiagramRoot.Element = shapes.devs.Coupled.extend((function () {
      */
     const addSimpleRow = function (row) {
         simpleRowList = _concat(simpleRowList, row);
+        // if(_isFunction(this.embed)) this.embed(row);
     };
 
     /**
@@ -57,6 +62,15 @@ DiagramRoot.Element = shapes.devs.Coupled.extend((function () {
      */
     const addObjectRow = function (row) {
         objectRowList = _concat(objectRowList, row);
+        // if(_isFunction(this.embed)) this.embed(row);
+    };
+
+    const getSimpleRowList = function () {
+        return simpleRowList;
+    };
+
+    const getObjectRowList = function () {
+        return objectRowList;
     };
 
     /**
@@ -71,9 +85,11 @@ DiagramRoot.Element = shapes.devs.Coupled.extend((function () {
 
     return {
         defaults: defaults,
-        setDiagramTitle: setDiagramTitle,
         addSimpleRow: addSimpleRow,
-        addObjectRow: addObjectRow
+        addObjectRow: addObjectRow,
+        setDiagramTitle: setDiagramTitle,
+        getSimpleRowList: getSimpleRowList,
+        getObjectRowList: getObjectRowList
     };
 })());
 

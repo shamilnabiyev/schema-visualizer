@@ -1,9 +1,8 @@
 import {
-    bind as _bind,
-    bindAll as _bindAll,
     concat as _concat,
-    findIndex as _findIndex, isNull as _isNull,
-    isUndefined as _isUndefined, template as _template
+    findIndex as _findIndex,
+    isUndefined as _isUndefined,
+    isFunction as _isFunction
 } from 'lodash';
 import {dia, shapes, util} from 'jointjs';
 import ObjectRowTemplate from './object-row.html';
@@ -21,39 +20,54 @@ const TRANSITION_DURATION = 100;
 
 const ObjectRow = shapes.html.ObjectRow = {};
 
-ObjectRow.Element = shapes.devs.Coupled.extend({
+ObjectRow.Element = shapes.devs.Coupled.extend((function(){
     /**
      * Model defaults
      */
-    defaults: util.defaultsDeep({
+    const defaults = util.defaultsDeep({
         type: 'html.ObjectRow.Element',
-    }, shapes.devs.Coupled.prototype.defaults),
+    }, shapes.devs.Coupled.prototype.defaults);
 
-    rowLevel: 0,
+    let rowLevel = 0;
 
     /**
      * A list of child elements
      */
-    simpleRowList: [],
+    let simpleRowList = [];
 
-    objectRowList: [],
+    let objectRowList = [];
 
     /**
      * Adds a new child element to the list 'simpleRowList'
      * @param {Object} simpleRow
      */
-    addSimpleRow: function (simpleRow) {
-        this.simpleRowList = _concat(this.simpleRowList, simpleRow);
-    },
+    const addSimpleRow = function (simpleRow) {
+        simpleRowList = _concat(simpleRowList, simpleRow);
+        if(_isFunction(this.embed)) this.embed(simpleRow);
+    };
 
-    /**
-     * Adds a list of child elements to the list 'simpleRowList'
-     * @param {Array} simpleRowList
-     */
-    addSimpleRows: function (simpleRowList) {
-        this.addSimpleRow(simpleRowList);
-    }
-});
+    const addObjectRow = function (objectRow) {
+        objectRowList = _concat(objectRowList, objectRow);
+        if(_isFunction(this.embed)) this.embed(objectRow);
+    };
+
+    const simpleRowListLength = function () {
+        return simpleRowList.length;
+    };
+
+    const objectRowListLength = function () {
+        return objectRowList.length;
+    };
+
+    return {
+        defaults: defaults,
+        rowLevel: rowLevel,
+        addSimpleRow: addSimpleRow,
+        addObjectRow: addObjectRow,
+        simpleRowListLength: simpleRowListLength,
+        objectRowListLength: objectRowListLength
+    };
+})());
 
 ObjectRow.ElementView = dia.ElementView.extend({
     htmlTemplate: ObjectRowTemplate,
@@ -62,10 +76,6 @@ ObjectRow.ElementView = dia.ElementView.extend({
     initialize: initializeBox,
 
     appendValuesToTemplate: appendValuesToTemplate,
-
-    simpleRowListLength: function () {
-        return this.model.simpleRowList.length;
-    },
 
     addAdditionalEvents: function () {
         const view = this;
@@ -107,7 +117,7 @@ function expandRow(view, parentCell) {
 
     const parentHeight = parentCell.prop("size/height");
 
-    let offset = HEIGHT * (view.simpleRowListLength() + view.model.objectRowList.length);
+    let offset = HEIGHT * (view.model.simpleRowListLength() + view.model.objectRowListLength());
     if(offset === 0) return;
 
     parentCell.transition("size/height", parentHeight + offset, {
@@ -152,7 +162,7 @@ function collapseRow(view, parentCell) {
     removeAllSimpleRows(view);
     removeAllObjectRows(view);
 
-    let offset = HEIGHT * (view.simpleRowListLength() + view.model.objectRowList.length);
+    let offset = HEIGHT * (view.model.simpleRowListLength() + view.model.objectRowListLength());
     if(offset === 0) return;
 
     parentCell.transition("size/height", parentHeight - offset, {
