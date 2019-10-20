@@ -1,11 +1,14 @@
 import {
+    bind as _bind,
+    bindAll as _bindAll,
     concat as _concat,
-    findIndex as _findIndex,
-    isUndefined as _isUndefined
+    findIndex as _findIndex, isNull as _isNull,
+    isUndefined as _isUndefined, template as _template
 } from 'lodash';
-import {shapes, util} from 'jointjs';
-import CustomHtml from '../common/html-element';
+import {dia, shapes, util} from 'jointjs';
 import ObjectRowTemplate from './object-row.html';
+import $ from "jquery";
+import {removeBox, renderBox, updateBox} from "../utils";
 
 
 if (_isUndefined(shapes.html)) {
@@ -18,13 +21,15 @@ const TRANSITION_DURATION = 100;
 
 const ObjectRow = shapes.html.ObjectRow = {};
 
-ObjectRow.Element = CustomHtml.Element.extend({
+ObjectRow.Element = shapes.devs.Coupled.extend({
     /**
      * Model defaults
      */
     defaults: util.defaultsDeep({
         type: 'html.ObjectRow.Element',
-    }, CustomHtml.Element.prototype.defaults),
+    }, shapes.devs.Coupled.prototype.defaults),
+
+    rowLevel: 0,
 
     /**
      * A list of child elements
@@ -50,9 +55,43 @@ ObjectRow.Element = CustomHtml.Element.extend({
     }
 });
 
-ObjectRow.ElementView = CustomHtml.ElementView.extend({
+ObjectRow.ElementView = dia.ElementView.extend({
     htmlTemplate: ObjectRowTemplate,
     isCollapsed: true,
+
+    initialize: function () {
+        _bindAll(this, 'updateBox');
+        dia.ElementView.prototype.initialize.apply(this, arguments);
+
+        let rowLevel = this.model.get("rowLevel");
+        this.$box = $(_template(this.htmlTemplate)({'rowLevel': rowLevel}));
+
+        const deleteButton = this.$box.find('.delete');
+        if (!_isUndefined(deleteButton) && !_isNull(deleteButton)) {
+            deleteButton.on('click', _bind(this.model.remove, this.model));
+        }
+
+        const flexContainer = this.$box.find('.flex-container');
+        if (!_isUndefined(flexContainer) && !_isNull(flexContainer)) {
+            flexContainer.on('mousedown', (evt) => { evt.stopPropagation(); });
+            flexContainer.on('click', (evt) => { evt.stopPropagation(); });
+        }
+
+        this.appendValuesToTemplate();
+        this.addAdditionalEvents();
+
+        this.model.on('change', this.updateBox, this);
+        this.model.on('remove', this.removeBox, this);
+    },
+
+    appendValuesToTemplate: function name() {
+        const customAttrs = this.model.get("customAttrs");
+        let textValue = "";
+        for (let a in customAttrs) {
+            textValue = (!_isUndefined(customAttrs[a]) && !_isNull(customAttrs[a])) ? customAttrs[a] : "";
+            this.$box.find('div.' + a + '> span').text(textValue);
+        }
+    },
 
     simpleRowListLength: function () {
         return this.model.simpleRowList.length;
@@ -84,7 +123,11 @@ ObjectRow.ElementView = CustomHtml.ElementView.extend({
                 collapseRow(view, parentCell);
             }
         });
-    }
+    },
+
+    render: renderBox,
+    updateBox: updateBox,
+    removeBox: removeBox
 });
 
 function expandRow(view, parentCell) {

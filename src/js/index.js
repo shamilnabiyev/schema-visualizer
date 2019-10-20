@@ -119,7 +119,9 @@ diagramRoot1.fitEmbeds({
     deep: true
 });
 
-console.log("shapes.html: ", shapes.html);
+diagramRoot1.toFront();
+
+// console.log("shapes.html: ", shapes.html);
 
 // console.log(coupledParent.getEmbeddedCells({deep: true}));
 
