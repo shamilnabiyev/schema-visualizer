@@ -1,18 +1,8 @@
-import {createCoupled, createTitleRow, createSimpleRow, createObjectRow} from './jointjs-helper';
+import { createTitleRow, createSimpleRow, createObjectRow} from './jointjs-helper';
 import {
     isEqual as _isEqual,
-    isFunction as _isFunction,
-    isUndefined as _isUndefined,
-    isNull as _isNull,
     forEach as _forEach,
     includes as _includes,
-    toLower as _toLower,
-    has as _has,
-    filter as _filter,
-    map as _map,
-    noop as _noop,
-    pickBy as _pickBy,
-    concat as _concat
 } from 'lodash';
 import DiagramRoot from "../schema-diagram/diagram-root/diagram-root";
 
@@ -59,7 +49,7 @@ const schema = {
     },
     "required": ["id", "title", "author", "year", "publisher", "subDoc"]
 };
-
+/*
 const complexSchema = {
     "$schema": "http://json-schema.org/draft-07/schema#",
     "type": "object",
@@ -79,26 +69,27 @@ const complexSchema = {
         }
     },
 };
-
+*/
 let GRAPH = null;
 const TYPE = "type";
 const WIDTH = 400;
 const HEIGHT = 35;
-const HEIGHT_OFFSET = 35;
+// const HEIGHT_OFFSET = 35;
 const X_START = 700;
 const Y_START = 380;
 const REQ_FRAG = "req";
 const OPT_FLAG = " ";
-const NULL_TYPE = "null";
+// const NULL_TYPE = "null";
 
-const props = schema.properties || {};
-const propKeys = Object.keys(props);
+// const props = schema.properties || {};
+// const propKeys = Object.keys(props);
 const requiredProps = schema.required || [];
 
 /**
  *
  * @param {String} key The json schema property name
  * @param {Object} value The property itself containing key value pairs such as data type, properties etc.
+ * @param {{value: number}} rowLevel
  */
 const simpleRow = (value, key, rowLevel) => createSimpleRow({
     field_name: key,
@@ -120,9 +111,9 @@ const objectRow = (value, key, rowLevel) => createObjectRow({
 
 const SIMPLE_TYPES = ["boolean", "integer", "null", "number", "string"];
 const OBJECT_TYPE = "object";
-const ARRAY_TYPE = "array";
-const MULTI_TYPE = 'multi';
-const ANY_OF = 'anyOf';
+// const ARRAY_TYPE = "array";
+// const MULTI_TYPE = 'multi';
+// const ANY_OF = 'anyOf';
 
 function generateRow(properties, doc, rowLevel) {
     _forEach(properties, (property, key) => {
@@ -214,6 +205,13 @@ const generateCells = function (graph) {
     diagramRoot.fitEmbeds();
 
     diagramRoot.toFront();
+
+    const diagramRoot_2 = new DiagramRoot.Element({
+        attrs: {
+            text: {text: "ROOT_2"},
+        },
+    });
+    console.log('diagramRoot_2', diagramRoot_2.getObjectRowList());
 };
 
 export default generateCells;

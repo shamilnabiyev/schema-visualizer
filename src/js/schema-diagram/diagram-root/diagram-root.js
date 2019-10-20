@@ -16,7 +16,7 @@ DiagramRoot.Element = shapes.devs.Coupled.extend((function () {
     let defaults = util.defaultsDeep({
         type: 'html.DiagramRoot.Element',
         attrs: {
-            '.body': { stroke: '#ff1733' },
+            '.body': { stroke: '#ffffff' },
         },
     }, shapes.devs.Coupled.prototype.defaults);
 

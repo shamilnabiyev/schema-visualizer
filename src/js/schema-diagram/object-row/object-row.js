@@ -2,7 +2,8 @@ import {
     concat as _concat,
     findIndex as _findIndex,
     isUndefined as _isUndefined,
-    isFunction as _isFunction
+    isFunction as _isFunction,
+    forEach as _forEach
 } from 'lodash';
 import {dia, shapes, util} from 'jointjs';
 import ObjectRowTemplate from './object-row.html';
@@ -43,12 +44,12 @@ ObjectRow.Element = shapes.devs.Coupled.extend((function(){
      */
     const addSimpleRow = function (simpleRow) {
         simpleRowList = _concat(simpleRowList, simpleRow);
-        if(_isFunction(this.embed)) this.embed(simpleRow);
+        // if(_isFunction(this.embed)) this.embed(simpleRow);
     };
 
     const addObjectRow = function (objectRow) {
         objectRowList = _concat(objectRowList, objectRow);
-        if(_isFunction(this.embed)) this.embed(objectRow);
+        // if(_isFunction(this.embed)) this.embed(objectRow);
     };
 
     const simpleRowListLength = function () {
@@ -59,13 +60,23 @@ ObjectRow.Element = shapes.devs.Coupled.extend((function(){
         return objectRowList.length;
     };
 
+    const getSimpleRowList = function () {
+        return simpleRowList;
+    };
+
+    const getObjectRowList = function () {
+        return objectRowList;
+    };
+
     return {
         defaults: defaults,
         rowLevel: rowLevel,
         addSimpleRow: addSimpleRow,
         addObjectRow: addObjectRow,
         simpleRowListLength: simpleRowListLength,
-        objectRowListLength: objectRowListLength
+        objectRowListLength: objectRowListLength,
+        getSimpleRowList: getSimpleRowList,
+        getObjectRowList: getObjectRowList
     };
 })());
 
@@ -92,15 +103,29 @@ ObjectRow.ElementView = dia.ElementView.extend({
         if (_isUndefined(caretRight)) return;
 
         rowExpander.on('click', (evt) => {
+            const model = view.model;
+            const graph = model.graph;
+            let modelHeight = model.prop('size/height');
+
+            // console.log(model.getSimpleRowList());
             /* workaround to get the parent cell */
-            parentCell = parentCell || view.model.getParentCell();
+            parentCell = parentCell || model.getParentCell();
 
             caretRight.toggleClass('down');
 
             if (view.isCollapsed) {
-                expandRow(view, parentCell);
+                // expandRow(view, parentCell);
+
+                _forEach(model.getSimpleRowList(), (simpleRow, index) => {
+                    graph.addCell(simpleRow);
+                    model.embed(simpleRow);
+                    simpleRow.position(0, modelHeight + (index * 35), {parentRelative: true});
+                });
+
+                // model.fitEmbeds();
+
             } else if (!view.isCollapsed) {
-                collapseRow(view, parentCell);
+                // collapseRow(view, parentCell);
             }
         });
     },
@@ -136,19 +161,21 @@ function expandRow(view, parentCell) {
 
     const modelPosition = view.model.get('position');
     offset = 0;
-    view.model.simpleRowList.forEach((simpleRow, index) => {
+
+    view.model.getSimpleRowList().forEach((simpleRow, index) => {
         offset = HEIGHT * (index + 1);
         simpleRow.position(modelPosition.x, modelPosition.y + offset);
         view.model.graph.addCell(simpleRow);
         parentCell.embed(simpleRow);
     });
 
-    view.model.objectRowList.forEach((objectRow, index) => {
+    view.model.getObjectRowList().forEach((objectRow, index) => {
         offset = HEIGHT * (index + 1);
         objectRow.position(modelPosition.x, modelPosition.y + offset);
         view.model.graph.addCell(objectRow);
         parentCell.embed(objectRow);
     });
+
     view.isCollapsed = false;
 }
 

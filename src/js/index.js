@@ -19,6 +19,9 @@ import {
 /* contains DiagramRoot.Element and DiagramRoot.ElementView */
 import DiagramRoot from "./schema-diagram/diagram-root";
 import DiagramTitle from "./schema-diagram/diagram-title";
+import CustomHtml from "./schema-diagram/common/html-element";
+import ObjectRow from "./schema-diagram/object-row/object-row";
+import SimpleRow from "./schema-diagram/simple-row/simple-row";
 
 $(window).on("load", () => {
     $('#loading-icon').remove();
@@ -58,6 +61,19 @@ const m1 = new shapes.devs.Model({
 graph.addCell(m1);
 
 generateCells(graph);
+
+// console.log('shapes:', shapes);
+
+const html1 = new ObjectRow.Element({rowLevel: 111, simpleRowList: []});
+const html2 = new ObjectRow.Element();
+
+console.log('html1', html1);
+console.log('html1.rowLevel', html1.get('rowLevel'));
+console.log('html2.rowLevel', html2.get('rowLevel'));
+
+html1.get('simpleRowList').push(new SimpleRow.Element({}));
+console.log('html1', html1);
+console.log('html1.simpleRowList', html1.get('simpleRowList'));
 
 /**
  * An example showing how to collapse/expand elements in jointjs
