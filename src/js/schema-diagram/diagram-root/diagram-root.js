@@ -1,6 +1,6 @@
 import {
     concat as _concat,
-    isFunction as _isFunction
+    isFunction as _isFunction, isUndefined as _isUndefined
 } from 'lodash';
 import {shapes, util} from 'jointjs';
 
@@ -16,7 +16,7 @@ DiagramRoot.Element = shapes.devs.Coupled.extend((function () {
     let defaults = util.defaultsDeep({
         type: 'html.DiagramRoot.Element',
         attrs: {
-            '.body': { stroke: '#ffffff' },
+            '.body': {stroke: '#ffffff'},
         },
     }, shapes.devs.Coupled.prototype.defaults);
 
@@ -27,23 +27,11 @@ DiagramRoot.Element = shapes.devs.Coupled.extend((function () {
     let diagramTitle = null;
 
     /**
-     * @private
-     * @type {[SimpleRow.Element]}
-     */
-    let simpleRowList = [];
-
-    /**
-     * @private
-     * @type {[ObjectRow.Element]}
-     */
-    let objectRowList = [];
-
-    /**
      *
      * @param {DiagramTitle.Element} title
      */
     const setDiagramTitle = function (title) {
-      diagramTitle = title;
+        diagramTitle = title;
     };
 
     /**
@@ -51,7 +39,9 @@ DiagramRoot.Element = shapes.devs.Coupled.extend((function () {
      * @param {SimpleRow.Element} row
      */
     const addSimpleRow = function (row) {
-        simpleRowList = _concat(simpleRowList, row);
+        if (_isUndefined(this.get('simpleRowList'))) this.prop('simpleRowList', []);
+
+        this.get('simpleRowList').push(row);
     };
 
     /**
@@ -59,15 +49,17 @@ DiagramRoot.Element = shapes.devs.Coupled.extend((function () {
      * @param {ObjectRow.Element} row
      */
     const addObjectRow = function (row) {
-        objectRowList = _concat(objectRowList, row);
+        if (_isUndefined(this.get('objectRowList'))) this.prop('objectRowList', []);
+
+        this.get('objectRowList').push(row);
     };
 
     const getSimpleRowList = function () {
-        return simpleRowList;
+        return this.get('simpleRowList');
     };
 
     const getObjectRowList = function () {
-        return objectRowList;
+        return this.get('objectRowList');
     };
 
     /**

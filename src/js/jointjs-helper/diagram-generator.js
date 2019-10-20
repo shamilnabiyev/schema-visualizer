@@ -43,6 +43,7 @@ const schema = {
             "type": "object",
             "properties": {
                 "serial_number": {"type": "string"},
+                "logs": {"type": "string"},
             },
             "required": ["serial_number"]
         },
@@ -205,47 +206,6 @@ const generateCells = function (graph) {
     diagramRoot.fitEmbeds();
 
     diagramRoot.toFront();
-
-    const diagramRoot_2 = new DiagramRoot.Element({
-        attrs: {
-            text: {text: "ROOT_2"},
-        },
-    });
-    console.log('diagramRoot_2', diagramRoot_2.getObjectRowList());
 };
 
 export default generateCells;
-
-/*
-const initialDoc = {key: "", property: {}, simpleRowList: [], objectRowList: [], arrayRows: []};
-const rowLevel = {value: 0};
-generateRow(schema.properties, initialDoc, rowLevel);
-
-cells.childCells = cells.childCells.concat(initialDoc.simpleRowList, initialDoc.objectRowList);
-cells.childCells.forEach((cell) => {
-    cells.rootCell.embed(cell);
-});
-
-*/
-
-// console.log(cells.childCells);
-
-/*
-_forEach(cells.child, (element, index) => {
-    element.prop('position/y', (index * HEIGHT_OFFSET), {parentRelative: true});
-    cells.root.embed(element);
-});
-*/
-
-/*
-const isSimpleType = (property) => _isUndefined(property.type) ? false : _includes(SIMPLE_TYPES, property.type);
-const isObjectType = (property) => _isUndefined(property.type) ? false : _includes(OBJECT_TYPE, property.type);
-
-const simpleTypeProps = _pickBy(schema.properties, (property, key) => isSimpleType(property));
-const simpleRowList = _map(simpleTypeProps, simpleRow);
-
-const objectTypeProps = _pickBy(schema.properties, (property, key) => isObjectType(property));
-const objectRowList = _map(objectTypeProps, (value, key) => objectRow(value, key));
-
-cells.childCells = _concat(cells.childCells, simpleRowList, objectRowList);
-*/

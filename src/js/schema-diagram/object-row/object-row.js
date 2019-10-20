@@ -21,7 +21,7 @@ const TRANSITION_DURATION = 100;
 
 const ObjectRow = shapes.html.ObjectRow = {};
 
-ObjectRow.Element = shapes.devs.Coupled.extend((function(){
+ObjectRow.Element = shapes.devs.Coupled.extend((function () {
     /**
      * Model defaults
      */
@@ -32,40 +32,35 @@ ObjectRow.Element = shapes.devs.Coupled.extend((function(){
     let rowLevel = 0;
 
     /**
-     * A list of child elements
-     */
-    let simpleRowList = [];
-
-    let objectRowList = [];
-
-    /**
      * Adds a new child element to the list 'simpleRowList'
      * @param {Object} simpleRow
      */
     const addSimpleRow = function (simpleRow) {
-        simpleRowList = _concat(simpleRowList, simpleRow);
-        // if(_isFunction(this.embed)) this.embed(simpleRow);
+        if (_isUndefined(this.get('simpleRowList'))) this.prop('simpleRowList', []);
+
+        this.get('simpleRowList').push(simpleRow);
     };
 
     const addObjectRow = function (objectRow) {
-        objectRowList = _concat(objectRowList, objectRow);
-        // if(_isFunction(this.embed)) this.embed(objectRow);
+        if (_isUndefined(this.get('objectRowList'))) this.prop('objectRowList', []);
+
+        this.get('objectRowList').push(objectRow);
     };
 
     const simpleRowListLength = function () {
-        return simpleRowList.length;
+        return this.get('simpleRowList').length;
     };
 
     const objectRowListLength = function () {
-        return objectRowList.length;
+        return this.get('objectRowList').length;
     };
 
     const getSimpleRowList = function () {
-        return simpleRowList;
+        return this.get('simpleRowList');
     };
 
     const getObjectRowList = function () {
-        return objectRowList;
+        return this.get('objectRowList');
     };
 
     return {
@@ -76,7 +71,7 @@ ObjectRow.Element = shapes.devs.Coupled.extend((function(){
         simpleRowListLength: simpleRowListLength,
         objectRowListLength: objectRowListLength,
         getSimpleRowList: getSimpleRowList,
-        getObjectRowList: getObjectRowList
+        getObjectRowList: getObjectRowList,
     };
 })());
 
@@ -90,11 +85,11 @@ ObjectRow.ElementView = dia.ElementView.extend({
 
     addAdditionalEvents: function () {
         const view = this;
-        if(_isUndefined(view)) return;
+        if (_isUndefined(view)) return;
 
         removeAllSimpleRows(view);
 
-        let parentCell =  view.model.getParentCell();
+        let parentCell = view.model.getParentCell();
 
         const rowExpander = view.$box.find('.row-expander');
         if (_isUndefined(rowExpander)) return;
@@ -137,13 +132,13 @@ ObjectRow.ElementView = dia.ElementView.extend({
 
 function expandRow(view, parentCell) {
 
-    if(_isUndefined(view)) return;
-    if(_isUndefined(parentCell)) return;
+    if (_isUndefined(view)) return;
+    if (_isUndefined(parentCell)) return;
 
     const parentHeight = parentCell.prop("size/height");
 
     let offset = HEIGHT * (view.model.simpleRowListLength() + view.model.objectRowListLength());
-    if(offset === 0) return;
+    if (offset === 0) return;
 
     parentCell.transition("size/height", parentHeight + offset, {
         delay: TRANSITION_DELAY,
@@ -180,8 +175,8 @@ function expandRow(view, parentCell) {
 }
 
 function collapseRow(view, parentCell) {
-    if(_isUndefined(view)) return;
-    if(_isUndefined(parentCell)) return;
+    if (_isUndefined(view)) return;
+    if (_isUndefined(parentCell)) return;
 
     const parentHeight = parentCell.prop("size/height");
     if (parentHeight <= HEIGHT) return;
@@ -190,7 +185,7 @@ function collapseRow(view, parentCell) {
     removeAllObjectRows(view);
 
     let offset = HEIGHT * (view.model.simpleRowListLength() + view.model.objectRowListLength());
-    if(offset === 0) return;
+    if (offset === 0) return;
 
     parentCell.transition("size/height", parentHeight - offset, {
         delay: TRANSITION_DELAY,
@@ -233,7 +228,7 @@ function removeObjectRow(view, objectRow) {
 }
 
 function sliceEmbeds(model, parentCell) {
-    if(_isUndefined(model) || _isUndefined(parentCell)) return [];
+    if (_isUndefined(model) || _isUndefined(parentCell)) return [];
 
     let embeddedCells = parentCell.getEmbeddedCells();
     embeddedCells = embeddedCells.filter((cell) => _isUndefined(cell.prop("rowLevel")) || cell.prop("rowLevel") <= model.prop("rowLevel"));

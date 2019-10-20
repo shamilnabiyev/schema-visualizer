@@ -62,19 +62,6 @@ graph.addCell(m1);
 
 generateCells(graph);
 
-// console.log('shapes:', shapes);
-
-const html1 = new ObjectRow.Element({rowLevel: 111, simpleRowList: []});
-const html2 = new ObjectRow.Element();
-
-console.log('html1', html1);
-console.log('html1.rowLevel', html1.get('rowLevel'));
-console.log('html2.rowLevel', html2.get('rowLevel'));
-
-html1.get('simpleRowList').push(new SimpleRow.Element({}));
-console.log('html1', html1);
-console.log('html1.simpleRowList', html1.get('simpleRowList'));
-
 /**
  * An example showing how to collapse/expand elements in jointjs
  *
