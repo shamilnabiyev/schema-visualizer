@@ -7,7 +7,7 @@ import {
     isNull as _isNull
 } from 'lodash';
 import { dia, shapes, util } from 'jointjs';
-import {renderBox, updateBox, removeBox} from '../utils';
+import {renderBox, updateBox, removeBox, initializeBox, appendValuesToTemplate} from '../utils';
 
 if (_isUndefined(shapes.html)) {
     shapes.html = {};
@@ -28,43 +28,13 @@ CustomHtml.Element = shapes.devs.Model.extend({
 CustomHtml.ElementView = dia.ElementView.extend({
     htmlTemplate: '',
 
-    initialize: function () {
-        _bindAll(this, 'updateBox');
-        dia.ElementView.prototype.initialize.apply(this, arguments);
-
-        let rowLevel = this.model.get("rowLevel");
-        this.$box = $(_template(this.htmlTemplate)({'rowLevel': rowLevel}));
-
-        const deleteButton = this.$box.find('.delete');
-        if (!_isUndefined(deleteButton) && !_isNull(deleteButton)) {
-            deleteButton.on('click', _bind(this.model.remove, this.model));
-        }
-
-        const flexContainer = this.$box.find('.flex-container');
-        if (!_isUndefined(flexContainer) && !_isNull(flexContainer)) {
-            flexContainer.on('mousedown', (evt) => { evt.stopPropagation(); });
-            flexContainer.on('click', (evt) => { evt.stopPropagation(); });
-        }
-
-        this.appendValuesToTemplate();
-        this.addAdditionalEvents();
-
-        this.model.on('change', this.updateBox, this);
-        this.model.on('remove', this.removeBox, this);
-    },
+    initialize: initializeBox,
 
     addAdditionalEvents: function() {
 
     },
 
-    appendValuesToTemplate: function name() {
-        const customAttrs = this.model.get("customAttrs");
-        let textValue = "";
-        for (let a in customAttrs) {
-            textValue = (!_isUndefined(customAttrs[a]) && !_isNull(customAttrs[a])) ? customAttrs[a] : "";
-            this.$box.find('div.' + a + '> span').text(textValue);
-        }
-    },
+    appendValuesToTemplate: appendValuesToTemplate,
 
     render: renderBox,
     updateBox: updateBox,
