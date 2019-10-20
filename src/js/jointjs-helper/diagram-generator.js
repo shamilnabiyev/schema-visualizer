@@ -147,18 +147,17 @@ function generateRow(properties, doc, rowLevel) {
 function addSimpleRow(doc, key, property, rowLevel) {
     const newSimpleRow = simpleRow(property, key, rowLevel.value);
     doc.addSimpleRow(newSimpleRow);
-    if (!_isNull(GRAPH)) GRAPH.addCell(newSimpleRow);
-    doc.embed(newSimpleRow);
-    newSimpleRow.position(0, 0, {parentRelative: true});
+    // if (!_isNull(GRAPH)) GRAPH.addCell(newSimpleRow);
+    // doc.embed(newSimpleRow);
 }
 
 function addDocumentRow(doc, key, property, rowLevel) {
     const subDoc = objectRow(property, key, rowLevel.value);
     doc.addObjectRow(subDoc);
-    if (!_isNull(GRAPH)) GRAPH.addCell(subDoc);
+    // if (!_isNull(GRAPH)) GRAPH.addCell(subDoc);
 
-    doc.embed(subDoc);
-    subDoc.position(0, 0, {parentRelative: true});
+    // doc.embed(subDoc);
+    // subDoc.position(0, 0, {parentRelative: true});
 
     rowLevel.value += 1;
     generateRow(property.properties, subDoc, rowLevel);
@@ -192,27 +191,27 @@ const generateCells = function (graph) {
     generateRow(schema.properties, diagramRoot, rowLevel);
 
     // console.log('embeds: ', diagramRoot.getEmbeddedCells());
-    diagramRoot.fitEmbeds({deep: true});
+    diagramRoot.fitEmbeds();
 
     let diagramRootHeight = diagramRoot.prop('size/height');
 
     _forEach(diagramRoot.getSimpleRowList(), (simpleRow, index) => {
+        GRAPH.addCell(simpleRow);
+        diagramRoot.embed(simpleRow);
         simpleRow.position(0, diagramRootHeight + (index * HEIGHT), {parentRelative: true});
     });
 
-    diagramRoot.fitEmbeds({deep: true});
+    diagramRoot.fitEmbeds();
 
     diagramRootHeight = diagramRoot.prop('size/height');
 
     _forEach(diagramRoot.getObjectRowList(), (objectRow, index) => {
+        GRAPH.addCell(objectRow);
+        diagramRoot.embed(objectRow);
         objectRow.position(0, diagramRootHeight + (index * HEIGHT), {parentRelative: true});
     });
 
-    diagramRoot.fitEmbeds({
-        padding: {
-            top: 50
-        }, deep: true
-    });
+    diagramRoot.fitEmbeds();
 
     diagramRoot.toFront();
 };

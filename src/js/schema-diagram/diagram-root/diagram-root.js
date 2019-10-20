@@ -44,7 +44,6 @@ DiagramRoot.Element = shapes.devs.Coupled.extend((function () {
      */
     const setDiagramTitle = function (title) {
       diagramTitle = title;
-      // if(_isFunction(this.embed)) this.embed(title);
     };
 
     /**
@@ -53,7 +52,6 @@ DiagramRoot.Element = shapes.devs.Coupled.extend((function () {
      */
     const addSimpleRow = function (row) {
         simpleRowList = _concat(simpleRowList, row);
-        // if(_isFunction(this.embed)) this.embed(row);
     };
 
     /**
@@ -62,7 +60,6 @@ DiagramRoot.Element = shapes.devs.Coupled.extend((function () {
      */
     const addObjectRow = function (row) {
         objectRowList = _concat(objectRowList, row);
-        // if(_isFunction(this.embed)) this.embed(row);
     };
 
     const getSimpleRowList = function () {
