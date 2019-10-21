@@ -44,6 +44,20 @@ const schema = {
             "properties": {
                 "serial_number": {"type": "string"},
                 "logs": {"type": "string"},
+                "internal": {
+                    "type": "object",
+                    "properties": {
+                        "ean": {
+                            "type": "integer"
+                        },
+                        "sn": {
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "ean"
+                    ]
+                }
             },
             "required": ["serial_number"]
         },
@@ -139,17 +153,11 @@ function generateRow(properties, doc, rowLevel) {
 function addSimpleRow(doc, key, property, rowLevel) {
     const newSimpleRow = simpleRow(property, key, rowLevel.value);
     doc.addSimpleRow(newSimpleRow);
-    // if (!_isNull(GRAPH)) GRAPH.addCell(newSimpleRow);
-    // doc.embed(newSimpleRow);
 }
 
 function addDocumentRow(doc, key, property, rowLevel) {
     const subDoc = objectRow(property, key, rowLevel.value);
     doc.addObjectRow(subDoc);
-    // if (!_isNull(GRAPH)) GRAPH.addCell(subDoc);
-
-    // doc.embed(subDoc);
-    // subDoc.position(0, 0, {parentRelative: true});
 
     rowLevel.value += 1;
     generateRow(property.properties, subDoc, rowLevel);
@@ -160,7 +168,6 @@ const generateCells = function (graph) {
     GRAPH = graph;
 
     const titleText = "Book";
-
     const diagramRoot = new DiagramRoot.Element({
         attrs: {
             text: {text: titleText},
@@ -198,7 +205,7 @@ const generateCells = function (graph) {
     diagramRootHeight = diagramRoot.prop('size/height');
 
     _forEach(diagramRoot.getObjectRowList(), (objectRow, index) => {
-        const header = objectRow.get('objectRowHeader');
+        const header = objectRow.getHeader();
         GRAPH.addCell(header);
         objectRow.embed(header);
 
@@ -212,6 +219,8 @@ const generateCells = function (graph) {
     diagramRoot.fitEmbeds();
 
     diagramRoot.toFront();
+
+    console.log('diagramRoot.ParentCell: ', diagramRoot.getParentCell());
 };
 
 export default generateCells;

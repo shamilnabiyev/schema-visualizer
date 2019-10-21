@@ -250,15 +250,19 @@ export const createSimpleRow = function createSimpleRow(options) {
 export const createObjectRow = function createObjectRow(options) {
     const objectRowHeader = new ObjectRowHeader.Element({
         customAttrs: {
-            field_name: options.field_name,
+            field_name: options.field_name || 'new_field',
             field_constraints: options.field_constraints || 'ID, req, unq, idx',
             field_date_type: options.field_date_type || 'obj'
         },
+        rowLevel: options.rowLevel || 0,
         size: {width: options.width || 0, height: options.height || 0},
         position: {x: options.x || 0, y: options.y || 0},
     });
 
     const objectRow = new ObjectRow.Element({
+        attrs: {
+            text: {text: options.field_name || 'new_object_row'}
+        },
         isObjectRow: true,
         size: {width: options.width || 0, height: options.height || 0},
         position: {x: options.x || 0, y: options.y || 0},
