@@ -3,6 +3,7 @@ import {isUndefined, isNull} from 'lodash';
 import SimpleRow from '../schema-diagram/simple-row/simple-row';
 import DiagramTitle from '../schema-diagram/diagram-title/diagram-title';
 import ObjectRow from "../schema-diagram/object-row/object-row";
+import ObjectRowHeader from "../schema-diagram/object-row-header/object-row-header";
 import diagramTitleTemplate from "../schema-diagram/diagram-title/diagram-title.html";
 
 const getPosition = (options) => {
@@ -247,8 +248,7 @@ export const createSimpleRow = function createSimpleRow(options) {
 };
 
 export const createObjectRow = function createObjectRow(options) {
-    return new ObjectRow.Element({
-        isObjectRow: true,
+    const objectRowHeader = new ObjectRowHeader.Element({
         customAttrs: {
             field_name: options.field_name,
             field_constraints: options.field_constraints || 'ID, req, unq, idx',
@@ -256,11 +256,21 @@ export const createObjectRow = function createObjectRow(options) {
         },
         size: {width: options.width || 0, height: options.height || 0},
         position: {x: options.x || 0, y: options.y || 0},
+    });
+
+    const objectRow = new ObjectRow.Element({
+        isObjectRow: true,
+        size: {width: options.width || 0, height: options.height || 0},
+        position: {x: options.x || 0, y: options.y || 0},
         rowLevel: options.rowLevel || 0,
         inPorts: ['in'],
         outPorts: ['out'],
         ports: PORT_OPTIONS
     });
+
+    objectRow.prop('objectRowHeader', objectRowHeader);
+
+    return objectRow;
 };
 
 

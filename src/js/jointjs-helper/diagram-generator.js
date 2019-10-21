@@ -198,9 +198,15 @@ const generateCells = function (graph) {
     diagramRootHeight = diagramRoot.prop('size/height');
 
     _forEach(diagramRoot.getObjectRowList(), (objectRow, index) => {
+        const header = objectRow.get('objectRowHeader');
+        GRAPH.addCell(header);
+        objectRow.embed(header);
+
         GRAPH.addCell(objectRow);
         diagramRoot.embed(objectRow);
         objectRow.position(0, diagramRootHeight + (index * HEIGHT), {parentRelative: true});
+
+        header.position(0, 0, {parentRelative: true});
     });
 
     diagramRoot.fitEmbeds();

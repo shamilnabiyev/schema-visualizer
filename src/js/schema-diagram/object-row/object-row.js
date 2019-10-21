@@ -10,6 +10,7 @@ import ObjectRowTemplate from './object-row.html';
 import DiagramRoot from "../diagram-root";
 import $ from "jquery";
 import {removeBox, renderBox, updateBox, initializeBox, appendValuesToTemplate} from "../utils";
+import SimpleRow from "../simple-row/simple-row";
 
 
 if (_isUndefined(shapes.html)) {
@@ -43,19 +44,33 @@ ObjectRow.Element = DiagramRoot.Element.extend((function () {
      */
     const setDiagramTitle = undefined;
 
+    /**
+     *
+     * @param {SimpleRow.Element} header
+     */
+    const setHeader = function (header) {
+      if(_isUndefined(this.get('objectRowHeader'))) this.prop('objectRowHeader', header);
+    };
+
+    const getHeader = function () {
+        return (_isUndefined(this.get('objectRowHeader'))) ? new SimpleRow.Element() : this.get('objectRowHeader');
+    };
+
     return {
         defaults: defaults,
         rowLevel: rowLevel,
+        setHeader: setHeader,
+        getHeader: getHeader
     };
 })());
 
 ObjectRow.ElementView = DiagramRoot.ElementView.extend({
-    htmlTemplate: ObjectRowTemplate,
+    // htmlTemplate: ObjectRowTemplate,
     isCollapsed: true,
 
     appendValuesToTemplate: appendValuesToTemplate,
 
-    addAdditionalEvents: function () {
+    addAdditionalEvents_tmp: function () {
         const view = this;
         if (_isUndefined(view)) return;
 
@@ -63,11 +78,7 @@ ObjectRow.ElementView = DiagramRoot.ElementView.extend({
 
         let parentCell = view.model.getParentCell();
 
-        const rowExpander = view.$box.find('.row-expander');
-        if (_isUndefined(rowExpander)) return;
 
-        const caretRight = view.$box.find('.fa-caret-right');
-        if (_isUndefined(caretRight)) return;
 
         rowExpander.on('click', (evt) => {
             const model = view.model;

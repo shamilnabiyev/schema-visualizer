@@ -5,7 +5,7 @@ const appendValuesToTemplate = function () {
     let textValue = "";
     for (let a in customAttrs) {
         textValue = (!_isUndefined(customAttrs[a]) && !_isNull(customAttrs[a])) ? customAttrs[a] : "";
-        this.$box.find('div.' + a + '> span').text(textValue);
+        if (!_isUndefined(this.$box) && !_isNull(this.$box)) this.$box.find('div.' + a + '> span').text(textValue);
     }
 };
 
