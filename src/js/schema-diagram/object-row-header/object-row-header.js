@@ -70,7 +70,9 @@ function expandParentRow(view) {
     const model = view.model;
     const graph = model.graph;
     const parentCell = model.getParentCell();
-    console.log(parentCell instanceof DiagramRoot.Element);
+
+    const diagramRoot = getDiagramRoot(parentCell);
+    console.log('diagramRoot: ', diagramRoot);
 
     let modelHeight = parentCell.prop('size/height');
 
@@ -127,7 +129,7 @@ function removeAllObjectRows(view) {
     const graph = view.model.graph;
     const parentCell = view.model.getParentCell();
     const objectRowList = parentCell.getObjectRowList();
-    if(_isNil(objectRowList)) return;
+    if (_isNil(objectRowList)) return;
 
     objectRowList.forEach((objectRow) => {
         graph.removeCells([objectRow.getHeader()]);
@@ -140,7 +142,7 @@ function removeAllObjectRows(view) {
 
 function removeObjectRow(graph, objectRow) {
     const objectRowList = objectRow.getObjectRowList();
-    if(_isNil(objectRowList)) return;
+    if (_isNil(objectRowList)) return;
 
     objectRowList.forEach((row) => {
         graph.removeCells([row.getHeader()]);
@@ -155,16 +157,20 @@ function removeObjectRow(graph, objectRow) {
 
 function getDiagramRoot(cell) {
     const result = cell.getParentCell();
-
-
+    if (result instanceof DiagramRoot.Element) {
+        return result;
+    } else {
+        return getDiagramRoot(result);
+    }
 }
 
 function moveObjectRows(graph, objectRowList) {
-    if(_isNil(graph)) return;
-    if(_isNil(objectRowList)) return;
+    if (_isNil(graph)) return;
+    if (_isNil(objectRowList)) return;
 
-   _forEach(objectRowList, (row, index) => {
+    _forEach(objectRowList, (row, index) => {
 
-   });
+    });
 }
+
 export default ObjectRowHeader;
