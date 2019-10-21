@@ -183,7 +183,7 @@ function getRootLevelObjectRow(cell) {
     if((result instanceof ObjectRow.Element) && (result.get('rowLevel') === 0)) {
         return result;
     } else {
-        getRootLevelObjectRow(result);
+        return getRootLevelObjectRow(result);
     }
 }
 
