@@ -1,4 +1,4 @@
-import { createTitleRow, createSimpleRow, createObjectRow} from './jointjs-helper';
+import {createTitleRow, createSimpleRow, createObjectRow} from './jointjs-helper';
 import {
     isEqual as _isEqual,
     forEach as _forEach,
@@ -20,6 +20,7 @@ const schema = {
         "subDoc": {
             "type": "object",
             "properties": {
+                "logs": {"type": "string"},
                 "internal": {
                     "type": "object",
                     "properties": {
@@ -47,18 +48,18 @@ const schema = {
             "properties": {
                 "serial_number": {"type": "string"},
                 "logs": {"type": "string"},
-                "internal": {
+                "internal2": {
                     "type": "object",
                     "properties": {
-                        "ean": {
+                        "ean2": {
                             "type": "integer"
                         },
-                        "sn": {
+                        "sn2": {
                             "type": "string"
                         }
                     },
                     "required": [
-                        "ean"
+                        "ean2"
                     ]
                 }
             },

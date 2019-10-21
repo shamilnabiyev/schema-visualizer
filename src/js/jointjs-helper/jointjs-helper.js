@@ -257,6 +257,9 @@ export const createObjectRow = function createObjectRow(options) {
         rowLevel: options.rowLevel || 0,
         size: {width: options.width || 0, height: options.height || 0},
         position: {x: options.x || 0, y: options.y || 0},
+        inPorts: ['in'],
+        outPorts: ['out'],
+        ports: PORT_OPTIONS
     });
 
     const objectRow = new ObjectRow.Element({
@@ -267,9 +270,6 @@ export const createObjectRow = function createObjectRow(options) {
         size: {width: options.width || 0, height: options.height || 0},
         position: {x: options.x || 0, y: options.y || 0},
         rowLevel: options.rowLevel || 0,
-        inPorts: ['in'],
-        outPorts: ['out'],
-        ports: PORT_OPTIONS
     });
 
     objectRow.prop('objectRowHeader', objectRowHeader);

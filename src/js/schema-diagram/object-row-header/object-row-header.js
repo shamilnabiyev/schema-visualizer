@@ -70,6 +70,7 @@ function expandParentRow(view) {
     const model = view.model;
     const graph = model.graph;
     const parentCell = model.getParentCell();
+    console.log('rowLevel:', parentCell.get('rowLevel'));
 
     let modelHeight = parentCell.prop('size/height');
 
@@ -99,8 +100,11 @@ function expandParentRow(view) {
     parentCell.fitEmbeds();
 
     const diagramRoot = getDiagramRoot(parentCell);
-    // console.log('diagramRoot: ', diagramRoot);
-    moveObjectRows(diagramRoot, parentCell);
+    const result = (parentCell.get('rowLevel') === 0) ? parentCell : getRootLevelObjectRow(parentCell);
+
+    console.log('result: ', result);
+
+    // moveObjectRows(diagramRoot, parentCell);
 
     view.isCollapsed = false;
 }
@@ -165,22 +169,28 @@ function getDiagramRoot(cell) {
     }
 }
 
+function getRootLevelObjectRow(cell) {
+    const result = cell.getParentCell();
+    if((result instanceof ObjectRow.Element) && (result.get('rowLevel') === 0)) {
+        return result;
+    } else {
+        getRootLevelObjectRow(result);
+    }
+}
+
 function moveObjectRows(diagramRoot, parentCell) {
     if (_isNil(diagramRoot) || _isNil(parentCell)) return;
     const objectRowList = diagramRoot.getObjectRowList();
 
     const indexOfCell = objectRowList.indexOf(parentCell);
-    if(_isNil(indexOfCell)) return;
+    if (_isNil(indexOfCell) /*|| indexOfCell < 0 */) return;
 
-    let cellPositionY = parentCell.prop("position/y");
+    let cellPosition = parentCell.prop("position");
     let cellHeight = parentCell.prop("size/height");
-    let nextPositionY = cellPositionY + cellHeight;
+    let nextPositionY = cellPosition.y + cellHeight;
 
     _forEach(objectRowList.slice(indexOfCell + 1), (objectRow, index) => {
-        objectRow.prop("position/y", nextPositionY);
-        objectRow.getHeader().prop("position/y", nextPositionY);
-        // objectRow.position(0, nextPositionY);
-        // objectRow.fitEmbeds();
+        objectRow.position(cellPosition.x, nextPositionY, {deep: true});
         nextPositionY = nextPositionY + objectRow.prop("size/height");
     });
 }
