@@ -71,9 +71,6 @@ function expandParentRow(view) {
     const graph = model.graph;
     const parentCell = model.getParentCell();
 
-    const diagramRoot = getDiagramRoot(parentCell);
-    console.log('diagramRoot: ', diagramRoot);
-
     let modelHeight = parentCell.prop('size/height');
 
     _forEach(parentCell.getSimpleRowList(), (simpleRow, index) => {
@@ -92,14 +89,18 @@ function expandParentRow(view) {
 
         graph.addCell(objectRow);
         parentCell.embed(objectRow);
+
         objectRow.position(0, modelHeight + (index * 35), {parentRelative: true});
         header.position(0, 0, {parentRelative: true});
+
         objectRow.fitEmbeds();
     });
 
     parentCell.fitEmbeds();
 
-    moveObjectRows(graph, parentCell.getObjectRowList());
+    const diagramRoot = getDiagramRoot(parentCell);
+    // console.log('diagramRoot: ', diagramRoot);
+    moveObjectRows(diagramRoot, parentCell);
 
     view.isCollapsed = false;
 }
@@ -164,12 +165,23 @@ function getDiagramRoot(cell) {
     }
 }
 
-function moveObjectRows(graph, objectRowList) {
-    if (_isNil(graph)) return;
-    if (_isNil(objectRowList)) return;
+function moveObjectRows(diagramRoot, parentCell) {
+    if (_isNil(diagramRoot) || _isNil(parentCell)) return;
+    const objectRowList = diagramRoot.getObjectRowList();
 
-    _forEach(objectRowList, (row, index) => {
+    const indexOfCell = objectRowList.indexOf(parentCell);
+    if(_isNil(indexOfCell)) return;
 
+    let cellPositionY = parentCell.prop("position/y");
+    let cellHeight = parentCell.prop("size/height");
+    let nextPositionY = cellPositionY + cellHeight;
+
+    _forEach(objectRowList.slice(indexOfCell + 1), (objectRow, index) => {
+        objectRow.prop("position/y", nextPositionY);
+        objectRow.getHeader().prop("position/y", nextPositionY);
+        // objectRow.position(0, nextPositionY);
+        // objectRow.fitEmbeds();
+        nextPositionY = nextPositionY + objectRow.prop("size/height");
     });
 }
 
