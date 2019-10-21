@@ -2,7 +2,8 @@ import {
     isUndefined as _isUndefined,
     isNull as _isNull,
     has as _has,
-    forEach as _forEach
+    forEach as _forEach,
+    isNil as _isNil
 } from 'lodash';
 import {shapes, util} from 'jointjs';
 import CustomHtml from '../common/html-element';
@@ -88,6 +89,7 @@ function expandParentRow(view) {
         parentCell.embed(objectRow);
         objectRow.position(0, modelHeight + (index * 35), {parentRelative: true});
         header.position(0, 0, {parentRelative: true});
+        objectRow.fitEmbeds();
     });
 
     parentCell.fitEmbeds();
@@ -108,6 +110,7 @@ function collapseParentRow(view) {
     removeAllObjectRows(view);
 
     parentCell.fitEmbeds();
+
     view.isCollapsed = true;
 }
 
@@ -119,13 +122,30 @@ function removeAllObjectRows(view) {
     const graph = view.model.graph;
     const parentCell = view.model.getParentCell();
     const objectRowList = parentCell.getObjectRowList();
+    if(_isNil(objectRowList)) return;
+
+    objectRowList.forEach((objectRow) => {
+        graph.removeCells([objectRow.getHeader()]);
+        objectRow.fitEmbeds();
+        removeObjectRow(graph, objectRow);
+    });
+
     graph.removeCells(objectRowList);
 }
 
 function removeObjectRow(graph, objectRow) {
+    const objectRowList = objectRow.getObjectRowList();
+    if(_isNil(objectRowList)) return;
 
+    objectRowList.forEach((row) => {
+        graph.removeCells([row.getHeader()]);
+        row.fitEmbeds();
+        removeObjectRow(graph, row);
+    });
+
+    graph.removeCells(objectRow.getSimpleRowList());
+    graph.removeCells(objectRow.getObjectRowList());
+    objectRow.fitEmbeds();
 }
-
-
 
 export default ObjectRowHeader;

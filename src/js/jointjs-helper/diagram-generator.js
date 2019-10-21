@@ -28,6 +28,9 @@ const schema = {
                         },
                         "sn": {
                             "type": "string"
+                        },
+                        "pm": {
+                            "type": "boolean"
                         }
                     },
                     "required": [
