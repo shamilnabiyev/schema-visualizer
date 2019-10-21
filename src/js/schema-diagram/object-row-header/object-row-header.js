@@ -70,7 +70,6 @@ function expandParentRow(view) {
     const model = view.model;
     const graph = model.graph;
     const parentCell = model.getParentCell();
-    console.log('rowLevel:', parentCell.get('rowLevel'));
 
     let modelHeight = parentCell.prop('size/height');
 
@@ -101,10 +100,12 @@ function expandParentRow(view) {
 
     const diagramRoot = getDiagramRoot(parentCell);
     const result = (parentCell.get('rowLevel') === 0) ? parentCell : getRootLevelObjectRow(parentCell);
+    result.fitEmbeds();
 
     console.log('result: ', result);
 
-    // moveObjectRows(diagramRoot, parentCell);
+    moveObjectRows(diagramRoot, result);
+
 
     view.isCollapsed = false;
 }
@@ -122,6 +123,14 @@ function collapseParentRow(view) {
     removeAllObjectRows(view);
 
     parentCell.fitEmbeds();
+
+    const diagramRoot = getDiagramRoot(parentCell);
+    const result = (parentCell.get('rowLevel') === 0) ? parentCell : getRootLevelObjectRow(parentCell);
+    result.fitEmbeds();
+
+    console.log('result: ', result);
+
+    moveObjectRows(diagramRoot, result);
 
     view.isCollapsed = true;
 }
