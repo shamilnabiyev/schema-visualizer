@@ -222,8 +222,6 @@ const generateCells = function (graph) {
     diagramRoot.fitEmbeds();
 
     diagramRoot.toFront();
-
-    console.log('diagramRoot.ParentCell: ', diagramRoot.getParentCell());
 };
 
 export default generateCells;

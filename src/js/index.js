@@ -17,6 +17,7 @@ import {
     isUndefined as _isUndefined
 } from "lodash";
 /* contains DiagramRoot.Element and DiagramRoot.ElementView */
+import HierarchyBase from "./schema-diagram/common/hierarchy-base";
 import DiagramRoot from "./schema-diagram/diagram-root";
 import DiagramTitle from "./schema-diagram/diagram-title";
 import CustomHtml from "./schema-diagram/common/html-element";

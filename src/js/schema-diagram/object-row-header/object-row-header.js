@@ -9,6 +9,8 @@ import {shapes, util} from 'jointjs';
 import CustomHtml from '../common/html-element';
 import ObjectRowHeaderTemplate from './object-row-header.html';
 import {appendValuesToTemplate} from "../utils";
+import ObjectRow from "../object-row/object-row";
+import DiagramRoot from "../diagram-root";
 
 if (_isUndefined(shapes.html)) {
     throw Error("joint.shapes.html is not undefined");
@@ -68,6 +70,7 @@ function expandParentRow(view) {
     const model = view.model;
     const graph = model.graph;
     const parentCell = model.getParentCell();
+    console.log(parentCell instanceof DiagramRoot.Element);
 
     let modelHeight = parentCell.prop('size/height');
 
@@ -93,6 +96,8 @@ function expandParentRow(view) {
     });
 
     parentCell.fitEmbeds();
+
+    moveObjectRows(graph, parentCell.getObjectRowList());
 
     view.isCollapsed = false;
 }
@@ -148,4 +153,18 @@ function removeObjectRow(graph, objectRow) {
     objectRow.fitEmbeds();
 }
 
+function getDiagramRoot(cell) {
+    const result = cell.getParentCell();
+
+
+}
+
+function moveObjectRows(graph, objectRowList) {
+    if(_isNil(graph)) return;
+    if(_isNil(objectRowList)) return;
+
+   _forEach(objectRowList, (row, index) => {
+
+   });
+}
 export default ObjectRowHeader;

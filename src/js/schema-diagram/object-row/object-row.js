@@ -8,6 +8,7 @@ import {
 import {dia, shapes, util} from 'jointjs';
 import ObjectRowTemplate from './object-row.html';
 import DiagramRoot from "../diagram-root";
+import HierarchyBase from "../common/hierarchy-base-view";
 import $ from "jquery";
 import {removeBox, renderBox, updateBox, initializeBox, appendValuesToTemplate} from "../utils";
 import SimpleRow from "../simple-row/simple-row";
@@ -23,13 +24,13 @@ const TRANSITION_DURATION = 100;
 
 const ObjectRow = shapes.html.ObjectRow = {};
 
-ObjectRow.Element = DiagramRoot.Element.extend((function () {
+ObjectRow.Element = HierarchyBase.Element.extend((function () {
     /**
      * Model defaults
      */
     const defaults = util.defaultsDeep({
         type: 'html.ObjectRow.Element',
-    }, DiagramRoot.Element.prototype.defaults);
+    }, HierarchyBase.Element.prototype.defaults);
 
     let rowLevel = 0;
     /**
@@ -64,7 +65,7 @@ ObjectRow.Element = DiagramRoot.Element.extend((function () {
     };
 })());
 
-ObjectRow.ElementView = DiagramRoot.ElementView.extend({
+ObjectRow.ElementView = HierarchyBase.ElementView.extend({
     // htmlTemplate: ObjectRowTemplate,
     isCollapsed: true,
 
