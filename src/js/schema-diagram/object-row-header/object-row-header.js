@@ -60,11 +60,16 @@ ObjectRowHeader.ElementView = CustomHtml.ElementView.extend({
                 expandParentRow(parentCell);
             } else if (!parentCell.isCollapsed()) {
                 const deepEmbeds = parentCell.getEmbeddedCells({deep: true}).filter((cell) => cell !== model);
-                _forEach(deepEmbeds, (cell) => {if(cell instanceof ObjectRow.Element) {cell.setCollapsed(); }});
+                _forEach(deepEmbeds, (cell) => {
+                    if (cell instanceof ObjectRow.Element) {
+                        cell.setCollapsed();
+                    }
+                });
 
                 graph.removeCells(deepEmbeds);
                 parentCell.fitEmbeds();
                 parentCell.setCollapsed();
+                adjustCell(parentCell);
                 // collapseParentRow(parentCell);
             }
         });
@@ -79,6 +84,7 @@ function expandParentRow(cell) {
     moveSimpleRows(cell);
     moveObjectRows(cell);
 
+    adjustCell(cell);
     /*
         const diagramRoot = getDiagramRoot(cell);
         const result = (cell.get('rowLevel') === 0) ? cell : getRootLevelObjectRow(cell);
@@ -86,7 +92,29 @@ function expandParentRow(cell) {
 
         moveObjectRows(diagramRoot, result);
     */
+    // if(cell instanceof DiagramRoot.Element) return;
+
     cell.setExpanded();
+    // expandParentRow(cell.getParentCell());
+}
+
+function adjustCell(cell) {
+    const parentCell = cell.getParentCell();
+    const objectRowList = parentCell.getObjectRowList();
+
+    let cellPosition = objectRowList[0].prop("position");
+    let cellHeight = objectRowList[0].prop("size/height");
+    let nextPositionY = cellPosition.y + cellHeight;
+
+    _forEach(objectRowList.slice(1), (objectRow, index) => {
+        objectRow.position(cellPosition.x, nextPositionY, {deep: true});
+        nextPositionY = nextPositionY + objectRow.prop("size/height");
+    });
+
+    parentCell.fitEmbeds();
+
+    if(parentCell instanceof DiagramRoot.Element) return;
+    adjustCell(parentCell);
 }
 
 /**
