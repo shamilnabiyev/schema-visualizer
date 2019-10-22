@@ -24,6 +24,9 @@ const TRANSITION_DURATION = 100;
 
 const ObjectRow = shapes.html.ObjectRow = {};
 
+/**
+ * @extends HierarchyBase.Element
+ */
 ObjectRow.Element = HierarchyBase.Element.extend((function () {
     /**
      * Model defaults
@@ -33,6 +36,7 @@ ObjectRow.Element = HierarchyBase.Element.extend((function () {
     }, HierarchyBase.Element.prototype.defaults);
 
     let rowLevel = 0;
+
     /**
      * Sign the undefined value to prevent the inheritance
      * @type {undefined}
@@ -57,11 +61,27 @@ ObjectRow.Element = HierarchyBase.Element.extend((function () {
         return (_isUndefined(this.get('objectRowHeader'))) ? new SimpleRow.Element() : this.get('objectRowHeader');
     };
 
+    const isCollapsed = function () {
+        if (_isUndefined(this.get('isCollapsed'))) this.prop('isCollapsed', true);
+        return this.get('isCollapsed');
+    };
+
+    const setCollapsed = function () {
+        this.prop('isCollapsed', true);
+    };
+
+    const setExpanded = function() {
+        this.prop('isCollapsed', false);
+    };
+
     return {
         defaults: defaults,
         rowLevel: rowLevel,
         setHeader: setHeader,
-        getHeader: getHeader
+        getHeader: getHeader,
+        isCollapsed: isCollapsed,
+        setCollapsed: setCollapsed,
+        setExpanded: setExpanded,
     };
 })());
 

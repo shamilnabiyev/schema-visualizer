@@ -1,9 +1,10 @@
 import {
     isUndefined as _isUndefined,
     isNull as _isNull,
+    isNil as _isNil,
+    isFunction as _isFunction,
     has as _has,
     forEach as _forEach,
-    isNil as _isNil
 } from 'lodash';
 import {shapes, util} from 'jointjs';
 import CustomHtml from '../common/html-element';
@@ -11,6 +12,8 @@ import ObjectRowHeaderTemplate from './object-row-header.html';
 import {appendValuesToTemplate} from "../utils";
 import ObjectRow from "../object-row/object-row";
 import DiagramRoot from "../diagram-root";
+
+const HEIGHT = 35;
 
 if (_isUndefined(shapes.html)) {
     throw Error("joint.shapes.html is not undefined");
@@ -50,65 +53,92 @@ ObjectRowHeader.ElementView = CustomHtml.ElementView.extend({
         if (_isUndefined(caretRight)) return;
 
         rowExpander.on('click', (evt) => {
-            if (_isUndefined(parentCell) && _isNull(parentCell)) parentCell = model.getParentCell();
-
-            if (view.isCollapsed) {
-                expandParentRow(view);
-            } else if (!view.isCollapsed) {
-                collapseParentRow(view);
-            }
+            if (_isNil(parentCell)) parentCell = model.getParentCell();
             caretRight.toggleClass('down');
+
+            if (parentCell.isCollapsed()) {
+                expandParentRow(parentCell);
+            } else if (!parentCell.isCollapsed()) {
+                const deepEmbeds = parentCell.getEmbeddedCells({deep: true}).filter((cell) => cell !== model);
+                console.log('embeds deep: ', deepEmbeds);
+                graph.removeCells(deepEmbeds);
+                parentCell.fitEmbeds();
+                parentCell.setCollapsed();
+
+                // collapseParentRow(parentCell);
+            }
         });
     }
 });
 
-function expandParentRow(view) {
-    if (_isUndefined(view) && _isNull(view)) return;
-    if (!_has(view, 'model')) return;
-    if (!_has(view, 'model.graph')) return;
+function expandParentRow(cell) {
+    if (_isNil(cell)) return;
+    if (!_has(cell, 'graph')) return;
+    if (!_isFunction(cell.getParentCell)) return;
 
-    const model = view.model;
-    const graph = model.graph;
-    const parentCell = model.getParentCell();
+    moveSimpleRows(cell);
+    moveObjectRows(cell);
 
-    let modelHeight = parentCell.prop('size/height');
+    /*
+        const diagramRoot = getDiagramRoot(cell);
+        const result = (cell.get('rowLevel') === 0) ? cell : getRootLevelObjectRow(cell);
+        result.fitEmbeds();
 
-    _forEach(parentCell.getSimpleRowList(), (simpleRow, index) => {
+        moveObjectRows(diagramRoot, result);
+    */
+    cell.setExpanded();
+}
+
+/**
+ *
+ * @param {ObjectRow.Element} cell
+ */
+function moveSimpleRows(cell) {
+    if (_isNil(cell)) return;
+    if (_isNil(cell.getSimpleRowList)) return;
+    if (_isNil(cell.fitEmbeds)) return;
+
+    const graph = cell.graph;
+    const modelHeight = cell.prop('size/height');
+
+    _forEach(cell.getSimpleRowList(), (simpleRow, index) => {
         graph.addCell(simpleRow);
-        parentCell.embed(simpleRow);
-        simpleRow.position(0, modelHeight + (index * 35), {parentRelative: true});
+        cell.embed(simpleRow);
+        simpleRow.position(0, modelHeight + (index * HEIGHT), {parentRelative: true});
     });
+    cell.fitEmbeds();
+}
 
-    parentCell.fitEmbeds();
-    modelHeight = parentCell.prop('size/height');
+/**
+ *
+ * @param {ObjectRow.Element} cell
+ */
+function moveObjectRows(cell) {
+    if (_isNil(cell)) return;
+    if (_isNil(cell.getObjectRowList)) return;
+    if (_isNil(cell.fitEmbeds)) return;
 
-    _forEach(parentCell.getObjectRowList(), (objectRow, index) => {
+    const graph = cell.graph;
+    const modelHeight = cell.prop('size/height');
+
+    _forEach(cell.getObjectRowList(), (objectRow, index) => {
         const header = objectRow.getHeader();
         graph.addCell(header);
         objectRow.embed(header);
 
         graph.addCell(objectRow);
-        parentCell.embed(objectRow);
+        cell.embed(objectRow);
 
-        objectRow.position(0, modelHeight + (index * 35), {parentRelative: true});
+        objectRow.position(0, modelHeight + (index * HEIGHT), {parentRelative: true});
         header.position(0, 0, {parentRelative: true});
 
         objectRow.fitEmbeds();
     });
 
-    parentCell.fitEmbeds();
-
-    const diagramRoot = getDiagramRoot(parentCell);
-    const result = (parentCell.get('rowLevel') === 0) ? parentCell : getRootLevelObjectRow(parentCell);
-    result.fitEmbeds();
-
-    console.log('result: ', result);
-
-    moveObjectRows(diagramRoot, result);
-
-
-    view.isCollapsed = false;
+    cell.fitEmbeds();
 }
+
+/*
 
 function collapseParentRow(view) {
     if (_isUndefined(view) && _isNull(view)) return;
@@ -180,7 +210,7 @@ function getDiagramRoot(cell) {
 
 function getRootLevelObjectRow(cell) {
     const result = cell.getParentCell();
-    if((result instanceof ObjectRow.Element) && (result.get('rowLevel') === 0)) {
+    if ((result instanceof ObjectRow.Element) && (result.get('rowLevel') === 0)) {
         return result;
     } else {
         return getRootLevelObjectRow(result);
@@ -192,7 +222,7 @@ function moveObjectRows(diagramRoot, parentCell) {
     const objectRowList = diagramRoot.getObjectRowList();
 
     const indexOfCell = objectRowList.indexOf(parentCell);
-    if (_isNil(indexOfCell) /*|| indexOfCell < 0 */) return;
+    if (_isNil(indexOfCell) return;
 
     let cellPosition = parentCell.prop("position");
     let cellHeight = parentCell.prop("size/height");
@@ -203,5 +233,7 @@ function moveObjectRows(diagramRoot, parentCell) {
         nextPositionY = nextPositionY + objectRow.prop("size/height");
     });
 }
+
+*/
 
 export default ObjectRowHeader;

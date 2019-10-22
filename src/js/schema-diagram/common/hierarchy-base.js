@@ -5,6 +5,9 @@ import {shapes, util} from 'jointjs';
 
 const HierarchyBase = shapes.html.HierarchyBase = {};
 
+/**
+ * @extends shapes.devs.Coupled
+ */
 HierarchyBase.Element = shapes.devs.Coupled.extend((function () {
     const model = this;
 
