@@ -60,11 +60,11 @@ ObjectRowHeader.ElementView = CustomHtml.ElementView.extend({
                 expandParentRow(parentCell);
             } else if (!parentCell.isCollapsed()) {
                 const deepEmbeds = parentCell.getEmbeddedCells({deep: true}).filter((cell) => cell !== model);
-                console.log('embeds deep: ', deepEmbeds);
+                _forEach(deepEmbeds, (cell) => {if(cell instanceof ObjectRow.Element) {cell.setCollapsed(); }});
+
                 graph.removeCells(deepEmbeds);
                 parentCell.fitEmbeds();
                 parentCell.setCollapsed();
-
                 // collapseParentRow(parentCell);
             }
         });
