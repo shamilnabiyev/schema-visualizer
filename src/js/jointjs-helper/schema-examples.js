@@ -252,10 +252,9 @@ export const schema = {
         "year": {"type": "integer"},
         "publisher": {"type": "string"},
         "website": {"type": "string"},
-        "sub_doc": {
+        "doc": {
             "type": "object",
             "properties": {
-                "sub_doc_logs": {"type": "string"},
                 "sub_doc_internal": {
                     "type": "object",
                     "properties": {
@@ -273,7 +272,7 @@ export const schema = {
                         "ean"
                     ]
                 },
-                "a": {
+                "sub_doc_a": {
                     "type": "object",
                     "properties": {
                         "b": {
@@ -291,7 +290,7 @@ export const schema = {
                                                         "f": {
                                                             "type": "object",
                                                             "properties": {
-                                                                "id": {
+                                                                "id_0123456789": {
                                                                     "type": "integer"
                                                                 }
                                                             },
@@ -378,12 +377,9 @@ export const complexSchema = {
 export const multiLevel = {
     "$schema": "http://json-schema.org/draft-04/schema#",
     "type": "object",
-    "properties": {
-
-    },
+    "properties": {},
     "required": [
         "a"
     ]
 };
-
 

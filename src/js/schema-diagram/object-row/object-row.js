@@ -25,9 +25,10 @@ const TRANSITION_DURATION = 100;
 const ObjectRow = shapes.html.ObjectRow = {};
 
 /**
- * typedef ObjectRow.Element
- * @extends HierarchyBase.Element
+ * typedef {HierarchyBase.Element} ObjectRow.Element
  */
+
+
 ObjectRow.Element = HierarchyBase.Element.extend((function () {
     /**
      * Model defaults

@@ -59,18 +59,7 @@ ObjectRowHeader.ElementView = CustomHtml.ElementView.extend({
             if (parentCell.isCollapsed()) {
                 expandParentRow(parentCell);
             } else if (!parentCell.isCollapsed()) {
-                const deepEmbeds = parentCell.getEmbeddedCells({deep: true}).filter((cell) => cell !== model);
-                _forEach(deepEmbeds, (cell) => {
-                    if (cell instanceof ObjectRow.Element) {
-                        cell.setCollapsed();
-                    }
-                });
-
-                graph.removeCells(deepEmbeds);
-                parentCell.fitEmbeds();
-                parentCell.setCollapsed();
-                adjustCell(parentCell);
-                // collapseParentRow(parentCell);
+                collapseParentRow(model, parentCell);
             }
         });
     }
@@ -85,19 +74,24 @@ function expandParentRow(cell) {
     moveObjectRows(cell);
 
     adjustCell(cell);
-    /*
-        const diagramRoot = getDiagramRoot(cell);
-        const result = (cell.get('rowLevel') === 0) ? cell : getRootLevelObjectRow(cell);
-        result.fitEmbeds();
-
-        moveObjectRows(diagramRoot, result);
-    */
-    // if(cell instanceof DiagramRoot.Element) return;
 
     cell.setExpanded();
-    // expandParentRow(cell.getParentCell());
 }
 
+function collapseParentRow(cell, parentCell) {
+    const deepEmbeds = parentCell.getEmbeddedCells({deep: true}).filter((item) => item !== cell);
+    _forEach(deepEmbeds, (cell) => {if (cell instanceof ObjectRow.Element) { cell.setCollapsed();}});
+
+    parentCell.graph.removeCells(deepEmbeds);
+    parentCell.fitEmbeds();
+    parentCell.setCollapsed();
+    adjustCell(parentCell);
+}
+
+/**
+ *
+ * @param cell JointJs Element
+ */
 function adjustCell(cell) {
     const parentCell = cell.getParentCell();
     const objectRowList = parentCell.getObjectRowList();
@@ -119,7 +113,7 @@ function adjustCell(cell) {
 
 /**
  *
- * @param {ObjectRow.Element} cell
+ * @param cell JointJs Element
  */
 function moveSimpleRows(cell) {
     if (_isNil(cell)) return;
@@ -139,7 +133,7 @@ function moveSimpleRows(cell) {
 
 /**
  *
- * @param {ObjectRow.Element} cell
+ * @param cell JointJs Element
  */
 function moveObjectRows(cell) {
     if (_isNil(cell)) return;
@@ -165,103 +159,5 @@ function moveObjectRows(cell) {
 
     cell.fitEmbeds();
 }
-
-/*
-
-function collapseParentRow(view) {
-    if (_isUndefined(view) && _isNull(view)) return;
-    if (!_has(view, 'model')) return;
-    if (!_has(view, 'model.graph')) return;
-
-    const model = view.model;
-    const graph = model.graph;
-    const parentCell = model.getParentCell();
-
-    removeAllSimpleRows(view);
-    removeAllObjectRows(view);
-
-    parentCell.fitEmbeds();
-
-    const diagramRoot = getDiagramRoot(parentCell);
-    const result = (parentCell.get('rowLevel') === 0) ? parentCell : getRootLevelObjectRow(parentCell);
-    result.fitEmbeds();
-
-    console.log('result: ', result);
-
-    moveObjectRows(diagramRoot, result);
-
-    view.isCollapsed = true;
-}
-
-function removeAllSimpleRows(view) {
-    view.model.graph.removeCells(view.model.getParentCell().getSimpleRowList());
-}
-
-function removeAllObjectRows(view) {
-    const graph = view.model.graph;
-    const parentCell = view.model.getParentCell();
-    const objectRowList = parentCell.getObjectRowList();
-    if (_isNil(objectRowList)) return;
-
-    objectRowList.forEach((objectRow) => {
-        graph.removeCells([objectRow.getHeader()]);
-        objectRow.fitEmbeds();
-        removeObjectRow(graph, objectRow);
-    });
-
-    graph.removeCells(objectRowList);
-}
-
-function removeObjectRow(graph, objectRow) {
-    const objectRowList = objectRow.getObjectRowList();
-    if (_isNil(objectRowList)) return;
-
-    objectRowList.forEach((row) => {
-        graph.removeCells([row.getHeader()]);
-        row.fitEmbeds();
-        removeObjectRow(graph, row);
-    });
-
-    graph.removeCells(objectRow.getSimpleRowList());
-    graph.removeCells(objectRow.getObjectRowList());
-    objectRow.fitEmbeds();
-}
-
-function getDiagramRoot(cell) {
-    const result = cell.getParentCell();
-    if (result instanceof DiagramRoot.Element) {
-        return result;
-    } else {
-        return getDiagramRoot(result);
-    }
-}
-
-function getRootLevelObjectRow(cell) {
-    const result = cell.getParentCell();
-    if ((result instanceof ObjectRow.Element) && (result.get('rowLevel') === 0)) {
-        return result;
-    } else {
-        return getRootLevelObjectRow(result);
-    }
-}
-
-function moveObjectRows(diagramRoot, parentCell) {
-    if (_isNil(diagramRoot) || _isNil(parentCell)) return;
-    const objectRowList = diagramRoot.getObjectRowList();
-
-    const indexOfCell = objectRowList.indexOf(parentCell);
-    if (_isNil(indexOfCell) return;
-
-    let cellPosition = parentCell.prop("position");
-    let cellHeight = parentCell.prop("size/height");
-    let nextPositionY = cellPosition.y + cellHeight;
-
-    _forEach(objectRowList.slice(indexOfCell + 1), (objectRow, index) => {
-        objectRow.position(cellPosition.x, nextPositionY, {deep: true});
-        nextPositionY = nextPositionY + objectRow.prop("size/height");
-    });
-}
-
-*/
 
 export default ObjectRowHeader;
