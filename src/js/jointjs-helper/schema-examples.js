@@ -1,7 +1,7 @@
 export const foxx_manifest = {
     "$schema": "http://json-schema.org/draft-04/schema",
     "description": "Schema for ArangoDB Foxx service manifests",
-
+    "title": "ArangoDB Foxx Service",
     "type": "object",
 
     "properties": {
@@ -382,4 +382,161 @@ export const multiLevel = {
         "a"
     ]
 };
+
+export const simulations = {
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "SIMULATIONS",
+    "type": "object",
+    "properties": {
+        "_id": {
+            "type": "string"
+        },
+        "createdOn": {
+            "type": "string"
+        },
+        "fileName": {
+            "type": "string"
+        },
+        "migCastConfigurationList": {
+            "type": "array",
+            "items": [
+                {
+                    "type": "object",
+                    "properties": {
+                        "_id": {
+                            "type": "string"
+                        },
+                        "createdOn": {
+                            "type": "string"
+                        },
+                        "migCastParameters": {
+                            "type": "object",
+                            "properties": {
+                                "adaptiveFlag": {
+                                    "type": "boolean"
+                                },
+                                "cloudPrice": {
+                                    "type": "number"
+                                },
+                                "complexity": {
+                                    "type": "integer"
+                                },
+                                "dataGrowthRate": {
+                                    "type": "integer"
+                                },
+                                "eagerFlag": {
+                                    "type": "boolean"
+                                },
+                                "incrementalFlag": {
+                                    "type": "boolean"
+                                },
+                                "incrementalRound": {
+                                    "type": "integer"
+                                },
+                                "initialNumber": {
+                                    "type": "integer"
+                                },
+                                "lazyFlag": {
+                                    "type": "boolean"
+                                },
+                                "location": {
+                                    "type": "string"
+                                },
+                                "migrationType": {
+                                    "type": "string"
+                                },
+                                "mission2playerCardinality": {
+                                    "type": "integer"
+                                },
+                                "operationExecution": {
+                                    "type": "string"
+                                },
+                                "pattern": {
+                                    "type": "string"
+                                },
+                                "percentageAccessedData": {
+                                    "type": "integer"
+                                },
+                                "place2missionCardinality": {
+                                    "type": "integer"
+                                },
+                                "predictionCacheSize": {
+                                    "type": "integer"
+                                },
+                                "predictionSetSize": {
+                                    "type": "integer"
+                                },
+                                "predictiveFlag": {
+                                    "type": "boolean"
+                                },
+                                "realInitialNumber": {
+                                    "type": "integer"
+                                },
+                                "schemaChanges4Adaptive": {
+                                    "type": "integer"
+                                },
+                                "schemaModifications": {
+                                    "type": "integer"
+                                },
+                                "simpleLRUFlag": {
+                                    "type": "boolean"
+                                },
+                                "superPredictionSetEscalation": {
+                                    "type": "integer"
+                                },
+                                "useCacheFlag": {
+                                    "type": "boolean"
+                                },
+                                "workloadExecutions": {
+                                    "type": "integer"
+                                }
+                            },
+                            "required": [
+                                "adaptiveFlag",
+                                "cloudPrice",
+                                "complexity",
+                                "dataGrowthRate",
+                                "eagerFlag",
+                                "incrementalFlag",
+                                "incrementalRound",
+                                "initialNumber",
+                                "lazyFlag",
+                                "location",
+                                "migrationType",
+                                "mission2playerCardinality",
+                                "operationExecution",
+                                "pattern",
+                                "percentageAccessedData",
+                                "place2missionCardinality",
+                                "predictionCacheSize",
+                                "predictionSetSize",
+                                "predictiveFlag",
+                                "realInitialNumber",
+                                "schemaChanges4Adaptive",
+                                "schemaModifications",
+                                "simpleLRUFlag",
+                                "superPredictionSetEscalation",
+                                "useCacheFlag",
+                                "workloadExecutions"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "_id",
+                        "createdOn",
+                        "migCastParameters"
+                    ]
+                }
+            ]
+        }
+    },
+    "required": [
+        "_id",
+        "createdOn",
+        "fileName",
+        "migCastConfigurationList"
+    ]
+};
+
+
 

@@ -17,12 +17,7 @@ import {
     isUndefined as _isUndefined
 } from "lodash";
 /* contains DiagramRoot.Element and DiagramRoot.ElementView */
-import HierarchyBase from "./schema-diagram/common/hierarchy-base";
-import DiagramRoot from "./schema-diagram/diagram-root";
-import DiagramTitle from "./schema-diagram/diagram-title";
-import CustomHtml from "./schema-diagram/common/html-element";
-import ObjectRow from "./schema-diagram/object-row/object-row";
-import SimpleRow from "./schema-diagram/simple-row/simple-row";
+
 
 $(window).on("load", () => {
     $('#loading-icon').remove();
@@ -43,13 +38,13 @@ graph.on('add', (cell) => {
     }
 });
 
-createDummyDiagrams(graph);
+// createDummyDiagrams(graph);
 
 /**
  * Model with multiple ports
  */
 const m1 = new shapes.devs.Model({
-    position: {x: 80, y: 380},
+    position: {x: 850, y: 50},
     size: {width: 180, height: 180},
     inPorts: ['in1', 'in2', 'in3', 'in4'],
     outPorts: ['out1', 'out2', 'out3', 'out4'],

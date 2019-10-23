@@ -5,22 +5,24 @@ import {
     includes as _includes,
 } from 'lodash';
 import DiagramRoot from "../schema-diagram/diagram-root/diagram-root";
-import {schema, foxx_manifest} from './schema-examples';
+import {schema, foxx_manifest, simulations} from './schema-examples';
+
+const SCHEMA = simulations;
 
 let GRAPH = null;
 const TYPE = "type";
 const WIDTH = 400;
 const HEIGHT = 35;
 // const HEIGHT_OFFSET = 35;
-const X_START = 700;
-const Y_START = 380;
+const X_START = 50;
+const Y_START = 50;
 const REQ_FRAG = "req";
 const OPT_FLAG = " ";
 // const NULL_TYPE = "null";
 
 // const props = schema.properties || {};
 // const propKeys = Object.keys(props);
-const requiredProps = schema.required || [];
+const requiredProps = SCHEMA.required || [];
 
 /**
  *
@@ -89,7 +91,7 @@ function addDocumentRow(doc, key, property, rowLevel) {
 const generateCells = function (graph) {
     GRAPH = graph;
 
-    const titleText = "Book";
+    const titleText = SCHEMA.title || "TITLE" ;
     const diagramRoot = new DiagramRoot.Element({
         attrs: {
             text: {text: titleText},
@@ -109,7 +111,7 @@ const generateCells = function (graph) {
 
     diagramRoot.setDiagramTitle(diagramTitle);
     const rowLevel = {value: 0};
-    generateRow(schema.properties, diagramRoot, rowLevel);
+    generateRow(SCHEMA.properties, diagramRoot, rowLevel);
 
     // console.log('embeds: ', diagramRoot.getEmbeddedCells());
     diagramRoot.fitEmbeds();
