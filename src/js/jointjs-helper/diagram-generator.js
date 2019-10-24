@@ -3,6 +3,8 @@ import {
     isEqual as _isEqual,
     forEach as _forEach,
     includes as _includes,
+    has as _has,
+    isPlainObject as _isPlainObject
 } from 'lodash';
 import DiagramRoot from "../schema-diagram/diagram-root/diagram-root";
 import {schema, foxx_manifest, simulations} from './schema-examples';
@@ -50,9 +52,10 @@ const objectRow = (value, key, rowLevel) => createObjectRow({
 
 const SIMPLE_TYPES = ["boolean", "integer", "null", "number", "string"];
 const OBJECT_TYPE = "object";
-// const ARRAY_TYPE = "array";
+const ARRAY_TYPE = "array";
 // const MULTI_TYPE = 'multi';
 // const ANY_OF = 'anyOf';
+const ITEMS = "items";
 
 function generateRow(properties, doc, rowLevel) {
     _forEach(properties, (property, key) => {
@@ -62,15 +65,15 @@ function generateRow(properties, doc, rowLevel) {
         if (_isEqual(property.type, OBJECT_TYPE)) {
             addDocumentRow(doc, key, property, rowLevel);
         }
-        /*
-        if (_isEqual(property.type, ARRAY_TYPE)) {
-            addArrayRow(property, doc, key, required);
-        }
 
+        if (_isEqual(property.type, ARRAY_TYPE)) {
+            addArrayRow(doc, key, property, rowLevel);
+        }
+        /*
         if (_isEqual(property.type, MULTI_TYPE)) {
             addMultiTypeRow(property, doc, key);
         }
-        */
+       */
     });
 }
 
@@ -86,6 +89,22 @@ function addDocumentRow(doc, key, property, rowLevel) {
     rowLevel.value += 1;
     generateRow(property.properties, subDoc, rowLevel);
     rowLevel.value -= 1;
+}
+
+function addArrayRow(doc, key, property, rowLevel) {
+    const arrayRow =  objectRow(property, key, rowLevel.value);
+    doc.addObjectRow(arrayRow);
+
+    rowLevel.value += 1;
+    if(_has(property, ITEMS) && _isPlainObject(property[ITEMS]) && _isEqual(property[ITEMS].type, OBJECT_TYPE)) {
+        generateRow(property[ITEMS].properties, arrayRow,  rowLevel);
+    }
+    rowLevel.value -= 1;
+}
+
+function addArrayItems(arrayRow, items) {
+
+
 }
 
 const generateCells = function (graph) {
