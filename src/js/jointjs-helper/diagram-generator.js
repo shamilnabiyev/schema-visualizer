@@ -97,7 +97,12 @@ function addArrayRow(doc, key, property, rowLevel) {
 
     rowLevel.value += 1;
     if(_has(property, ITEMS) && _isPlainObject(property[ITEMS]) && _isEqual(property[ITEMS].type, OBJECT_TYPE)) {
-        generateRow(property[ITEMS].properties, arrayRow,  rowLevel);
+        const itemsRow =  objectRow(property[ITEMS], '[0]', rowLevel.value);
+        arrayRow.addObjectRow(itemsRow);
+
+        rowLevel.value += 1;
+        generateRow(property[ITEMS].properties, itemsRow,  rowLevel);
+        rowLevel.value -= 1;
     }
     rowLevel.value -= 1;
 }
