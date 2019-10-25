@@ -1,15 +1,17 @@
 import {createTitleRow, createSimpleRow, createObjectRow} from './jointjs-helper';
 import {
+    isArray as _isArray,
     isEqual as _isEqual,
-    forEach as _forEach,
+    isPlainObject as _isPlainObject,
     includes as _includes,
     has as _has,
-    isPlainObject as _isPlainObject
+    forEach as _forEach,
 } from 'lodash';
+import {Generator as SchemaGenerator} from "json-s-generator";
 import DiagramRoot from "../schema-diagram/diagram-root/diagram-root";
-import {schema, foxx_manifest, simulations} from './schema-examples';
+import {schema, schema2, foxx_manifest, simulations} from './schema-examples';
 
-const SCHEMA = simulations;
+const SCHEMA = schema2;
 
 let GRAPH = null;
 const TYPE = "type";
@@ -98,8 +100,16 @@ function addArrayRow(doc, key, property, rowLevel) {
     rowLevel.value += 1;
     if(_has(property, ITEMS) && _isPlainObject(property[ITEMS]) && _isEqual(property[ITEMS].type, OBJECT_TYPE)) {
         addArrayItems(arrayRow, property[ITEMS], '[0]', rowLevel);
+    } else if (_has(property, ITEMS) && _isArray(property[ITEMS])) {
+        _forEach(property[ITEMS], (elem, elemIndex) => {
+            addArrayItems(arrayRow, elem, `[${elemIndex}]`, rowLevel);
+        });
     }
     rowLevel.value -= 1;
+}
+
+function addArrayItemsList(arrayRow, item, key, rowLevel) {
+
 }
 
 function addArrayItems(arrayRow, items, key, rowLevel) {
@@ -169,3 +179,21 @@ const generateCells = function (graph) {
 };
 
 export default generateCells;
+
+/*
+const doc = {
+    id: "asdasdas",
+    num: 123,
+    bool: true,
+    arr: [false, 1, 2, 3, "4", true],
+    obj: {
+        sub: 123
+    }
+};
+
+const generator = new SchemaGenerator();
+const mySchema = generator.getSchema(doc);
+
+console.log(mySchema);
+
+ */

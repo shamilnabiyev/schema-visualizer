@@ -148,6 +148,7 @@ export const createPaper = function createPaper(paperDivElement, graph) {
         width: '100%',
         height: '100%',
         markAvailable: true,
+        restrictTranslate: true,
         model: graph,
         el: paperDivElement,
         cellViewNamespace: shapes,

@@ -538,4 +538,101 @@ export const simulations = {
 };
 
 
-
+export const schema2 = {
+    "$id": "http://example.com/example.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "definitions": {},
+    "description": "root of schema",
+    "properties": {
+        "id": {
+            "$id": "/properties/id",
+            "type": "string",
+            "title": "The id Schema ",
+            "default": "",
+            "examples": [
+                "asdasdas"
+            ]
+        },
+        "num": {
+            "$id": "/properties/num",
+            "type": "integer",
+            "title": "The num Schema ",
+            "default": 0,
+            "examples": [
+                123
+            ]
+        },
+        "bool": {
+            "$id": "/properties/bool",
+            "type": "boolean",
+            "title": "The bool Schema ",
+            "default": false,
+            "examples": [
+                true
+            ]
+        },
+        "arr": {
+            "$id": "/properties/arr",
+            "type": "array",
+            "uniqueItems": true,
+            "items": [
+                {
+                    "$id": "/properties/arr/items/0",
+                    "type": "boolean",
+                    "title": "The 0 Schema ",
+                    "default": false,
+                    "examples": [
+                        false,
+                        true
+                    ]
+                },
+                {
+                    "$id": "/properties/arr/items/1",
+                    "type": "integer",
+                    "title": "The 1 Schema ",
+                    "default": 0,
+                    "examples": [
+                        1,
+                        2,
+                        3
+                    ]
+                },
+                {
+                    "$id": "/properties/arr/items/2",
+                    "type": "string",
+                    "title": "The 2 Schema ",
+                    "default": "",
+                    "examples": [
+                        "4"
+                    ]
+                }
+            ]
+        },
+        "obj": {
+            "$id": "/properties/obj",
+            "type": "object",
+            "properties": {
+                "sub": {
+                    "$id": "/properties/obj/properties/sub",
+                    "type": "integer",
+                    "title": "The sub Schema ",
+                    "default": 0,
+                    "examples": [
+                        123
+                    ]
+                }
+            },
+            "required": [
+                "sub"
+            ]
+        }
+    },
+    "required": [
+        "id",
+        "num",
+        "bool",
+        "arr",
+        "obj"
+    ]
+};
