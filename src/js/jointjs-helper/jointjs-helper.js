@@ -1,4 +1,4 @@
-import {dia, shapes, linkTools, util} from 'jointjs';
+import {dia, shapes, linkTools} from 'jointjs';
 import {isUndefined, isNull} from 'lodash';
 import SimpleRow from '../schema-diagram/simple-row/simple-row';
 import DiagramTitle from '../schema-diagram/diagram-title/diagram-title';
@@ -116,6 +116,21 @@ const createInfoButton = function createInfoButton() {
         offset: 0,
         action: function (evt) {
             console.log('View id: ' + this.id + '\n' + 'Model id: ' + this.model.id);
+            const cardinalityLabel = {
+                attrs: {
+                    text: {
+                        text: '1:1'
+                    },
+                    line: {
+                        strokeWidth: 2,
+                    }
+                },
+                position: {
+                    distance: 20,
+                    offset: 20
+                }
+            };
+            this.model.appendLabel(cardinalityLabel);
         }
     });
 };
@@ -182,21 +197,10 @@ export const createPaper = function createPaper(paperDivElement, graph) {
         'element:collapse': (elementView, evt) => {
             evt.stopPropagation();
             console.log('element:collapse');
-        },
-        'cell:pointerclick': (cellView) => {
-            if (!(cellView instanceof dia.LinkView)) {
-                return;
-                /* highlighting disabled */
-                if (highlighted) {
-                    cellView.unhighlight();
-                    highlighted = false;
-                } else {
-                    cellView.highlight();
-                    highlighted = true;
-                }
-            }
         }
     });
+
+    paper.scale(0.7, 0.7);
 
     return paper;
 };
@@ -479,8 +483,6 @@ export const createDummyDiagrams = function (graph) {
     const c3 = createCoupled({text: 'Item', x: 1300, y: 15, width: 400, height: 175});
 
     const t3 = createTitleRow({title: 'Item', template: diagramTitleTemplate, x: 1300, y: 15, width: 400, height: 35});
-
-    // console.log(t3.get('id'));
 
     const sr31 = new SimpleRow.Element({
         customAttrs: {

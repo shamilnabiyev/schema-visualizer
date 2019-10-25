@@ -12,25 +12,16 @@ import 'fontawesome_min_css';
 import 'fontawesome_solid_min_css';
 import 'jointjs_min_css';
 import '../scss/index.scss';
-import {
-    forEach as _forEach,
-    isUndefined as _isUndefined
-} from "lodash";
-/* contains DiagramRoot.Element and DiagramRoot.ElementView */
-
 
 $(window).on("load", () => {
     $('#loading-icon').remove();
     $('#wrapper').css("visibility", "initial");
 });
 
-
-// console.log('shapes.html', shapes.html);
-
 const graph = new dia.Graph();
 
 const paper = createPaper($('#paper-html-elements'), graph);
-paper.scale(0.7, 0.7);
+// paper.scale(0.7, 0.7);
 
 graph.on('add', (cell) => {
     if (cell instanceof dia.Link) {

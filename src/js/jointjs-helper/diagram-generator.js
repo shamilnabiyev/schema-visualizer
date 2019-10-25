@@ -146,7 +146,6 @@ const generateCells = function (graph) {
     const rowLevel = {value: 0};
     generateRow(SCHEMA.properties, diagramRoot, rowLevel);
 
-    // console.log('embeds: ', diagramRoot.getEmbeddedCells());
     diagramRoot.fitEmbeds();
 
     let diagramRootHeight = diagramRoot.prop('size/height');

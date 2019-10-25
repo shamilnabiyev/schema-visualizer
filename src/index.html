@@ -209,7 +209,15 @@
 
                   <div class="vertical-divider mr-3"></div>
 
+                  <div class="mr-3 d-inline">
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+                      Launch demo modal
+                    </button>
+                  </div>
+
                   <!-- Diagram controllers -->
+                  <!--
                   <div class="mr-3 d-inline">
                     <button id="" type="button" class="btn btn-sm btn-outline-secondary" data-toggle="tooltip"
                       data-placement="bottom" title="Add entity">
@@ -235,10 +243,10 @@
                       data-placement="bottom" title="Edit link">
                       <span class="fas fa-arrows-alt-h"></span>
                     </button>
-
                   </div>
 
                   <div class="vertical-divider mr-3"></div>
+                  -->
 
                   <!-- Zoom controllers -->
                   <div class="mr-3 d-inline">
@@ -284,6 +292,29 @@
         </div>
       </div>
       <!-- End of Paper holder -->
+
+      <!-- Bootstrap Modals -->
+      <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              ...
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- End of Bootstrap Modals -->
+
 
       <!-- Footer -->
       <footer class="sticky-footer bg-white">
