@@ -94,11 +94,11 @@ function addDocumentRow(doc, key, property, rowLevel) {
 }
 
 function addArrayRow(doc, key, property, rowLevel) {
-    const arrayRow =  objectRow(property, key, rowLevel.value);
+    const arrayRow = objectRow(property, key, rowLevel.value);
     doc.addObjectRow(arrayRow);
 
     rowLevel.value += 1;
-    if(_has(property, ITEMS) && _isPlainObject(property[ITEMS]) && _isEqual(property[ITEMS].type, OBJECT_TYPE)) {
+    if (_has(property, ITEMS) && _isPlainObject(property[ITEMS]) && _isEqual(property[ITEMS].type, OBJECT_TYPE)) {
         addArrayItems(arrayRow, property[ITEMS], '[0]', rowLevel);
     } else if (_has(property, ITEMS) && _isArray(property[ITEMS])) {
         _forEach(property[ITEMS], (elem, elemIndex) => {
@@ -113,18 +113,22 @@ function addArrayItemsList(arrayRow, item, key, rowLevel) {
 }
 
 function addArrayItems(arrayRow, items, key, rowLevel) {
-    const itemsRow =  objectRow(items, key, rowLevel.value);
-    arrayRow.addObjectRow(itemsRow);
+    if (_has(items, TYPE) && _isEqual(items[TYPE], OBJECT_TYPE)) {
+        const itemsRow = objectRow(items, key, rowLevel.value);
+        arrayRow.addObjectRow(itemsRow);
 
-    rowLevel.value += 1;
-    generateRow(items.properties, itemsRow,  rowLevel);
-    rowLevel.value -= 1;
+        rowLevel.value += 1;
+        generateRow(items.properties, itemsRow, rowLevel);
+        rowLevel.value -= 1;
+    } else if (_has(items, TYPE) && _includes(SIMPLE_TYPES, items[TYPE])) {
+       addSimpleRow(arrayRow, key, items, rowLevel);
+    }
 }
 
 const generateCells = function (graph) {
     GRAPH = graph;
 
-    const titleText = SCHEMA.title || "TITLE" ;
+    const titleText = SCHEMA.title || "TITLE";
     const diagramRoot = new DiagramRoot.Element({
         attrs: {
             text: {text: titleText},
