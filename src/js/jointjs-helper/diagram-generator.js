@@ -11,7 +11,7 @@ import {Generator as SchemaGenerator} from "json-s-generator";
 import DiagramRoot from "../schema-diagram/diagram-root/diagram-root";
 import {schema, schema2, foxx_manifest, simulations} from './schema-examples';
 
-const SCHEMA = schema2;
+const SCHEMA = schema;
 
 let GRAPH = null;
 const TYPE = "type";
@@ -106,10 +106,6 @@ function addArrayRow(doc, key, property, rowLevel) {
         });
     }
     rowLevel.value -= 1;
-}
-
-function addArrayItemsList(arrayRow, item, key, rowLevel) {
-
 }
 
 function addArrayItems(arrayRow, items, key, rowLevel) {

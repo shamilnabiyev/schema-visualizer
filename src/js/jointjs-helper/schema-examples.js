@@ -255,6 +255,8 @@ export const schema = {
         "doc": {
             "type": "object",
             "properties": {
+                "serial_number": {"type": "string"},
+                "logs_2": {"type": "string"},
                 "sub_doc_internal": {
                     "type": "object",
                     "properties": {
@@ -328,27 +330,59 @@ export const schema = {
                 "internal"
             ]
         },
-        "meta_data": {
-            "type": "object",
-            "properties": {
-                "serial_number": {"type": "string"},
-                "logs_2": {"type": "string"},
-                "internal_2": {
+        "arr": {
+            "$id": "/properties/arr",
+            "type": "array",
+            "uniqueItems": true,
+            "items": [
+                {
+                    "$id": "/properties/arr/items/0",
+                    "type": "boolean",
+                    "title": "The 0 Schema ",
+                    "default": false,
+                    "examples": [
+                        false,
+                        true
+                    ]
+                },
+                {
+                    "$id": "/properties/arr/items/1",
+                    "type": "integer",
+                    "title": "The 1 Schema ",
+                    "default": 0,
+                    "examples": [
+                        1,
+                        2,
+                        3
+                    ]
+                },
+                {
+                    "$id": "/properties/arr/items/2",
+                    "type": "string",
+                    "title": "The 2 Schema ",
+                    "default": "",
+                    "examples": [
+                        "4"
+                    ]
+                },
+                {
                     "type": "object",
                     "properties": {
-                        "ean2": {
+                        "ean": {
                             "type": "integer"
                         },
-                        "sn2": {
+                        "sn": {
                             "type": "string"
+                        },
+                        "pm": {
+                            "type": "boolean"
                         }
                     },
                     "required": [
-                        "ean2"
+                        "ean"
                     ]
                 }
-            },
-            "required": ["serial_number"]
+            ]
         },
     },
     "required": ["id", "title", "author", "year", "publisher", "subDoc"]
@@ -605,6 +639,23 @@ export const schema2 = {
                     "default": "",
                     "examples": [
                         "4"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "ean": {
+                            "type": "integer"
+                        },
+                        "sn": {
+                            "type": "string"
+                        },
+                        "pm": {
+                            "type": "boolean"
+                        }
+                    },
+                    "required": [
+                        "ean"
                     ]
                 }
             ]
