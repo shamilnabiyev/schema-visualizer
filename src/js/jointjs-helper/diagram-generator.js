@@ -97,19 +97,18 @@ function addArrayRow(doc, key, property, rowLevel) {
 
     rowLevel.value += 1;
     if(_has(property, ITEMS) && _isPlainObject(property[ITEMS]) && _isEqual(property[ITEMS].type, OBJECT_TYPE)) {
-        const itemsRow =  objectRow(property[ITEMS], '[0]', rowLevel.value);
-        arrayRow.addObjectRow(itemsRow);
-
-        rowLevel.value += 1;
-        generateRow(property[ITEMS].properties, itemsRow,  rowLevel);
-        rowLevel.value -= 1;
+        addArrayItems(arrayRow, property[ITEMS], '[0]', rowLevel);
     }
     rowLevel.value -= 1;
 }
 
-function addArrayItems(arrayRow, items) {
+function addArrayItems(arrayRow, items, key, rowLevel) {
+    const itemsRow =  objectRow(items, key, rowLevel.value);
+    arrayRow.addObjectRow(itemsRow);
 
-
+    rowLevel.value += 1;
+    generateRow(items.properties, itemsRow,  rowLevel);
+    rowLevel.value -= 1;
 }
 
 const generateCells = function (graph) {
