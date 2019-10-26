@@ -16,3 +16,12 @@
   border: thin solid #0099ee;
 }
 
+.joint-tool {
+  opacity: 0.01;
+  transition: opacity 0.5s;
+}
+
+.joint-layers:hover .joint-tool {
+  transition: opacity 0.5s;
+  opacity: 1;
+}

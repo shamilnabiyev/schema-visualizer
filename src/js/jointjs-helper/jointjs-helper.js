@@ -199,8 +199,8 @@ export const createPaper = function createPaper(paperDivElement, graph) {
             evt.stopPropagation();
             console.log('element:collapse');
         },
-        'element:mouseover': (elementView)=> {
-            if(elementView instanceof DiagramRoot.ElementView) console.log(elementView);
+        'element:mouseover': (elementView) => {
+            // if (elementView instanceof DiagramRoot.ElementView) // console.log(elementView);
         }
     });
 
@@ -209,7 +209,29 @@ export const createPaper = function createPaper(paperDivElement, graph) {
     graph.on('add', function (cell) {
         if (cell instanceof DiagramRoot.Element) {
             cell.findView(paper).addTools(new dia.ToolsView({
-                tools: [new elementTools.Remove({x: -10, y: -10})]
+                tools: [new elementTools.Remove({
+                    x: 415,
+                    y: -15,
+                    markup: [{
+                        tagName: 'circle',
+                        selector: 'button',
+                        attributes: {
+                            'r': 11,
+                            'fill': '#FF1D00',
+                            'cursor': 'pointer'
+                        }
+                    }, {
+                        tagName: 'path',
+                        selector: 'icon',
+                        attributes: {
+                            'd': 'M -5 -5 5 5 M -5 5 5 -5',
+                            'fill': 'none',
+                            'stroke': '#FFFFFF',
+                            'stroke-width': 3,
+                            'pointer-events': 'none'
+                        }
+                    }]
+                })]
             }));
         }
     });
