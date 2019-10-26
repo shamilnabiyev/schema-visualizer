@@ -1,10 +1,11 @@
-import {dia, shapes, linkTools} from 'jointjs';
+import {dia, shapes, linkTools, elementTools} from 'jointjs';
 import {isUndefined, isNull} from 'lodash';
 import SimpleRow from '../schema-diagram/simple-row/simple-row';
 import DiagramTitle from '../schema-diagram/diagram-title/diagram-title';
 import ObjectRow from "../schema-diagram/object-row/object-row";
 import ObjectRowHeader from "../schema-diagram/object-row-header/object-row-header";
 import diagramTitleTemplate from "../schema-diagram/diagram-title/diagram-title.html";
+import DiagramRoot from "../schema-diagram/diagram-root";
 
 const getPosition = (options) => {
     return {x: options.x, y: options.y};
@@ -136,7 +137,7 @@ const createInfoButton = function createInfoButton() {
 };
 
 function validateConnection(cellViewS, magnetS, cellViewT, magnetT, end, linkView) {
-    if (!linkView.hasTools()) linkView.addTools(new dia.ToolsView({tools: [createInfoButton()]}));
+    // if (!linkView.hasTools()) linkView.addTools(new dia.ToolsView({tools: [createInfoButton()]}));
 
     // Prevent linking from input ports.
     // if (magnetS && magnetS.getAttribute('port-group') === 'in') return false;
@@ -197,22 +198,23 @@ export const createPaper = function createPaper(paperDivElement, graph) {
         'element:collapse': (elementView, evt) => {
             evt.stopPropagation();
             console.log('element:collapse');
+        },
+        'element:mouseover': (elementView)=> {
+            if(elementView instanceof DiagramRoot.ElementView) console.log(elementView);
         }
     });
 
     paper.scale(0.7, 0.7);
 
+    graph.on('add', function (cell) {
+        if (cell instanceof DiagramRoot.Element) {
+            cell.findView(paper).addTools(new dia.ToolsView({
+                tools: [new elementTools.Remove({x: -10, y: -10})]
+            }));
+        }
+    });
+
     return paper;
-};
-
-export const addInfoButton = function addInfoButton(link, paper) {
-    if (paper == null) return;
-
-    const linkView = link.findView(paper);
-    if (linkView == null) return;
-
-    linkView.addTools(new dia.ToolsView({tools: [createInfoButton()]}));
-    linkView.hideTools();
 };
 
 export const createCoupled = function createCoupled(options) {

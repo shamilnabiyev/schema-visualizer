@@ -2,3 +2,17 @@
   display: inline;
   border-right: 1px solid $gray-900;
 }
+
+.jsoneditor-wrapper {
+  height: 50vh;
+}
+
+.jsoneditor-menu {
+  background-color: #0099ee;
+  border-bottom: 1px solid #0068a2;
+}
+
+.jsoneditor {
+  border: thin solid #0099ee;
+}
+

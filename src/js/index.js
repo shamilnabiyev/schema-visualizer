@@ -1,17 +1,20 @@
 /* Import the core libs */
 import $ from 'jquery';
-import {dia, shapes} from 'jointjs';
+import {dia, shapes, elementTools} from 'jointjs';
 import 'bootstrap/dist/js/bootstrap.bundle';
 import './ui-script.js';
 import './font-awesome-custom.js';
+import './json-editor';
 /* Import the custom classes */
 import generateCells from "./jointjs-helper/diagram-generator";
-import {addInfoButton, createPaper, createDummyDiagrams} from './jointjs-helper/jointjs-helper';
+import {createPaper} from './jointjs-helper/jointjs-helper';
 import 'typeface-nunito';
-import 'fontawesome_min_css';
-import 'fontawesome_solid_min_css';
-import 'jointjs_min_css';
+import 'jointjs/dist/joint.min.css';
+import 'jsoneditor/dist/jsoneditor.min.css';
+import '@fortawesome/fontawesome-free/css/fontawesome.min.css';
+import '@fortawesome/fontawesome-free/css/solid.min.css';
 import '../scss/index.scss';
+import DiagramRoot from "./schema-diagram/diagram-root";
 
 $(window).on("load", () => {
     $('#loading-icon').remove();
@@ -23,11 +26,6 @@ const graph = new dia.Graph();
 const paper = createPaper($('#paper-html-elements'), graph);
 // paper.scale(0.7, 0.7);
 
-graph.on('add', (cell) => {
-    if (cell instanceof dia.Link) {
-        addInfoButton(cell, paper);
-    }
-});
 
 // createDummyDiagrams(graph);
 
@@ -72,4 +70,5 @@ $("#zoom-out-btn").on('click', () => {
 $("#zoom-reset-btn").on('click', () => {
     paper.scale(0.7, 0.7);
 });
+
 
