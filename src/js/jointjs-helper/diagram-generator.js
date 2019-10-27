@@ -37,6 +37,7 @@ let SCHEMA;
 
 const FIFTY = 50;
 const TYPE = "type";
+const PROPERTIES = 'properties';
 const WIDTH = 400;
 const HEIGHT = 35;
 // const HEIGHT_OFFSET = 35;
@@ -110,8 +111,9 @@ function addDocumentRow(doc, key, property, rowLevel) {
     const subDoc = objectRow(property, key, rowLevel.value);
     doc.addObjectRow(subDoc);
 
+    if(!_has(property, PROPERTIES)) return;
     rowLevel.value += 1;
-    generateRow(property.properties, subDoc, rowLevel);
+    generateRow(property[PROPERTIES], subDoc, rowLevel);
     rowLevel.value -= 1;
 }
 
@@ -136,7 +138,7 @@ function addArrayItems(arrayRow, items, key, rowLevel) {
         arrayRow.addObjectRow(itemsRow);
 
         rowLevel.value += 1;
-        generateRow(items.properties, itemsRow, rowLevel);
+        generateRow(items[PROPERTIES], itemsRow, rowLevel);
         rowLevel.value -= 1;
     } else if (_has(items, TYPE) && _includes(SIMPLE_TYPES, items[TYPE])) {
         addSimpleRow(arrayRow, key, items, rowLevel);

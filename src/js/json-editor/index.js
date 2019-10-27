@@ -18,7 +18,7 @@ const jsonDocEditor = createJSONEditor(
         history: true,
         schema: jsonDocValidator,
         onError: onError,
-        onChange: onChange
+        onChange: onJsonDocChange
     },
     {}
 );
@@ -33,7 +33,7 @@ const jsonSchemaEditor = createJSONEditor(
         history: true,
         schema: jsonSchemaValidator,
         onError: onError,
-        // onChange: onChange
+        onChange: onJsonSchemaChange
     },
     {}
 );
@@ -52,7 +52,7 @@ function onError(err) {
  * button 'Visualize' will be disabled. The button will be also disable, if there
  * occurs an error.
  */
-function onChange() {
+function onJsonDocChange() {
     try {
         if (!!jsonDocEditor) {
             const json = jsonDocEditor.get();
@@ -67,40 +67,23 @@ function onChange() {
     }
 }
 
-const vizButton = $('#json-doc-viz-btn');
-
-if (!!vizButton) vizButton.on('click', (evt) => {
-    if (isNil(jsonDocEditor)) return;
+function onJsonSchemaChange() {
     try {
-        const inferredSchema = generator.getSchema(jsonDocEditor.get());
-        createCellsFrom(inferredSchema);
-
-        const jsonDocumentModal = $('#jsonDocumentModal');
-        if(!!jsonDocumentModal) jsonDocumentModal.modal('hide');
+        const jsonSchema = jsonSchemaEditor.get();
+        if (jsonSchemaEditor.validateSchema(jsonSchema)) {
+            enableButton();
+        } else {
+            disableButton();
+        }
     } catch (err) {
-        console.log(err);
+        disableButton();
     }
-});
-
-function disableButton() {
-    if (!!vizButton) vizButton.prop("disabled", true);
 }
-
-function enableButton() {
-    if (!!vizButton) vizButton.prop("disabled", false);
-}
-
 
 const jsonDocModal = $('#jsonDocumentModal');
 
 jsonDocModal.on('shown.bs.modal', (evt) => {
-    const errorsTable = $('.jsoneditor-validation-errors');
-    if (errorsTable.length > 0) return;
-
-    const errorIcon = $('.jsoneditor-validation-error-icon');
-    if (isNil(errorIcon)) return;
-
-    errorIcon.trigger('click');
+    showErrorsTable();
 });
 
 jsonDocModal.on('hidden.bs.modal', (evt) => {
@@ -111,6 +94,68 @@ jsonDocModal.on('hidden.bs.modal', (evt) => {
         console.log(err);
     }
 });
+
+const vizButton = $('#json-doc-viz-btn');
+
+if (!!vizButton) vizButton.on('click', (evt) => {
+    if (isNil(jsonDocEditor)) return;
+    try {
+        const inferredSchema = generator.getSchema(jsonDocEditor.get());
+        createCellsFrom(inferredSchema);
+
+        if (!!jsonDocModal) jsonDocModal.modal('hide');
+    } catch (err) {
+        console.log(err);
+    }
+});
+
+const jsonSchemaModal = $('#jsonSchemaModal');
+
+jsonSchemaModal.on('shown.bs.modal', (evt) => {
+    showErrorsTable();
+});
+
+jsonSchemaModal.on('hidden.bs.modal', (evt) => {
+    try {
+        if (!jsonSchemaEditor) return;
+        jsonSchemaEditor.set({});
+    } catch (err) {
+        console.log(err);
+    }
+});
+
+const vizButton2 = $('#json-schema-viz-btn');
+
+if (!!vizButton2) vizButton2.on('click', (evt) => {
+    if (isNil(jsonSchemaEditor)) return;
+    try {
+        const jsonSchema = jsonSchemaEditor.get();
+        createCellsFrom(jsonSchema);
+        if (!!jsonSchemaModal) jsonSchemaModal.modal('hide');
+    } catch (err) {
+        console.log(err);
+    }
+});
+
+function disableButton() {
+    if (!!vizButton) vizButton.prop("disabled", true);
+    if (!!vizButton2) vizButton2.prop("disabled", true);
+}
+
+function enableButton() {
+    if (!!vizButton) vizButton.prop("disabled", false);
+    if (!!vizButton2) vizButton2.prop("disabled", false);
+}
+
+function showErrorsTable() {
+    const errorsTable = $('.jsoneditor-validation-errors');
+    if (errorsTable.length > 0) return;
+
+    const errorIcon = $('.jsoneditor-validation-error-icon');
+    if (isNil(errorIcon)) return;
+
+    errorIcon.trigger('click');
+}
 
 
 /**

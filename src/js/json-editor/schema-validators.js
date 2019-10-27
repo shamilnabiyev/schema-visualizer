@@ -76,7 +76,7 @@ export const jsonSchemaValidator = {
             "type": "object",
             "description": "Validiert primitive Datentypen, wie string, number und boolean",
             "properties": {
-                "type": {"type": "string", "enum": ["boolean", "integer", "null", "number", "string", "object", "array"]},
+                "type": {"type": "string"},
                 "constraints": {
                     "type": "array",
                     "items": {
@@ -94,8 +94,8 @@ export const jsonSchemaValidator = {
                 "type": {"type": "string"},
                 "items": {
                     "anyOf": [
-                        {"$ref": "#/definitions/simple_types_secondary"},
-                        {
+                        {"$ref": "#/definitions/simple_types"},
+                        /* {
                             "type": "object",
                             "properties": {
                                 "anyOf": {
@@ -109,7 +109,7 @@ export const jsonSchemaValidator = {
                                 }
                             },
                             "required": ["anyOf"]
-                        }
+                        } */
                     ]
                 },
                 "constraints": {
