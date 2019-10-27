@@ -209,29 +209,59 @@ export const createPaper = function createPaper(paperDivElement, graph) {
     graph.on('add', function (cell) {
         if (cell instanceof DiagramRoot.Element) {
             cell.findView(paper).addTools(new dia.ToolsView({
-                tools: [new elementTools.Remove({
-                    x: 415,
-                    y: -15,
-                    markup: [{
-                        tagName: 'circle',
-                        selector: 'button',
-                        attributes: {
-                            'r': 11,
-                            'fill': '#FF1D00',
-                            'cursor': 'pointer'
+                tools: [
+                    new elementTools.Remove({
+                        x: 425,
+                        y: -17.5,
+                        markup: [{
+                            tagName: 'circle',
+                            selector: 'button',
+                            attributes: {
+                                'r': 11,
+                                'fill': '#FF1D00',
+                                'cursor': 'pointer'
+                            }
+                        }, {
+                            tagName: 'path',
+                            selector: 'icon',
+                            attributes: {
+                                'd': 'M -5 -5 5 5 M -5 5 5 -5',
+                                'fill': 'none',
+                                'stroke': '#FFFFFF',
+                                'stroke-width': 3,
+                                'pointer-events': 'none'
+                            }
+                        }]
+                    }),
+                    new elementTools.Button(
+                        {
+                            x: 425,
+                            y: 17.5,
+                            markup: [{
+                                tagName: 'circle',
+                                selector: 'button',
+                                attributes: {
+                                    'r': 11,
+                                    'fill': '#0099ee',
+                                    'cursor': 'pointer'
+                                }
+                            }, {
+                                tagName: 'path',
+                                selector: 'icon',
+                                attributes: {
+                                    'd': 'M -2 4 2 4 M 0 3 0 0 M -2 -1 1 -1 M -1 -4 1 -4',
+                                    'fill': 'none',
+                                    'stroke': '#FFFFFF',
+                                    'stroke-width': 2,
+                                    'pointer-events': 'none'
+                                }
+                            }],
+                            action: function (evt) {
+                                console.log('View id: ' + this.id + '\n' + 'Model id: ' + this.model.id);
+                            }
                         }
-                    }, {
-                        tagName: 'path',
-                        selector: 'icon',
-                        attributes: {
-                            'd': 'M -5 -5 5 5 M -5 5 5 -5',
-                            'fill': 'none',
-                            'stroke': '#FFFFFF',
-                            'stroke-width': 3,
-                            'pointer-events': 'none'
-                        }
-                    }]
-                })]
+                    )
+                ]
             }));
         }
     });
