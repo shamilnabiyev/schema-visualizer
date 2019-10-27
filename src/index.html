@@ -211,8 +211,12 @@
 
                   <div class="mr-3 d-inline">
                     <!-- Button trigger modal -->
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
-                      Launch demo modal
+                    <button type="button" class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#jsonDocumentModal">
+                      Import a JSON Document
+                    </button>
+
+                    <button type="button" class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#jsonSchemaModal">
+                      Import a JSON-Schema
                     </button>
                   </div>
 
@@ -294,28 +298,27 @@
       <!-- End of Paper holder -->
 
       <!-- Bootstrap Modals -->
-      <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+      <div class="modal fade" id="jsonDocumentModal" tabindex="-1" role="dialog" aria-labelledby="jsonDocumentModalTitle"
            aria-hidden="true" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog modal-lg" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLongTitle">Import JSON-Document</h5>
+              <h5 class="modal-title" id="exampleModalLongTitle">Import a JSON-Document</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
             <div class="modal-body">
-              <div id="jsoneditor" class="jsoneditor-wrapper"></div>
+              <div id="json-doc-editor" class="jsoneditor-wrapper"></div>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary">Save changes</button>
+              <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Close</button>
+              <button id="json-doc-viz-btn" type="button" class="btn btn-sm btn-primary" disabled="true">Visualize</button>
             </div>
           </div>
         </div>
       </div>
       <!-- End of Bootstrap Modals -->
-
 
       <!-- Footer -->
       <footer class="sticky-footer bg-white">
