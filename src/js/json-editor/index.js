@@ -4,27 +4,9 @@ import $ from 'jquery';
 import {isNil} from 'lodash';
 import {Generator as SchemaGenerator} from "json-s-generator";
 import {createCellsFrom} from '../jointjs-helper/diagram-generator';
+import {jsonDocValidator, jsonSchemaValidator} from './schema-validators';
 
 const generator = new SchemaGenerator();
-
-const jsonSchema = {
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "anyOf": [
-        {"$ref": "#/definitions/object_typ"},
-        {"$ref": "#/definitions/array_type"}
-    ],
-    "definitions": {
-        "object_typ": {
-            "type": "object",
-            "minProperties": 1
-        },
-        "array_type": {
-            "type": "array",
-            "items": {"$ref": "#/definitions/object_typ"},
-            "minItems": 1,
-        }
-    }
-};
 
 const jsonDocEditor = createJSONEditor(
     document.getElementById("json-doc-editor"),
@@ -34,9 +16,24 @@ const jsonDocEditor = createJSONEditor(
         statusBar: true,
         enableTransform: false,
         history: true,
-        schema: jsonSchema,
+        schema: jsonDocValidator,
         onError: onError,
         onChange: onChange
+    },
+    {}
+);
+
+const jsonSchemaEditor = createJSONEditor(
+    document.getElementById("json-schema-editor"),
+    {
+        mode: 'code',
+        search: false,
+        statusBar: true,
+        enableTransform: false,
+        history: true,
+        schema: jsonSchemaValidator,
+        onError: onError,
+        // onChange: onChange
     },
     {}
 );

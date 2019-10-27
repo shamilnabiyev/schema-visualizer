@@ -9,7 +9,6 @@ import {
     cloneDeep as _cloneDeep
 } from 'lodash';
 import DiagramRoot from "../schema-diagram/diagram-root/diagram-root";
-import {schema, schema2, foxx_manifest, simulations} from './schema-examples';
 import {dia} from "jointjs";
 import $ from "jquery";
 
