@@ -19,7 +19,7 @@ export const jsonDocValidator = {
 
 export const jsonSchemaValidator = {
     "title": "JSON-Schema-Validator",
-    "description": "Validates the JSON-Schema",
+    "description": "Validiert das von Benutzer eingegebebes JSON-Schema",
     "type": "object",
     "properties": {
         "title": {
@@ -27,65 +27,25 @@ export const jsonSchemaValidator = {
         },
         "properties": {
             "type": "object",
-            "properties": {
-                "subtype": {
-                    "type": "object",
-                    "properties": {
-                        "supertype_name": {"type": "string"}
-                    }
-                },
-                "supertype": {
-                    "type": "object",
-                    "properties": {
-                        "subtype_names": {
-                            "type": "array",
-                            "items": {"type": "string"}
-                        }
-                    }
-                }
-            },
             "minProperties": 1,
             "additionalProperties": {
                 "anyOf": [
-                    {"$ref": "#/definitions/simple_types"},
+                    {"$ref": "#/definitions/primitive_types"},
                     {"$ref": "#/definitions/array_type"},
-                    {"$ref": "#/definitions/object_type"},
-                    {
-                        "type": "object",
-                        "properties": {
-                            "anyOf": {
-                                "type": "array",
-                                "items": {
-                                    "anyOf": [
-                                        {"$ref": "#/definitions/simple_types"},
-                                        {"$ref": "#/definitions/array_type"},
-                                        {"$ref": "#/definitions/object_type"}
-                                    ]
-                                }
-                            }
-                        },
-                        "required": ["anyOf"]
-                    }
+                    {"$ref": "#/definitions/object_type"}
                 ]
             }
         }
     },
     "required": ["properties"],
     "definitions": {
-        "simple_types": {
+        "primitive_types": {
             "type": "object",
             "description": "Validiert primitive Datentypen, wie string, number und boolean",
             "properties": {
                 "type": {"type": "string"},
-                "constraints": {
-                    "type": "array",
-                    "items": {
-                        "type": "string",
-                        "enum": ["req", "opt", "ID", "REF", "unq", "rcv", "idx"]
-                    }
-                }
             },
-            "required": ["type" /*, "constraints" */],
+            "required": ["type"],
             "additionalProperties": false
         },
         "array_type": {
@@ -94,41 +54,13 @@ export const jsonSchemaValidator = {
                 "type": {"type": "string"},
                 "items": {
                     "anyOf": [
-                        {"$ref": "#/definitions/simple_types"},
-                        /* {
-                            "type": "object",
-                            "properties": {
-                                "anyOf": {
-                                    "type": "array",
-                                    "items": {
-                                        "anyOf": [
-                                            {"$ref": "#/definitions/simple_types_secondary"},
-                                            {"$ref": "#/definitions/object_type"}
-                                        ]
-                                    }
-                                }
-                            },
-                            "required": ["anyOf"]
-                        } */
+                        {"$ref": "#/definitions/primitive_types"},
+                        {"$ref": "#/definitions/items"}
                     ]
-                },
-                "constraints": {
-                    "type": "array",
-                    "items": {
-                        "type": "string",
-                        "enum": ["req", "opt", "REF", "unq", "rcv", "idx"]
-                    }
                 }
             },
-            "required": ["type", "items" /* , "constraints" */],
+            "required": ["type", "items"],
             "additionalProperties": false
-        },
-        "simple_types_secondary": {
-            "type": "object",
-            "properties": {
-                "type": {"type": "string"}
-            },
-            "required": ["type"]
         },
         "object_type": {
             "type": "object",
@@ -138,21 +70,24 @@ export const jsonSchemaValidator = {
                     "type": "object",
                     "additionalProperties": {
                         "anyOf": [
-                            {"$ref": "#/definitions/simple_types"},
+                            {"$ref": "#/definitions/primitive_types"},
                             {"$ref": "#/definitions/object_type"},
                             {"$ref": "#/definitions/array_type"}
                         ]
                     }
-                },
-                "constraints": {
-                    "type": "array",
-                    "items": {
-                        "type": "string",
-                        "enum": ["req", "opt", "REF", "unq", "rcv", "idx"]
-                    }
                 }
             },
-            "required": ["type", "properties" /*, "constraints" */]
+            "required": ["type", "properties"]
+        },
+        "items": {
+            "type": "array",
+            "items": {
+                "anyOf": [
+                    {"$ref": "#/definitions/primitive_types"},
+                    {"$ref": "#/definitions/object_type"},
+                    {"$ref": "#/definitions/array_type"}
+                ]
+            }
         }
     }
 };
