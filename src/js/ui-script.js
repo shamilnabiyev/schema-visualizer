@@ -44,23 +44,3 @@ $(document).on('click', 'a.scroll-to-top', (e) => {
     }, 1000, 'easeInOutExpo');
     e.preventDefault();
 });
-
-/**
- * Find a JSONEditor instance from it's container element or id
- * @param {string | Element} selector  A query selector id like '#myEditor'
- *                                     or a DOM element
- * @return {JSONEditor | null} Returns the created JSONEditor, or null otherwise.
- */
-function findJSONEditor (selector) {
-    const container = (typeof selector === 'string')
-        ? document.querySelector(selector)
-        : selector;
-
-    return container && container.jsoneditor || null;
-}
-
-$('#json-doc-viz-btn').on('click', (evt) => {
-    console.log(findJSONEditor('#json-doc-editor'));
-});
-
-$('.jsoneditor-validation-error-icon').trigger('click');

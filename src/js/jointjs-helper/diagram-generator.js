@@ -1,32 +1,55 @@
-import {createTitleRow, createSimpleRow, createObjectRow} from './jointjs-helper';
+import {createTitleRow, createSimpleRow, createObjectRow, createPaper} from './jointjs-helper';
 import {
     isArray as _isArray,
     isEqual as _isEqual,
     isPlainObject as _isPlainObject,
     includes as _includes,
     has as _has,
-    forEach as _forEach,
+    forEach as _forEach, isNil,
+    cloneDeep as _cloneDeep
 } from 'lodash';
-import {Generator as SchemaGenerator} from "json-s-generator";
 import DiagramRoot from "../schema-diagram/diagram-root/diagram-root";
 import {schema, schema2, foxx_manifest, simulations} from './schema-examples';
+import {dia} from "jointjs";
+import $ from "jquery";
 
-const SCHEMA = schema;
+let GRAPH = initGraph();
+let PAPER = initPaper();
 
-let GRAPH = null;
+function initGraph() {
+    return new dia.Graph();
+}
+
+function getGraph() {
+    if (isNil(GRAPH)) GRAPH = initGraph();
+    return GRAPH;
+}
+
+function initPaper() {
+    return createPaper($('#paper-html-elements'), getGraph());
+}
+
+export const getPaper = function () {
+    if (isNil(PAPER)) PAPER = initPaper();
+    return PAPER;
+};
+
+let SCHEMA;
+
+const FIFTY = 50;
 const TYPE = "type";
 const WIDTH = 400;
 const HEIGHT = 35;
 // const HEIGHT_OFFSET = 35;
-const X_START = 50;
-const Y_START = 50;
+let X_START = 50;
+let Y_START = 50;
 const REQ_FRAG = "req";
 const OPT_FLAG = " ";
 // const NULL_TYPE = "null";
 
 // const props = schema.properties || {};
 // const propKeys = Object.keys(props);
-const requiredProps = SCHEMA.required || [];
+let requiredProps;
 
 /**
  *
@@ -98,7 +121,7 @@ function addArrayRow(doc, key, property, rowLevel) {
     doc.addObjectRow(arrayRow);
 
     rowLevel.value += 1;
-    if (_has(property, ITEMS) && _isPlainObject(property[ITEMS]) && _isEqual(property[ITEMS].type, OBJECT_TYPE)) {
+    if (_has(property, ITEMS) && _isPlainObject(property[ITEMS]) && _includes(SIMPLE_TYPES, property[ITEMS][TYPE])) {
         addArrayItems(arrayRow, property[ITEMS], '[0]', rowLevel);
     } else if (_has(property, ITEMS) && _isArray(property[ITEMS])) {
         _forEach(property[ITEMS], (elem, elemIndex) => {
@@ -117,24 +140,28 @@ function addArrayItems(arrayRow, items, key, rowLevel) {
         generateRow(items.properties, itemsRow, rowLevel);
         rowLevel.value -= 1;
     } else if (_has(items, TYPE) && _includes(SIMPLE_TYPES, items[TYPE])) {
-       addSimpleRow(arrayRow, key, items, rowLevel);
+        addSimpleRow(arrayRow, key, items, rowLevel);
     }
 }
 
-const generateCells = function (graph) {
-    GRAPH = graph;
+export const createCellsFrom = function (schema) {
+    SCHEMA = _cloneDeep(schema);
 
-    const titleText = SCHEMA.title || "TITLE";
+    const titleText = SCHEMA.title || "Entity Type " + Math.floor(X_START / FIFTY);
     const diagramRoot = new DiagramRoot.Element({
         attrs: {
             text: {text: titleText},
         },
         position: {x: X_START, y: Y_START}
     });
+
+    X_START = X_START + FIFTY;
+    Y_START = Y_START + FIFTY;
+
     GRAPH.addCell(diagramRoot);
 
     const diagramTitle = createTitleRow({
-        title: "Book",
+        title: titleText,
         width: WIDTH,
         height: HEIGHT
     });
@@ -176,8 +203,6 @@ const generateCells = function (graph) {
 
     diagramRoot.toFront();
 };
-
-export default generateCells;
 
 /*
 const doc = {
