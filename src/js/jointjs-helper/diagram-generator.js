@@ -204,21 +204,3 @@ export const createCellsFrom = function (schema) {
 
     diagramRoot.toFront();
 };
-
-/*
-const doc = {
-    id: "asdasdas",
-    num: 123,
-    bool: true,
-    arr: [false, 1, 2, 3, "4", true],
-    obj: {
-        sub: 123
-    }
-};
-
-const generator = new SchemaGenerator();
-const mySchema = generator.getSchema(doc);
-
-console.log(mySchema);
-
- */
