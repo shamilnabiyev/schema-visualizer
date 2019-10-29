@@ -1,4 +1,5 @@
 import {shapes, util} from 'jointjs';
+import {isNil} from 'lodash';
 import HierarchyBase from "../common/hierarchy-base";
 
 const DiagramRoot = shapes.html.DiagramRoot = {};
@@ -23,6 +24,17 @@ DiagramRoot.Element = HierarchyBase.Element.extend((function () {
      */
     let diagramTitle = null;
 
+    const setSchema = function (schema) {
+        this.prop('schema', schema);
+    };
+
+    const getSchema = function () {
+        const schema = this.get('schema');
+
+        if (isNil(schema)) return {};
+        return schema;
+    };
+
     /**
      *
      * @param {DiagramTitle.Element} title
@@ -34,6 +46,8 @@ DiagramRoot.Element = HierarchyBase.Element.extend((function () {
     return {
         defaults: defaults,
         setDiagramTitle: setDiagramTitle,
+        setSchema: setSchema,
+        getSchema: getSchema,
     };
 })());
 

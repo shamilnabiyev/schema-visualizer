@@ -201,6 +201,7 @@ export const createCellsFrom = function (schema) {
     });
 
     diagramRoot.fitEmbeds();
-
     diagramRoot.toFront();
+
+    diagramRoot.setSchema(schema);
 };

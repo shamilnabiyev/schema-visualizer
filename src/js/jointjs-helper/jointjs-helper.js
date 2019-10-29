@@ -1,5 +1,5 @@
 import {dia, shapes, linkTools, elementTools} from 'jointjs';
-import {isUndefined, isNull} from 'lodash';
+import {isUndefined, isNull, isFunction} from 'lodash';
 import SimpleRow from '../schema-diagram/simple-row/simple-row';
 import DiagramTitle from '../schema-diagram/diagram-title/diagram-title';
 import ObjectRow from "../schema-diagram/object-row/object-row";
@@ -257,7 +257,8 @@ export const createPaper = function createPaper(paperDivElement, graph) {
                                 }
                             }],
                             action: function (evt) {
-                                console.log('View id: ' + this.id + '\n' + 'Model id: ' + this.model.id);
+                                console.log('View id: ' + this.id + '\n', 'Model id: ', this.model.id);
+                                if(isFunction(this.model.getSchema)) console.log('Schema: ', this.model.getSchema());
                             }
                         }
                     )

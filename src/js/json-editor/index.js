@@ -5,6 +5,7 @@ import {isNil} from 'lodash';
 import {Generator as SchemaGenerator} from "json-s-generator";
 import {createCellsFrom} from '../jointjs-helper/diagram-generator';
 import {jsonDocValidator, jsonSchemaValidator} from './schema-validators';
+import {schema as bookSchema} from "../jointjs-helper/schema-examples";
 
 const generator = new SchemaGenerator();
 
@@ -191,4 +192,6 @@ function findJSONEditor(selector) {
     return container && container.jsoneditor || null;
 }
 
-
+$('#example1').on('click', (evt) => {
+    createCellsFrom(bookSchema);
+});
