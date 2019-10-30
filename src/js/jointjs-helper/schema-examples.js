@@ -331,39 +331,16 @@ export const schema = {
             ]
         },
         "arr": {
-            "$id": "/properties/arr",
             "type": "array",
-            "uniqueItems": true,
             "items": [
                 {
-                    "$id": "/properties/arr/items/0",
-                    "type": "boolean",
-                    "title": "The 0 Schema ",
-                    "default": false,
-                    "examples": [
-                        false,
-                        true
-                    ]
+                    "type": "boolean"
                 },
                 {
-                    "$id": "/properties/arr/items/1",
-                    "type": "integer",
-                    "title": "The 1 Schema ",
-                    "default": 0,
-                    "examples": [
-                        1,
-                        2,
-                        3
-                    ]
+                    "type": "integer"
                 },
                 {
-                    "$id": "/properties/arr/items/2",
-                    "type": "string",
-                    "title": "The 2 Schema ",
-                    "default": "",
-                    "examples": [
-                        "4"
-                    ]
+                    "type": "string"
                 },
                 {
                     "type": "object",
@@ -607,39 +584,16 @@ export const schema2 = {
             ]
         },
         "arr": {
-            "$id": "/properties/arr",
             "type": "array",
-            "uniqueItems": true,
             "items": [
                 {
-                    "$id": "/properties/arr/items/0",
-                    "type": "boolean",
-                    "title": "The 0 Schema ",
-                    "default": false,
-                    "examples": [
-                        false,
-                        true
-                    ]
+                    "type": "boolean"
                 },
                 {
-                    "$id": "/properties/arr/items/1",
-                    "type": "integer",
-                    "title": "The 1 Schema ",
-                    "default": 0,
-                    "examples": [
-                        1,
-                        2,
-                        3
-                    ]
+                    "type": "integer"
                 },
                 {
-                    "$id": "/properties/arr/items/2",
                     "type": "string",
-                    "title": "The 2 Schema ",
-                    "default": "",
-                    "examples": [
-                        "4"
-                    ]
                 },
                 {
                     "type": "object",
@@ -661,17 +615,10 @@ export const schema2 = {
             ]
         },
         "obj": {
-            "$id": "/properties/obj",
             "type": "object",
             "properties": {
                 "sub": {
-                    "$id": "/properties/obj/properties/sub",
-                    "type": "integer",
-                    "title": "The sub Schema ",
-                    "default": 0,
-                    "examples": [
-                        123
-                    ]
+                    "type": "integer"
                 }
             },
             "required": [

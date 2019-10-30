@@ -195,3 +195,11 @@ function findJSONEditor(selector) {
 $('#example1').on('click', (evt) => {
     createCellsFrom(bookSchema);
 });
+
+export const getSchemaEditor = function () {
+    return findJSONEditor('#json-schema-editor');
+};
+
+export const openSchemaModal = function () {
+    jsonSchemaModal.modal('show');
+};
