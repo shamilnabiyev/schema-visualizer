@@ -3,7 +3,7 @@ import JSONEditor from "jsoneditor";
 import $ from 'jquery';
 import {isNil} from 'lodash';
 import {Generator as SchemaGenerator} from "json-s-generator";
-import {createCellsFrom} from '../jointjs-helper/diagram-generator';
+import {createCellsFrom, addRect} from '../jointjs-helper/diagram-generator';
 import {jsonDocValidator, jsonSchemaValidator} from './schema-validators';
 import {schema as bookSchema} from "../jointjs-helper/schema-examples";
 
@@ -201,5 +201,9 @@ export const getSchemaEditor = function () {
 };
 
 export const openSchemaModal = function () {
-    jsonSchemaModal.modal('show');
+    $('#jsonSchemaUpdateModal').modal('show');
 };
+
+$('#rect-btn').on('click', () => {
+   addRect();
+});

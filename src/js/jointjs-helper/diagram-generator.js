@@ -1,4 +1,4 @@
-import {createTitleRow, createSimpleRow, createObjectRow, createPaper} from './jointjs-helper';
+import {createTitleRow, createSimpleRow, createObjectRow, createPaper, createRect} from './jointjs-helper';
 import {
     isArray as _isArray,
     isEqual as _isEqual,
@@ -204,4 +204,15 @@ export const createCellsFrom = function (schema) {
     diagramRoot.toFront();
 
     diagramRoot.setSchema(schema);
+};
+
+export const addRect = function () {
+    const rect = createRect();
+    rect.resize(200, 200);
+
+    const child = createRect();
+    rect.embed(child);
+
+    GRAPH.addCells([rect, child]);
+    // rect.toFront();
 };

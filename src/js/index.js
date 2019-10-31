@@ -1,9 +1,10 @@
 /* Import the core libs */
 import $ from 'jquery';
+import {template as _template} from 'lodash';
 import 'bootstrap/dist/js/bootstrap.bundle';
 import './ui-script.js';
 import './font-awesome-custom.js';
-import './json-editor';
+import './json-editor/json-editor';
 /* Import the custom classes */
 import {getPaper} from "./jointjs-helper/diagram-generator";
 import 'typeface-nunito';
@@ -12,6 +13,7 @@ import 'jsoneditor/dist/jsoneditor.min.css';
 import '@fortawesome/fontawesome-free/css/fontawesome.min.css';
 import '@fortawesome/fontawesome-free/css/solid.min.css';
 import '../scss/index.scss';
+import modalTemplate from './modal-template.html';
 
 $(window).on("load", () => {
     $('#loading-icon').remove();
@@ -49,4 +51,11 @@ $("#zoom-reset-btn").on('click', () => {
     paper.scale(0.7, 0.7);
 });
 
+$('#modalOutput').html(_template(modalTemplate)({
+    modalId: 'jsonSchemaUpdateModal',
+    modalTitle: 'Update the JSON-Schema',
+    jsonEditorId: 'json-schema-update',
+    modalButtonId: 'json-schema-update-btn',
+    modalButtonText: 'Update'
+}));
 

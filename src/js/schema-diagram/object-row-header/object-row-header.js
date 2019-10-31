@@ -124,6 +124,7 @@ function moveSimpleRows(cell) {
     const modelHeight = cell.prop('size/height');
 
     _forEach(cell.getSimpleRowList(), (simpleRow, index) => {
+        simpleRow.prop('z', cell.prop('z'));
         graph.addCell(simpleRow);
         cell.embed(simpleRow);
         simpleRow.position(0, modelHeight + (index * HEIGHT), {parentRelative: true});

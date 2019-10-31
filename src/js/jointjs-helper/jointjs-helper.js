@@ -6,7 +6,7 @@ import ObjectRow from "../schema-diagram/object-row/object-row";
 import ObjectRowHeader from "../schema-diagram/object-row-header/object-row-header";
 import diagramTitleTemplate from "../schema-diagram/diagram-title/diagram-title.html";
 import DiagramRoot from "../schema-diagram/diagram-root";
-import {getSchemaEditor, openSchemaModal} from "../json-editor";
+import {getSchemaEditor, openSchemaModal} from "../json-editor/json-editor";
 
 const getPosition = (options) => {
     return {x: options.x, y: options.y};
@@ -644,6 +644,10 @@ export const createDummyDiagrams = function (graph) {
     } catch (error) {
         console.log(error);
     }
+};
+
+export const createRect = function () {
+  return new shapes.devs.Model();
 };
 
 /*
