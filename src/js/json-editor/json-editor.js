@@ -60,8 +60,13 @@ function onJsonDocChange() {
 }
 
 jsonEditorModal.on('shown.bs.modal', (evt) => {
-    entityTypeNameInput.trigger('input propertychange');
     showErrorsTable();
+    onJsonDocChange();
+});
+
+jsonEditorModal.on('hidden.bs.modal', (evt) => {
+    entityTypeNameInput.val('');
+    entityTypeNameInput.removeClass('is-valid').addClass('is-invalid');
 });
 
 
@@ -107,11 +112,9 @@ $('#json-doc-button').on('click', () => {
         if (isNil(jsonEditor)) return;
         try {
             const inferredSchema = generator.getSchema(jsonEditor.get());
+            inferredSchema["title"] = entityTypeNameInput.val() || "";
             createCellsFrom(inferredSchema);
-
             jsonEditorModal.modal('hide');
-            entityTypeNameInput.val('');
-            entityTypeNameInput.removeClass('is-valid').addClass('is-invalid');
         } catch (err) {
             console.log(err);
         }
@@ -131,11 +134,9 @@ $('#json-schema-button').on('click', () => {
         if (isNil(jsonEditor)) return;
         try {
             const doc = jsonEditor.get();
+            doc["title"] = entityTypeNameInput.val() || "";
             createCellsFrom(doc);
-
             jsonEditorModal.modal('hide');
-            entityTypeNameInput.val('');
-            entityTypeNameInput.removeClass('is-valid').addClass('is-invalid');
         } catch (err) {
             console.log(err);
         }
@@ -155,18 +156,19 @@ entityTypeNameInput.on('input propertychange', function () {
     if (isValid) {
         invalidFeedbackBlock.fadeOut();
         entityTypeNameInput.removeClass('is-invalid').addClass('is-valid');
-        onJsonDocChange();
+        actionButton.prop("disabled", false);
     } else {
         invalidFeedbackBlock.fadeIn();
         entityTypeNameInput.removeClass('is-valid').addClass('is-invalid');
-        onJsonDocChange();
+        actionButton.prop("disabled", true);
     }
 });
 
 export const openSchemaUpdateModal = function (DiagramRootSchema) {
     jsonEditor.set(DiagramRootSchema);
     jsonEditor.setSchema(jsonSchemaValidator);
-
+    entityTypeNameInput.val(DiagramRootSchema["title"] || "");
+    entityTypeNameInput.removeClass('is-invalid').addClass('is-valid');
     modalTitle.text('Update the Schema');
     actionButton.text('Update');
     jsonEditorModal.modal('show');

@@ -12,7 +12,7 @@ export const jsonDocValidator = {
         "array_type": {
             "type": "array",
             "items": {"$ref": "#/definitions/object_typ"},
-            "minItems": 1,
+            "minItems": 1
         }
     }
 };
@@ -46,7 +46,7 @@ export const jsonSchemaValidator = {
                 "type": {"type": "string"},
             },
             "required": ["type"],
-            "additionalProperties": false
+            "additionalProperties": true
         },
         "array_type": {
             "type": "object",
@@ -60,7 +60,7 @@ export const jsonSchemaValidator = {
                 }
             },
             "required": ["type", "items"],
-            "additionalProperties": false
+            "additionalProperties": true
         },
         "object_type": {
             "type": "object",
