@@ -51,6 +51,7 @@ function onJsonDocChange() {
             if (jsonEditor.validateSchema(json) && isEntityTypeNameValid()) {
                 actionButton.prop("disabled", false);
             } else {
+                showErrorsTable();
                 actionButton.prop("disabled", true);
             }
         }
@@ -75,7 +76,7 @@ function showErrorsTable() {
     if (errorsTable.length > 0) return;
 
     const errorIcon = $('.jsoneditor-validation-error-icon');
-    if (isNil(errorIcon)) return;
+    if (isNil(errorIcon) || errorIcon.css('display') === 'none') return;
 
     errorIcon.trigger('click');
 }
