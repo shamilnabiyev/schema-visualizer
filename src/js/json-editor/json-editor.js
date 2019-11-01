@@ -11,6 +11,8 @@ const generator = new SchemaGenerator();
 const jsonEditorModal = $('#jsonEditorModal');
 const modalTitle = $('#jsonEditorModal .modal-title');
 const actionButton = $('#json-editor-action-btn');
+const entityTypeNameInput = $('#entity-type-name-input');
+const invalidFeedbackBlock = $('#entity-type-name-form .invalid-feedback');
 actionButton.off('click');
 
 const jsonEditor = createJSONEditor(
@@ -46,7 +48,7 @@ function onJsonDocChange() {
     try {
         if (!!jsonEditor) {
             const json = jsonEditor.get();
-            if (jsonEditor.validateSchema(json)) {
+            if (jsonEditor.validateSchema(json) && isEntityTypeNameValid()) {
                 actionButton.prop("disabled", false);
             } else {
                 actionButton.prop("disabled", true);
@@ -58,9 +60,9 @@ function onJsonDocChange() {
 }
 
 jsonEditorModal.on('shown.bs.modal', (evt) => {
+    entityTypeNameInput.trigger('input propertychange');
     showErrorsTable();
 });
-
 
 
 function showErrorsTable() {
@@ -107,7 +109,9 @@ $('#json-doc-button').on('click', () => {
             const inferredSchema = generator.getSchema(jsonEditor.get());
             createCellsFrom(inferredSchema);
 
-            if (!!jsonEditorModal) jsonEditorModal.modal('hide');
+            jsonEditorModal.modal('hide');
+            entityTypeNameInput.val('');
+            entityTypeNameInput.removeClass('is-valid').addClass('is-invalid');
         } catch (err) {
             console.log(err);
         }
@@ -129,7 +133,9 @@ $('#json-schema-button').on('click', () => {
             const doc = jsonEditor.get();
             createCellsFrom(doc);
 
-            if (!!jsonEditorModal) jsonEditorModal.modal('hide');
+            jsonEditorModal.modal('hide');
+            entityTypeNameInput.val('');
+            entityTypeNameInput.removeClass('is-valid').addClass('is-invalid');
         } catch (err) {
             console.log(err);
         }
@@ -138,6 +144,23 @@ $('#json-schema-button').on('click', () => {
     modalTitle.text('Import a JSON-Schema');
     actionButton.text('Visualize');
     jsonEditorModal.modal('show');
+});
+
+function isEntityTypeNameValid() {
+    return (/^([a-zA-Z0-9_]+)$/.test(entityTypeNameInput.val()));
+}
+
+entityTypeNameInput.on('input propertychange', function () {
+    const isValid = isEntityTypeNameValid();
+    if (isValid) {
+        invalidFeedbackBlock.fadeOut();
+        entityTypeNameInput.removeClass('is-invalid').addClass('is-valid');
+        onJsonDocChange();
+    } else {
+        invalidFeedbackBlock.fadeIn();
+        entityTypeNameInput.removeClass('is-valid').addClass('is-invalid');
+        onJsonDocChange();
+    }
 });
 
 export const openSchemaUpdateModal = function (DiagramRootSchema) {

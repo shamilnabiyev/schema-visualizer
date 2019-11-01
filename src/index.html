@@ -2,159 +2,160 @@
 <html lang="en">
 
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="">
-  <meta name="author" content="">
-  <title>Schema Visualizer</title>
-  <style>
-    .sk-cube-grid {
-      width: 40px;
-      height: 40px;
-      margin: 100px auto;
-    }
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Schema Visualizer</title>
+    <style>
+        .sk-cube-grid {
+            width: 40px;
+            height: 40px;
+            margin: 100px auto;
+        }
 
-    .sk-cube-grid .sk-cube {
-      width: 33%;
-      height: 33%;
-      background-color: #0081c9;
-      float: left;
-      -webkit-animation: sk-cubeGridScaleDelay 1.0s infinite ease-in-out;
-      animation: sk-cubeGridScaleDelay 1.0s infinite ease-in-out;
-    }
+        .sk-cube-grid .sk-cube {
+            width: 33%;
+            height: 33%;
+            background-color: #0081c9;
+            float: left;
+            -webkit-animation: sk-cubeGridScaleDelay 1.0s infinite ease-in-out;
+            animation: sk-cubeGridScaleDelay 1.0s infinite ease-in-out;
+        }
 
-    .sk-cube-grid .sk-cube1 {
-      -webkit-animation-delay: 0.2s;
-      animation-delay: 0.2s;
-    }
+        .sk-cube-grid .sk-cube1 {
+            -webkit-animation-delay: 0.2s;
+            animation-delay: 0.2s;
+        }
 
-    .sk-cube-grid .sk-cube2 {
-      -webkit-animation-delay: 0.3s;
-      animation-delay: 0.3s;
-    }
+        .sk-cube-grid .sk-cube2 {
+            -webkit-animation-delay: 0.3s;
+            animation-delay: 0.3s;
+        }
 
-    .sk-cube-grid .sk-cube3 {
-      -webkit-animation-delay: 0.4s;
-      animation-delay: 0.4s;
-    }
+        .sk-cube-grid .sk-cube3 {
+            -webkit-animation-delay: 0.4s;
+            animation-delay: 0.4s;
+        }
 
-    .sk-cube-grid .sk-cube4 {
-      -webkit-animation-delay: 0.1s;
-      animation-delay: 0.1s;
-    }
+        .sk-cube-grid .sk-cube4 {
+            -webkit-animation-delay: 0.1s;
+            animation-delay: 0.1s;
+        }
 
-    .sk-cube-grid .sk-cube5 {
-      -webkit-animation-delay: 0.2s;
-      animation-delay: 0.2s;
-    }
+        .sk-cube-grid .sk-cube5 {
+            -webkit-animation-delay: 0.2s;
+            animation-delay: 0.2s;
+        }
 
-    .sk-cube-grid .sk-cube6 {
-      -webkit-animation-delay: 0.3s;
-      animation-delay: 0.3s;
-    }
+        .sk-cube-grid .sk-cube6 {
+            -webkit-animation-delay: 0.3s;
+            animation-delay: 0.3s;
+        }
 
-    .sk-cube-grid .sk-cube7 {
-      -webkit-animation-delay: 0s;
-      animation-delay: 0s;
-    }
+        .sk-cube-grid .sk-cube7 {
+            -webkit-animation-delay: 0s;
+            animation-delay: 0s;
+        }
 
-    .sk-cube-grid .sk-cube8 {
-      -webkit-animation-delay: 0.1s;
-      animation-delay: 0.1s;
-    }
+        .sk-cube-grid .sk-cube8 {
+            -webkit-animation-delay: 0.1s;
+            animation-delay: 0.1s;
+        }
 
-    .sk-cube-grid .sk-cube9 {
-      -webkit-animation-delay: 0.2s;
-      animation-delay: 0.2s;
-    }
+        .sk-cube-grid .sk-cube9 {
+            -webkit-animation-delay: 0.2s;
+            animation-delay: 0.2s;
+        }
 
-    @-webkit-keyframes sk-cubeGridScaleDelay {
+        @-webkit-keyframes sk-cubeGridScaleDelay {
 
-      0%,
-      70%,
-      100% {
-        -webkit-transform: scale3D(1, 1, 1);
-        transform: scale3D(1, 1, 1);
-      }
+            0%,
+            70%,
+            100% {
+                -webkit-transform: scale3D(1, 1, 1);
+                transform: scale3D(1, 1, 1);
+            }
 
-      35% {
-        -webkit-transform: scale3D(0, 0, 1);
-        transform: scale3D(0, 0, 1);
-      }
-    }
+            35% {
+                -webkit-transform: scale3D(0, 0, 1);
+                transform: scale3D(0, 0, 1);
+            }
+        }
 
-    @keyframes sk-cubeGridScaleDelay {
+        @keyframes sk-cubeGridScaleDelay {
 
-      0%,
-      70%,
-      100% {
-        -webkit-transform: scale3D(1, 1, 1);
-        transform: scale3D(1, 1, 1);
-      }
+            0%,
+            70%,
+            100% {
+                -webkit-transform: scale3D(1, 1, 1);
+                transform: scale3D(1, 1, 1);
+            }
 
-      35% {
-        -webkit-transform: scale3D(0, 0, 1);
-        transform: scale3D(0, 0, 1);
-      }
-    }
-  </style>
+            35% {
+                -webkit-transform: scale3D(0, 0, 1);
+                transform: scale3D(0, 0, 1);
+            }
+        }
+    </style>
 </head>
 
 <body id="page-top" class="sidebar-toggled">
-  <div id="loading-icon" style="visibility: initial;">
+<div id="loading-icon" style="visibility: initial;">
     <div class="sk-cube-grid">
-      <div class="sk-cube sk-cube1"></div>
-      <div class="sk-cube sk-cube2"></div>
-      <div class="sk-cube sk-cube3"></div>
-      <div class="sk-cube sk-cube4"></div>
-      <div class="sk-cube sk-cube5"></div>
-      <div class="sk-cube sk-cube6"></div>
-      <div class="sk-cube sk-cube7"></div>
-      <div class="sk-cube sk-cube8"></div>
-      <div class="sk-cube sk-cube9"></div>
+        <div class="sk-cube sk-cube1"></div>
+        <div class="sk-cube sk-cube2"></div>
+        <div class="sk-cube sk-cube3"></div>
+        <div class="sk-cube sk-cube4"></div>
+        <div class="sk-cube sk-cube5"></div>
+        <div class="sk-cube sk-cube6"></div>
+        <div class="sk-cube sk-cube7"></div>
+        <div class="sk-cube sk-cube8"></div>
+        <div class="sk-cube sk-cube9"></div>
     </div>
-  </div>
-  <!-- Page Wrapper -->
-  <div id="wrapper" style="visibility: hidden;">
+</div>
+<!-- Page Wrapper -->
+<div id="wrapper" style="visibility: hidden;">
 
     <!-- Sidebar -->
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion toggled" id="accordionSidebar">
-      <!-- Sidebar - Brand -->
-      <span class="sidebar-brand d-flex align-items-center justify-content-center" href="">
+        <!-- Sidebar - Brand -->
+        <span class="sidebar-brand d-flex align-items-center justify-content-center" href="">
         <div class="sidebar-brand-icon rotate-n-15">
           <i class="fas fa-border-style"></i>
         </div>
         <div class="sidebar-brand-text mx-3">Demo</div>
       </span>
 
-      <!-- Divider -->
-      <hr class="sidebar-divider my-0">
+        <!-- Divider -->
+        <hr class="sidebar-divider my-0">
 
-      <!-- Divider -->
-      <hr class="sidebar-divider">
+        <!-- Divider -->
+        <hr class="sidebar-divider">
 
-      <!-- Nav Item - Pages Collapse Menu -->
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true"
-          aria-controls="collapseTwo">
-          <i class="fas fa-grip-horizontal"></i>
-          <span>Examples</span>
-        </a>
-        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner">
-            <a class="collapse-item" href="#">Species-Protocols</a>
-            <a class="collapse-item" href="#">MovieLens</a>
-            <a class="collapse-item" href="#">Social network</a>
-            <a class="collapse-item" href="#">Online shop</a>
-            <a class="collapse-item" href="#">Company</a>
-            <a class="collapse-item" href="#">Library</a>
-          </div>
-        </div>
-      </li>
+        <!-- Nav Item - Pages Collapse Menu -->
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
+               aria-expanded="true"
+               aria-controls="collapseTwo">
+                <i class="fas fa-grip-horizontal"></i>
+                <span>Examples</span>
+            </a>
+            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner">
+                    <a class="collapse-item" href="#">Species-Protocols</a>
+                    <a class="collapse-item" href="#">MovieLens</a>
+                    <a class="collapse-item" href="#">Social network</a>
+                    <a class="collapse-item" href="#">Online shop</a>
+                    <a class="collapse-item" href="#">Company</a>
+                    <a class="collapse-item" href="#">Library</a>
+                </div>
+            </div>
+        </li>
 
-      <!-- Divider -->
-      <hr class="sidebar-divider d-none d-md-block">
+        <!-- Divider -->
+        <hr class="sidebar-divider d-none d-md-block">
 
     </ul>
     <!-- End of Sidebar -->
@@ -162,196 +163,205 @@
     <!-- Content Wrapper -->
     <div id="content-wrapper" class="d-flex flex-column">
 
-      <!-- Main Content -->
-      <div id="content-x">
+        <!-- Main Content -->
+        <div id="content-x">
 
-        <!-- Topbar -->
-        <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+            <!-- Topbar -->
+            <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
-          <!-- Sidebar Toggle (Topbar) -->
-          <button id="sidebarToggleTop" class="btn btn-link rounded-circle mr-3">
-            <i class="fa fa-bars"></i>
-          </button>
+                <!-- Sidebar Toggle (Topbar) -->
+                <button id="sidebarToggleTop" class="btn btn-link rounded-circle mr-3">
+                    <i class="fa fa-bars"></i>
+                </button>
 
-          <div class=""> <strong> Schema Visualizer </strong> - a Diagramming Tool for JSON and JSON-Schema | v1.8
-          </div>
-        </nav>
-        <!-- End of Topbar -->
-
-        <!-- Begin Page Content -->
-        <div class="container-fluid">
-
-          <!-- Page Heading -->
-          <div class="row">
-            <div class="col-12">
-              <div class="card mb-4">
-                <div class="card-body">
-                  <!-- File -->
-                  <div class="mr-3 d-inline">
-                    <button type="button" class="btn btn-sm btn-outline-secondary" data-toggle="tooltip"
-                      data-placement="top" title="Print">
-                      <span class="fas fa-print"></span>
-                    </button>
-                    <button type="button" class="btn btn-sm btn-outline-secondary" data-toggle="tooltip"
-                      data-placement="top" title="Save as JSON">
-                      <span class="far fa-save"></span>
-                    </button>
-                    <button type="button" class="btn btn-sm btn-outline-secondary" data-toggle="tooltip"
-                      data-placement="top" title="Save as PDF">
-                      <span class="far fa-file-pdf"></span>
-                    </button>
-                    <button type="button" class="btn btn-sm btn-outline-secondary" data-toggle="tooltip"
-                      data-placement="top" title="Take screenshot">
-                      <span class="far fa-image"></span>
-                    </button>
-                  </div>
-                  <!-- End of file -->
-
-                  <div class="vertical-divider mr-3"></div>
-
-                  <div class="mr-3 d-inline">
-                    <!-- Button trigger modal -->
-                    <button id="json-doc-button" type="button" class="btn btn-sm btn-outline-secondary" data-toggle="modal">
-                      Import a JSON Document
-                    </button>
-
-                    <button id="json-schema-button" type="button" class="btn btn-sm btn-outline-secondary" data-toggle="modal">
-                      Import a JSON-Schema
-                    </button>
-
-                    <button id="example1" type="button" class="btn btn-sm btn-outline-secondary">
-                      Book
-                    </button>
-                  </div>
-
-                  <!-- Diagram controllers -->
-                  <!--
-                  <div class="mr-3 d-inline">
-                    <button id="" type="button" class="btn btn-sm btn-outline-secondary" data-toggle="tooltip"
-                      data-placement="bottom" title="Add entity">
-                      <span class="far fa-file"></span>
-                    </button>
-                    <button id="" type="button" class="btn btn-sm btn-outline-secondary" data-toggle="tooltip"
-                      data-placement="bottom" title="Edit entity">
-                      <span class="far fa-file"></span>
-                    </button>
-                    <button id="" type="button" class="btn btn-sm btn-outline-secondary" data-toggle="tooltip"
-                      data-placement="bottom" title="Add property">
-                      <span class="far fa-file"></span>
-                    </button>
-                    <button id="" type="button" class="btn btn-sm btn-outline-secondary" data-toggle="tooltip"
-                      data-placement="bottom" title="Edit property">
-                      <span class="far fa-file"></span>
-                    </button>
-                    <button id="" type="button" class="btn btn-sm btn-outline-secondary" data-toggle="tooltip"
-                      data-placement="bottom" title="Add link">
-                      <span class="fas fa-arrows-alt-h"></span>
-                    </button>
-                    <button id="" type="button" class="btn btn-sm btn-outline-secondary" data-toggle="tooltip"
-                      data-placement="bottom" title="Edit link">
-                      <span class="fas fa-arrows-alt-h"></span>
-                    </button>
-                  </div>
-
-                  <div class="vertical-divider mr-3"></div>
-                  -->
-
-                  <!-- Zoom controllers -->
-                  <div class="mr-3 d-inline">
-                    <button id="zoom-out-btn" type="button" class="btn btn-sm btn-outline-secondary"
-                      data-toggle="tooltip" data-placement="top" title="Zoom Out">
-                      <span class="fas fa-search-minus"></span>
-                    </button>
-                    <button id="zoom-reset-btn" type="button" class="btn btn-sm btn-outline-secondary"
-                      data-toggle="tooltip" data-placement="top" title="Reset Zoom">
-                      <span class="fas fa-expand"></span>
-                    </button>
-                    <button id="zoom-in-btn" type="button" class="btn btn-sm btn-outline-secondary"
-                      data-toggle="tooltip" data-placement="top" title="Zoom In">
-                      <span class="fas fa-search-plus"></span>
-                    </button>
-                  </div>
-                  <!-- End of Zoom controllers -->
-
+                <div class=""><strong> Schema Visualizer </strong> - a Diagramming Tool for JSON and JSON-Schema | v1.8
                 </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- /.container-fluid -->
+            </nav>
+            <!-- End of Topbar -->
 
-      </div>
+            <!-- Begin Page Content -->
+            <div class="container-fluid">
 
-      <!-- End of Main Content -->
+                <!-- Page Heading -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <!-- File -->
+                                <div class="mr-3 d-inline">
+                                    <button type="button" class="btn btn-sm btn-outline-secondary" data-toggle="tooltip"
+                                            data-placement="top" title="Print">
+                                        <span class="fas fa-print"></span>
+                                    </button>
+                                    <button type="button" class="btn btn-sm btn-outline-secondary" data-toggle="tooltip"
+                                            data-placement="top" title="Save as JSON">
+                                        <span class="far fa-save"></span>
+                                    </button>
+                                    <button type="button" class="btn btn-sm btn-outline-secondary" data-toggle="tooltip"
+                                            data-placement="top" title="Save as PDF">
+                                        <span class="far fa-file-pdf"></span>
+                                    </button>
+                                    <button type="button" class="btn btn-sm btn-outline-secondary" data-toggle="tooltip"
+                                            data-placement="top" title="Take screenshot">
+                                        <span class="far fa-image"></span>
+                                    </button>
+                                </div>
+                                <!-- End of file -->
 
-      <!-- Paper holder -->
-      <div id="paper-holder">
-        <div class="container-fluid h-100">
-          <div class="row h-100">
-            <div class="col-12 h-100">
-              <div class="card mb-4 h-100">
-                <div class="card-body h-100">
-                  <!-- JointJs Paper -->
-                  <div id="paper-html-elements"></div>
+                                <div class="vertical-divider mr-3"></div>
+
+                                <div class="mr-3 d-inline">
+                                    <!-- Button trigger modal -->
+                                    <button id="json-doc-button" type="button" class="btn btn-sm btn-outline-secondary"
+                                            data-toggle="modal">
+                                        Import a JSON Document
+                                    </button>
+
+                                    <button id="json-schema-button" type="button"
+                                            class="btn btn-sm btn-outline-secondary" data-toggle="modal">
+                                        Import a JSON-Schema
+                                    </button>
+
+                                    <button id="example1" type="button" class="btn btn-sm btn-outline-secondary">
+                                        Book
+                                    </button>
+                                </div>
+
+                                <!-- Diagram controllers -->
+                                <!--
+                                <div class="mr-3 d-inline">
+                                  <button id="" type="button" class="btn btn-sm btn-outline-secondary" data-toggle="tooltip"
+                                    data-placement="bottom" title="Add entity">
+                                    <span class="far fa-file"></span>
+                                  </button>
+                                  <button id="" type="button" class="btn btn-sm btn-outline-secondary" data-toggle="tooltip"
+                                    data-placement="bottom" title="Edit entity">
+                                    <span class="far fa-file"></span>
+                                  </button>
+                                  <button id="" type="button" class="btn btn-sm btn-outline-secondary" data-toggle="tooltip"
+                                    data-placement="bottom" title="Add property">
+                                    <span class="far fa-file"></span>
+                                  </button>
+                                  <button id="" type="button" class="btn btn-sm btn-outline-secondary" data-toggle="tooltip"
+                                    data-placement="bottom" title="Edit property">
+                                    <span class="far fa-file"></span>
+                                  </button>
+                                  <button id="" type="button" class="btn btn-sm btn-outline-secondary" data-toggle="tooltip"
+                                    data-placement="bottom" title="Add link">
+                                    <span class="fas fa-arrows-alt-h"></span>
+                                  </button>
+                                  <button id="" type="button" class="btn btn-sm btn-outline-secondary" data-toggle="tooltip"
+                                    data-placement="bottom" title="Edit link">
+                                    <span class="fas fa-arrows-alt-h"></span>
+                                  </button>
+                                </div>
+
+                                <div class="vertical-divider mr-3"></div>
+                                -->
+
+                                <!-- Zoom controllers -->
+                                <div class="mr-3 d-inline">
+                                    <button id="zoom-out-btn" type="button" class="btn btn-sm btn-outline-secondary"
+                                            data-toggle="tooltip" data-placement="top" title="Zoom Out">
+                                        <span class="fas fa-search-minus"></span>
+                                    </button>
+                                    <button id="zoom-reset-btn" type="button" class="btn btn-sm btn-outline-secondary"
+                                            data-toggle="tooltip" data-placement="top" title="Reset Zoom">
+                                        <span class="fas fa-expand"></span>
+                                    </button>
+                                    <button id="zoom-in-btn" type="button" class="btn btn-sm btn-outline-secondary"
+                                            data-toggle="tooltip" data-placement="top" title="Zoom In">
+                                        <span class="fas fa-search-plus"></span>
+                                    </button>
+                                </div>
+                                <!-- End of Zoom controllers -->
+
+                            </div>
+                        </div>
+                    </div>
                 </div>
-              </div>
             </div>
-          </div>
-        </div>
-      </div>
-      <!-- End of Paper holder -->
+            <!-- /.container-fluid -->
 
-      <!-- Bootstrap Modals -->
-      <div class="modal fade" id="jsonEditorModal" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
-        <div class="modal-dialog modal-lg" role="document">
-          <div class="modal-content">
-            <div class="modal-header  modal-header-success">
-              <!-- the title will be updated through jQuery -->
-              <h5 class="modal-title"> MODAL_TITLE </h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <form>
-                <div class="form-group row">
-                  <label for="entity-type-name-input" class="col-sm-3 col-form-label col-form-label-sm">Entity type name:</label>
-                  <div class="col-sm-9">
-                    <input type="text" class="form-control form-control-sm" id="entity-type-name-input" placeholder="Please enter an entity type name ">
-                  </div>
+        </div>
+
+        <!-- End of Main Content -->
+
+        <!-- Paper holder -->
+        <div id="paper-holder">
+            <div class="container-fluid h-100">
+                <div class="row h-100">
+                    <div class="col-12 h-100">
+                        <div class="card mb-4 h-100">
+                            <div class="card-body h-100">
+                                <!-- JointJs Paper -->
+                                <div id="paper-html-elements"></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-              </form>
-              <hr>
-              <div id="json-editor" class="jsoneditor-wrapper"></div>
             </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Close</button>
-              <!-- the button text will be updated through jQuery -->
-              <button id="json-editor-action-btn" type="button" class="btn btn-sm btn-primary" disabled="true"> BTN_TEXT </button>
-            </div>
-          </div>
         </div>
-      </div>
-      <!-- End of Bootstrap Modals -->
+        <!-- End of Paper holder -->
 
-      <!-- Footer -->
-      <footer class="sticky-footer bg-white">
-        <div class="container my-auto">
-          <div class="copyright text-center my-auto">
-            <span>Copyright &copy; 2019 Shamil Nabiyev </span> |
-            <a href="https://github.com/samnb" target="_" rel="noopener noreferrer">GitHub</a> |
-            <a href="#" rel="noopener noreferrer">Privacy policy</a> |
-            <a href="#" rel="noopener noreferrer">Contact</a>
-          </div>
+        <!-- Bootstrap Modals -->
+        <div class="modal fade" id="jsonEditorModal" tabindex="-1" role="dialog" aria-hidden="true"
+             data-backdrop="static" data-keyboard="false">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header  modal-header-success">
+                        <!-- the title will be updated through jQuery -->
+                        <h5 class="modal-title"> MODAL_TITLE </h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="entity-type-name-form">
+                            <div class="form-group row">
+                                <label for="entity-type-name-input" class="col-sm-3 col-form-label col-form-label-sm">Entity
+                                    type name:</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control form-control-sm is-invalid"
+                                           id="entity-type-name-input" placeholder="Please enter an entity type name "
+                                           required>
+                                    <div class="invalid-feedback"> Please choose a valid name containing only the allowed characters: a-zA-Z0-9_</div>
+                                </div>
+                            </div>
+                        </form>
+                        <hr>
+                        <div id="json-editor" class="jsoneditor-wrapper"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Close</button>
+                        <!-- the button text will be updated through jQuery -->
+                        <button id="json-editor-action-btn" type="button" class="btn btn-sm btn-primary"
+                                disabled="true"> BTN_TEXT
+                        </button>
+                    </div>
+                </div>
+            </div>
         </div>
-      </footer>
-      <!-- End of Footer -->
+        <!-- End of Bootstrap Modals -->
+
+        <!-- Footer -->
+        <footer class="sticky-footer bg-white">
+            <div class="container my-auto">
+                <div class="copyright text-center my-auto">
+                    <span>Copyright &copy; 2019 Shamil Nabiyev </span> |
+                    <a href="https://github.com/samnb" target="_" rel="noopener noreferrer">GitHub</a> |
+                    <a href="#" rel="noopener noreferrer">Privacy policy</a> |
+                    <a href="#" rel="noopener noreferrer">Contact</a>
+                </div>
+            </div>
+        </footer>
+        <!-- End of Footer -->
 
     </div>
     <!-- End of Content Wrapper -->
 
-  </div>
-  <!-- End of Page Wrapper -->
+</div>
+<!-- End of Page Wrapper -->
 
 </body>
 
