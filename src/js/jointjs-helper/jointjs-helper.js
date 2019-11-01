@@ -6,7 +6,7 @@ import ObjectRow from "../schema-diagram/object-row/object-row";
 import ObjectRowHeader from "../schema-diagram/object-row-header/object-row-header";
 import diagramTitleTemplate from "../schema-diagram/diagram-title/diagram-title.html";
 import DiagramRoot from "../schema-diagram/diagram-root";
-import {getSchemaEditor, openSchemaModal} from "../json-editor/json-editor";
+import {openSchemaUpdateModal} from "../json-editor/json-editor";
 
 const getPosition = (options) => {
     return {x: options.x, y: options.y};
@@ -259,10 +259,7 @@ export const createPaper = function createPaper(paperDivElement, graph) {
                             }],
                             action: function (evt) {
                                 if(!isFunction(this.model.getSchema)) return;
-
-                                const schema = this.model.getSchema();
-                                getSchemaEditor().set(schema);
-                                openSchemaModal();
+                                openSchemaUpdateModal(this.model.getSchema());
                             }
                         }
                     )

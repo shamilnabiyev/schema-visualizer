@@ -1,16 +1,20 @@
 // create the editor
 import JSONEditor from "jsoneditor";
 import $ from 'jquery';
-import {isNil} from 'lodash';
+import {isNil, template as _template} from 'lodash';
 import {Generator as SchemaGenerator} from "json-s-generator";
 import {createCellsFrom, addRect} from '../jointjs-helper/diagram-generator';
 import {jsonDocValidator, jsonSchemaValidator} from './schema-validators';
 import {schema as bookSchema} from "../jointjs-helper/schema-examples";
 
 const generator = new SchemaGenerator();
+const jsonEditorModal = $('#jsonEditorModal');
+const modalTitle = $('#jsonEditorModal .modal-title');
+const actionButton = $('#json-editor-action-btn');
+actionButton.off('click');
 
-const jsonDocEditor = createJSONEditor(
-    document.getElementById("json-doc-editor"),
+const jsonEditor = createJSONEditor(
+    document.getElementById("json-editor"),
     {
         mode: 'code',
         search: false,
@@ -20,21 +24,6 @@ const jsonDocEditor = createJSONEditor(
         schema: jsonDocValidator,
         onError: onError,
         onChange: onJsonDocChange
-    },
-    {}
-);
-
-const jsonSchemaEditor = createJSONEditor(
-    document.getElementById("json-schema-editor"),
-    {
-        mode: 'code',
-        search: false,
-        statusBar: true,
-        enableTransform: false,
-        history: true,
-        schema: jsonSchemaValidator,
-        onError: onError,
-        onChange: onJsonSchemaChange
     },
     {}
 );
@@ -55,98 +44,24 @@ function onError(err) {
  */
 function onJsonDocChange() {
     try {
-        if (!!jsonDocEditor) {
-            const json = jsonDocEditor.get();
-            if (jsonDocEditor.validateSchema(json)) {
-                enableButton();
+        if (!!jsonEditor) {
+            const json = jsonEditor.get();
+            if (jsonEditor.validateSchema(json)) {
+                actionButton.prop("disabled", false);
             } else {
-                disableButton();
+                actionButton.prop("disabled", true);
             }
         }
     } catch (e) {
-        disableButton();
+        actionButton.prop("disabled", true);
     }
 }
 
-function onJsonSchemaChange() {
-    try {
-        const jsonSchema = jsonSchemaEditor.get();
-        if (jsonSchemaEditor.validateSchema(jsonSchema)) {
-            enableButton();
-        } else {
-            disableButton();
-        }
-    } catch (err) {
-        disableButton();
-    }
-}
-
-const jsonDocModal = $('#jsonDocumentModal');
-
-jsonDocModal.on('shown.bs.modal', (evt) => {
+jsonEditorModal.on('shown.bs.modal', (evt) => {
     showErrorsTable();
 });
 
-jsonDocModal.on('hidden.bs.modal', (evt) => {
-    try {
-        if (!jsonDocEditor) return;
-        jsonDocEditor.set({});
-    } catch (err) {
-        console.log(err);
-    }
-});
 
-const vizButton = $('#json-doc-viz-btn');
-
-if (!!vizButton) vizButton.on('click', (evt) => {
-    if (isNil(jsonDocEditor)) return;
-    try {
-        const inferredSchema = generator.getSchema(jsonDocEditor.get());
-        createCellsFrom(inferredSchema);
-
-        if (!!jsonDocModal) jsonDocModal.modal('hide');
-    } catch (err) {
-        console.log(err);
-    }
-});
-
-const jsonSchemaModal = $('#jsonSchemaModal');
-
-jsonSchemaModal.on('shown.bs.modal', (evt) => {
-    showErrorsTable();
-});
-
-jsonSchemaModal.on('hidden.bs.modal', (evt) => {
-    try {
-        if (!jsonSchemaEditor) return;
-        jsonSchemaEditor.set({});
-    } catch (err) {
-        console.log(err);
-    }
-});
-
-const vizButton2 = $('#json-schema-viz-btn');
-
-if (!!vizButton2) vizButton2.on('click', (evt) => {
-    if (isNil(jsonSchemaEditor)) return;
-    try {
-        const jsonSchema = jsonSchemaEditor.get();
-        createCellsFrom(jsonSchema);
-        if (!!jsonSchemaModal) jsonSchemaModal.modal('hide');
-    } catch (err) {
-        console.log(err);
-    }
-});
-
-function disableButton() {
-    if (!!vizButton) vizButton.prop("disabled", true);
-    if (!!vizButton2) vizButton2.prop("disabled", true);
-}
-
-function enableButton() {
-    if (!!vizButton) vizButton.prop("disabled", false);
-    if (!!vizButton2) vizButton2.prop("disabled", false);
-}
 
 function showErrorsTable() {
     const errorsTable = $('.jsoneditor-validation-errors');
@@ -177,33 +92,59 @@ function createJSONEditor(selector, options, json) {
     return editor;
 }
 
-
-/**
- * Find a JSONEditor instance from it's container element or id
- * @param {string | Element} selector  A query selector id like '#myEditor'
- *                                     or a DOM element
- * @return {JSONEditor | null} Returns the created JSONEditor, or null otherwise.
- */
-function findJSONEditor(selector) {
-    const container = (typeof selector === 'string')
-        ? document.querySelector(selector)
-        : selector;
-
-    return container && container.jsoneditor || null;
-}
-
 $('#example1').on('click', (evt) => {
     createCellsFrom(bookSchema);
 });
 
-export const getSchemaEditor = function () {
-    return findJSONEditor('#json-schema-editor');
-};
+$('#json-doc-button').on('click', () => {
+    jsonEditor.set({});
+    jsonEditor.setSchema(jsonDocValidator);
 
-export const openSchemaModal = function () {
-    $('#jsonSchemaUpdateModal').modal('show');
-};
+    actionButton.off('click');
+    actionButton.on('click', (evt) => {
+        if (isNil(jsonEditor)) return;
+        try {
+            const inferredSchema = generator.getSchema(jsonEditor.get());
+            createCellsFrom(inferredSchema);
 
-$('#rect-btn').on('click', () => {
-   addRect();
+            if (!!jsonEditorModal) jsonEditorModal.modal('hide');
+        } catch (err) {
+            console.log(err);
+        }
+    });
+
+    modalTitle.text('Import a JSON Document');
+    actionButton.text('Visualize');
+    jsonEditorModal.modal('show');
 });
+
+$('#json-schema-button').on('click', () => {
+    jsonEditor.set({});
+    jsonEditor.setSchema(jsonSchemaValidator);
+
+    actionButton.off('click');
+    actionButton.on('click', (evt) => {
+        if (isNil(jsonEditor)) return;
+        try {
+            const doc = jsonEditor.get();
+            createCellsFrom(doc);
+
+            if (!!jsonEditorModal) jsonEditorModal.modal('hide');
+        } catch (err) {
+            console.log(err);
+        }
+    });
+
+    modalTitle.text('Import a JSON-Schema');
+    actionButton.text('Visualize');
+    jsonEditorModal.modal('show');
+});
+
+export const openSchemaUpdateModal = function (DiagramRootSchema) {
+    jsonEditor.set(DiagramRootSchema);
+    jsonEditor.setSchema(jsonSchemaValidator);
+
+    modalTitle.text('Update the Schema');
+    actionButton.text('Update');
+    jsonEditorModal.modal('show');
+};

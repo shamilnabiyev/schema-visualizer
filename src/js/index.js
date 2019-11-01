@@ -50,12 +50,3 @@ $("#zoom-reset-btn").on('click', () => {
 
     paper.scale(0.7, 0.7);
 });
-
-$('#modalOutput').html(_template(modalTemplate)({
-    modalId: 'jsonSchemaUpdateModal',
-    modalTitle: 'Update the JSON-Schema',
-    jsonEditorId: 'json-schema-update',
-    modalButtonId: 'json-schema-update-btn',
-    modalButtonText: 'Update'
-}));
-

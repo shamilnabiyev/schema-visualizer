@@ -211,26 +211,17 @@
 
                   <div class="mr-3 d-inline">
                     <!-- Button trigger modal -->
-                    <button type="button" class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#jsonDocumentModal">
+                    <button id="json-doc-button" type="button" class="btn btn-sm btn-outline-secondary" data-toggle="modal">
                       Import a JSON Document
                     </button>
 
-                    <button type="button" class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#jsonSchemaModal">
+                    <button id="json-schema-button" type="button" class="btn btn-sm btn-outline-secondary" data-toggle="modal">
                       Import a JSON-Schema
                     </button>
 
-                    <button type="button" class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#jsonSchemaUpdateModal">
-                      Update the JSON-Schema
-                    </button>
-
                     <button id="example1" type="button" class="btn btn-sm btn-outline-secondary">
-                      Example-1
+                      Book
                     </button>
-
-                    <button id="rect-btn" type="button" class="btn btn-sm btn-outline-secondary">
-                      addRect( )
-                    </button>
-
                   </div>
 
                   <!-- Diagram controllers -->
@@ -311,50 +302,37 @@
       <!-- End of Paper holder -->
 
       <!-- Bootstrap Modals -->
-      <div class="modal fade" id="jsonDocumentModal" tabindex="-1" role="dialog" aria-labelledby="jsonDocumentModalTitle"
-           aria-hidden="true" data-backdrop="static" data-keyboard="false">
+      <div class="modal fade" id="jsonEditorModal" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog modal-lg" role="document">
           <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLongTitle">Import a JSON-Document</h5>
+            <div class="modal-header  modal-header-success">
+              <!-- the title will be updated through jQuery -->
+              <h5 class="modal-title"> MODAL_TITLE </h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
             <div class="modal-body">
-              <div id="json-doc-editor" class="jsoneditor-wrapper"></div>
+              <form>
+                <div class="form-group row">
+                  <label for="entity-type-name-input" class="col-sm-3 col-form-label col-form-label-sm">Entity type name:</label>
+                  <div class="col-sm-9">
+                    <input type="text" class="form-control form-control-sm" id="entity-type-name-input" placeholder="Please enter an entity type name ">
+                  </div>
+                </div>
+              </form>
+              <hr>
+              <div id="json-editor" class="jsoneditor-wrapper"></div>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Close</button>
-              <button id="json-doc-viz-btn" type="button" class="btn btn-sm btn-primary" disabled="true">Visualize</button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="modal fade" id="jsonSchemaModal" tabindex="-1" role="dialog" aria-labelledby="jsonSchemaModalTitle"
-           aria-hidden="true" data-backdrop="static" data-keyboard="false">
-        <div class="modal-dialog modal-lg" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title">Import a JSON-Schema</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <div id="json-schema-editor" class="jsoneditor-wrapper"></div>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Close</button>
-              <button id="json-schema-viz-btn" type="button" class="btn btn-sm btn-primary" disabled="true">Visualize</button>
+              <!-- the button text will be updated through jQuery -->
+              <button id="json-editor-action-btn" type="button" class="btn btn-sm btn-primary" disabled="true"> BTN_TEXT </button>
             </div>
           </div>
         </div>
       </div>
       <!-- End of Bootstrap Modals -->
-
-      <div id="modalOutput"></div>
 
       <!-- Footer -->
       <footer class="sticky-footer bg-white">
