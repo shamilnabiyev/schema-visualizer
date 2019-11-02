@@ -1,5 +1,6 @@
 import {dia, shapes, linkTools, elementTools} from 'jointjs';
 import {isUndefined, isNull, isFunction} from 'lodash';
+import $ from 'jquery';
 import SimpleRow from '../schema-diagram/simple-row/simple-row';
 import DiagramTitle from '../schema-diagram/diagram-title/diagram-title';
 import ObjectRow from "../schema-diagram/object-row/object-row";
@@ -7,6 +8,10 @@ import ObjectRowHeader from "../schema-diagram/object-row-header/object-row-head
 import diagramTitleTemplate from "../schema-diagram/diagram-title/diagram-title.html";
 import DiagramRoot from "../schema-diagram/diagram-root";
 import {openSchemaUpdateModal} from "../json-editor/json-editor";
+
+const cardinalityUpdateModal = $('#update-cardinality-modal');
+const cardinalityUpdateButton = $('#update-cardinality-btn');
+const cardinalitySelection = $('#cardinality-selection');
 
 const getPosition = (options) => {
     return {x: options.x, y: options.y};
@@ -118,21 +123,27 @@ const createInfoButton = function createInfoButton() {
         offset: 0,
         action: function (evt) {
             console.log('View id: ' + this.id + '\n' + 'Model id: ' + this.model.id);
-            const cardinalityLabel = {
-                attrs: {
-                    text: {
-                        text: '1:1'
+            // console.log('Source: ', null || this.model.getSourceElement().prop('customAttrs/field_name'));
+            // console.log('Target: ', null || this.model.getTargetElement().prop('customAttrs/field_name'));
+            cardinalityUpdateModal.modal('show');
+            cardinalityUpdateButton.on('click', () => {
+                const cardinalityLabel = {
+                    attrs: {
+                        text: {
+                            text: cardinalitySelection.children('option:selected').val() || '0..N'
+                        },
+                        line: {
+                            strokeWidth: 2,
+                        }
                     },
-                    line: {
-                        strokeWidth: 2,
+                    position: {
+                        distance: 20,
+                        offset: 20
                     }
-                },
-                position: {
-                    distance: 20,
-                    offset: 20
-                }
-            };
-            this.model.appendLabel(cardinalityLabel);
+                };
+                this.model.appendLabel(cardinalityLabel);
+                cardinalityUpdateModal.modal('hide');
+            });
         }
     });
 };

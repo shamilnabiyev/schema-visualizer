@@ -342,6 +342,39 @@
                 </div>
             </div>
         </div>
+
+        <div class="modal fade" id="update-cardinality-modal" tabindex="-1" role="dialog" aria-hidden="true"
+             data-backdrop="static" data-keyboard="false">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header  modal-header-success">
+                        <h5 class="modal-title"> Update the cardinality </h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-inline">
+                            <div class="form-group">
+                                <label for="cardinality-selection">Select the cardinality:</label>
+                                <select id="cardinality-selection" class="custom-select custom-select-sm ml-3">
+                                    <option value="0..1"> 0..1 (at most one) </option>
+                                    <option value="1..1"> 1..1 (exact one) </option>
+                                    <option value="1..N"> 1..N (at least one)</option>
+                                    <option selected value="0..N"> 0..N (any)</option>
+                                </select>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Close</button>
+                        <button id="update-cardinality-btn" type="button" class="btn btn-sm btn-primary">
+                            Update
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
         <!-- End of Bootstrap Modals -->
 
         <!-- Footer -->
