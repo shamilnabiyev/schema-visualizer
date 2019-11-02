@@ -3,7 +3,7 @@ import JSONEditor from "jsoneditor";
 import $ from 'jquery';
 import {isNil, template as _template} from 'lodash';
 import {Generator as SchemaGenerator} from "json-s-generator";
-import {createCellsFrom, addRect} from '../jointjs-helper/diagram-generator';
+import {createDiagramRoot, addRect, updateDiagramRoot} from '../jointjs-helper/diagram-generator';
 import {jsonDocValidator, jsonSchemaValidator} from './schema-validators';
 import {schema as bookSchema} from "../jointjs-helper/schema-examples";
 
@@ -101,7 +101,7 @@ function createJSONEditor(selector, options, json) {
 }
 
 $('#example1').on('click', (evt) => {
-    createCellsFrom(bookSchema);
+    createDiagramRoot(bookSchema);
 });
 
 $('#json-doc-button').on('click', () => {
@@ -114,7 +114,7 @@ $('#json-doc-button').on('click', () => {
         try {
             const inferredSchema = generator.getSchema(jsonEditor.get());
             inferredSchema["title"] = entityTypeNameInput.val() || "";
-            createCellsFrom(inferredSchema);
+            createDiagramRoot(inferredSchema);
             jsonEditorModal.modal('hide');
         } catch (err) {
             console.log(err);
@@ -136,7 +136,7 @@ $('#json-schema-button').on('click', () => {
         try {
             const doc = jsonEditor.get();
             doc["title"] = entityTypeNameInput.val() || "";
-            createCellsFrom(doc);
+            createDiagramRoot(doc);
             jsonEditorModal.modal('hide');
         } catch (err) {
             console.log(err);
@@ -165,12 +165,31 @@ entityTypeNameInput.on('input propertychange', function () {
     }
 });
 
-export const openSchemaUpdateModal = function (DiagramRootSchema) {
-    jsonEditor.set(DiagramRootSchema);
+export const openSchemaUpdateModal = function (diagramRoot) {
+    const diagramRootSchema = diagramRoot.getSchema();
+
+    jsonEditor.set(diagramRootSchema);
     jsonEditor.setSchema(jsonSchemaValidator);
-    entityTypeNameInput.val(DiagramRootSchema["title"] || "");
+
+    entityTypeNameInput.val(diagramRootSchema["title"] || "");
     entityTypeNameInput.removeClass('is-invalid').addClass('is-valid');
+
     modalTitle.text('Update the Schema');
     actionButton.text('Update');
+
+    actionButton.off('click');
+    actionButton.on('click', (evt) => {
+        if (isNil(jsonEditor)) return;
+        try {
+            const updatedSchema = jsonEditor.get();
+            updatedSchema["title"] = entityTypeNameInput.val() || "";
+            diagramRoot.setSchema(updatedSchema);
+
+            updateDiagramRoot(diagramRoot);
+            jsonEditorModal.modal('hide');
+        } catch (err) {
+            console.log(err);
+        }
+    });
     jsonEditorModal.modal('show');
 };

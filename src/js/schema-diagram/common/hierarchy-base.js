@@ -76,6 +76,11 @@ HierarchyBase.Element = shapes.devs.Coupled.extend((function () {
         return this.get('objectRowList').length;
     };
 
+    const removeChildCells = function () {
+        this.prop('simpleRowList', []);
+        this.prop('objectRowList', []);
+    };
+
     /**
      * TODO: create the following attributes and their getter/setter methods
      * - arrayRowList
@@ -92,7 +97,8 @@ HierarchyBase.Element = shapes.devs.Coupled.extend((function () {
         addObjectRow: addObjectRow,
         setDiagramTitle: setDiagramTitle,
         getSimpleRowList: getSimpleRowList,
-        getObjectRowList: getObjectRowList
+        getObjectRowList: getObjectRowList,
+        removeChildCells: removeChildCells
     };
 })());
 

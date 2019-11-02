@@ -11,6 +11,7 @@ import {
 import DiagramRoot from "../schema-diagram/diagram-root/diagram-root";
 import {dia} from "jointjs";
 import $ from "jquery";
+import DiagramTitle from "../schema-diagram/diagram-title";
 
 let GRAPH = initGraph();
 let PAPER = initPaper();
@@ -82,7 +83,7 @@ const ARRAY_TYPE = "array";
 // const ANY_OF = 'anyOf';
 const ITEMS = "items";
 
-function generateRow(properties, doc, rowLevel) {
+function generateRows(properties, doc, rowLevel) {
     _forEach(properties, (property, key) => {
         if (_includes(SIMPLE_TYPES, property.type)) {
             addSimpleRow(doc, key, property, rowLevel);
@@ -113,7 +114,7 @@ function addDocumentRow(doc, key, property, rowLevel) {
 
     if(!_has(property, PROPERTIES)) return;
     rowLevel.value += 1;
-    generateRow(property[PROPERTIES], subDoc, rowLevel);
+    generateRows(property[PROPERTIES], subDoc, rowLevel);
     rowLevel.value -= 1;
 }
 
@@ -138,41 +139,16 @@ function addArrayItems(arrayRow, items, key, rowLevel) {
         arrayRow.addObjectRow(itemsRow);
 
         rowLevel.value += 1;
-        generateRow(items[PROPERTIES], itemsRow, rowLevel);
+        generateRows(items[PROPERTIES], itemsRow, rowLevel);
         rowLevel.value -= 1;
     } else if (_has(items, TYPE) && _includes(SIMPLE_TYPES, items[TYPE])) {
         addSimpleRow(arrayRow, key, items, rowLevel);
     }
 }
 
-export const createCellsFrom = function (schema) {
-    SCHEMA = _cloneDeep(schema);
-
-    const titleText = SCHEMA.title || "Entity Type " + Math.floor(X_START / FIFTY);
-    const diagramRoot = new DiagramRoot.Element({
-        attrs: {
-            text: {text: titleText},
-        },
-        position: {x: X_START, y: Y_START}
-    });
-
-    X_START = X_START + FIFTY;
-    Y_START = Y_START + FIFTY;
-
-    GRAPH.addCell(diagramRoot);
-
-    const diagramTitle = createTitleRow({
-        title: titleText,
-        width: WIDTH,
-        height: HEIGHT
-    });
-    GRAPH.addCell(diagramTitle);
-    diagramRoot.embed(diagramTitle);
-    diagramTitle.position(0, 0, {parentRelative: true});
-
-    diagramRoot.setDiagramTitle(diagramTitle);
+function createCellsFrom(diagramRoot, schema) {
     const rowLevel = {value: 0};
-    generateRow(SCHEMA.properties, diagramRoot, rowLevel);
+    generateRows(schema.properties, diagramRoot, rowLevel);
 
     diagramRoot.fitEmbeds();
 
@@ -202,8 +178,43 @@ export const createCellsFrom = function (schema) {
 
     diagramRoot.fitEmbeds();
     diagramRoot.toFront();
+}
 
+export const createDiagramRoot = function (schema) {
+    SCHEMA = _cloneDeep(schema);
+
+    const titleText = SCHEMA.title || "Entity Type " + Math.floor(X_START / FIFTY);
+    const diagramRoot = new DiagramRoot.Element({
+        attrs: {
+            text: {text: titleText},
+        },
+        position: {x: X_START, y: Y_START}
+    });
+
+    X_START = X_START + FIFTY;
+    Y_START = Y_START + FIFTY;
+
+    GRAPH.addCell(diagramRoot);
+
+    const diagramTitle = createTitleRow({
+        title: titleText,
+        width: WIDTH,
+        height: HEIGHT
+    });
+    GRAPH.addCell(diagramTitle);
+    diagramRoot.embed(diagramTitle);
+    diagramTitle.position(0, 0, {parentRelative: true});
+    diagramRoot.setDiagramTitle(diagramTitle);
     diagramRoot.setSchema(schema);
+
+    createCellsFrom(diagramRoot, SCHEMA);
+};
+
+export const updateDiagramRoot = function (diagramRoot) {
+    const deepEmbeds = diagramRoot.getEmbeddedCells({deep: true}).filter((item) => !(item instanceof DiagramTitle.Element));
+    GRAPH.removeCells(deepEmbeds);
+    diagramRoot.removeChildCells();
+    createCellsFrom(diagramRoot, diagramRoot.getSchema());
 };
 
 export const addRect = function () {

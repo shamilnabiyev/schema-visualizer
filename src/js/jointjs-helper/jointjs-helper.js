@@ -259,7 +259,7 @@ export const createPaper = function createPaper(paperDivElement, graph) {
                             }],
                             action: function (evt) {
                                 if(!isFunction(this.model.getSchema)) return;
-                                openSchemaUpdateModal(this.model.getSchema());
+                                openSchemaUpdateModal(this.model);
                             }
                         }
                     )
