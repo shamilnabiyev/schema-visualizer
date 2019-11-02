@@ -189,22 +189,25 @@
                             <div class="card-body">
                                 <!-- File -->
                                 <div class="mr-3 d-inline">
-                                    <button type="button" class="btn btn-sm btn-outline-secondary" data-toggle="tooltip"
-                                            data-placement="top" title="Print">
-                                        <span class="fas fa-print"></span>
-                                    </button>
-                                    <button type="button" class="btn btn-sm btn-outline-secondary" data-toggle="tooltip"
-                                            data-placement="top" title="Save as JSON">
-                                        <span class="far fa-save"></span>
-                                    </button>
-                                    <button type="button" class="btn btn-sm btn-outline-secondary" data-toggle="tooltip"
-                                            data-placement="top" title="Save as PDF">
-                                        <span class="far fa-file-pdf"></span>
-                                    </button>
-                                    <button type="button" class="btn btn-sm btn-outline-secondary" data-toggle="tooltip"
-                                            data-placement="top" title="Take screenshot">
-                                        <span class="far fa-image"></span>
-                                    </button>
+                                    <a href="#" class="btn btn-sm btn-outline-secondary btn-icon-split">
+                                        <span class="icon"><i class="fas fa-print"></i></span>
+                                        <span class="text btn-text">Print</span>
+                                    </a>
+
+                                    <a href="#" class="btn btn-sm btn-outline-secondary btn-icon-split">
+                                        <span class="icon"><i class="far fa-save"></i></span>
+                                        <span class="text btn-text">Save as JSON</span>
+                                    </a>
+
+                                    <a href="#" class="btn btn-sm btn-outline-secondary btn-icon-split">
+                                        <span class="icon"><i class="far fa-file-pdf"></i></span>
+                                        <span class="text btn-text">Save as PDF</span>
+                                    </a>
+
+                                    <a href="#" class="btn btn-sm btn-outline-secondary btn-icon-split">
+                                        <span class="icon"><i class="far fa-image"></i></span>
+                                        <span class="text btn-text">Save as PNG</span>
+                                    </a>
                                 </div>
                                 <!-- End of file -->
 
@@ -212,20 +215,18 @@
 
                                 <div class="mr-3 d-inline">
                                     <!-- Button trigger modal -->
-                                    <button id="json-doc-button" type="button" class="btn btn-sm btn-outline-secondary"
-                                            data-toggle="modal">
-                                        Import a JSON Document
-                                    </button>
+                                    <a href="#" id="json-doc-button" class="btn btn-sm btn-outline-secondary btn-icon-split">
+                                        <span class="icon"><i class="far fa-file"></i></span>
+                                        <span class="text btn-text">Import a JSON Document</span>
+                                    </a>
 
-                                    <button id="json-schema-button" type="button"
-                                            class="btn btn-sm btn-outline-secondary" data-toggle="modal">
-                                        Import a JSON-Schema
-                                    </button>
-
-                                    <button id="example1" type="button" class="btn btn-sm btn-outline-secondary">
-                                        Book
-                                    </button>
+                                    <a href="#" id="json-schema-button"  class="btn btn-sm btn-outline-secondary btn-icon-split">
+                                        <span class="icon"><i class="fas fa-file-code"></i></span>
+                                        <span class="text btn-text">Import a JSON-Schema</span>
+                                    </a>
                                 </div>
+
+                                <div class="vertical-divider mr-3"></div>
 
                                 <!-- Diagram controllers -->
                                 <!--
@@ -261,18 +262,20 @@
 
                                 <!-- Zoom controllers -->
                                 <div class="mr-3 d-inline">
-                                    <button id="zoom-out-btn" type="button" class="btn btn-sm btn-outline-secondary"
-                                            data-toggle="tooltip" data-placement="top" title="Zoom Out">
-                                        <span class="fas fa-search-minus"></span>
-                                    </button>
-                                    <button id="zoom-reset-btn" type="button" class="btn btn-sm btn-outline-secondary"
-                                            data-toggle="tooltip" data-placement="top" title="Reset Zoom">
-                                        <span class="fas fa-expand"></span>
-                                    </button>
-                                    <button id="zoom-in-btn" type="button" class="btn btn-sm btn-outline-secondary"
-                                            data-toggle="tooltip" data-placement="top" title="Zoom In">
-                                        <span class="fas fa-search-plus"></span>
-                                    </button>
+                                    <a href="#" id="zoom-out-btn" class="btn btn-sm btn-outline-secondary btn-icon-split">
+                                        <span class="icon"><i class="fas fa-search-minus"></i></span>
+                                        <span class="text btn-text">Zoom Out</span>
+                                    </a>
+
+                                    <a href="#" id="zoom-reset-btn" class="btn btn-sm btn-outline-secondary btn-icon-split">
+                                        <span class="icon"><i class="fas fa-expand"></i></span>
+                                        <span class="text btn-text">Reset Zoom</span>
+                                    </a>
+
+                                    <a href="#" id="zoom-in-btn" class="btn btn-sm btn-outline-secondary btn-icon-split">
+                                        <span class="icon"><i class="fas fa-search-plus"></i></span>
+                                        <span class="text btn-text">Zoom In</span>
+                                    </a>
                                 </div>
                                 <!-- End of Zoom controllers -->
 
