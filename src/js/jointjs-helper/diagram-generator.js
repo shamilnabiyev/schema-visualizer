@@ -34,22 +34,15 @@ export const getPaper = function () {
     return PAPER;
 };
 
-let SCHEMA;
-
 const FIFTY = 50;
 const TYPE = "type";
 const PROPERTIES = 'properties';
 const WIDTH = 400;
 const HEIGHT = 35;
-// const HEIGHT_OFFSET = 35;
 let X_START = 50;
 let Y_START = 50;
 const REQ_FRAG = "req";
 const OPT_FLAG = " ";
-// const NULL_TYPE = "null";
-
-// const props = schema.properties || {};
-// const propKeys = Object.keys(props);
 let requiredProps;
 
 /**
@@ -79,27 +72,17 @@ const objectRow = (value, key, rowLevel) => createObjectRow({
 const SIMPLE_TYPES = ["boolean", "integer", "null", "number", "string"];
 const OBJECT_TYPE = "object";
 const ARRAY_TYPE = "array";
-// const MULTI_TYPE = 'multi';
-// const ANY_OF = 'anyOf';
 const ITEMS = "items";
 
 function generateRows(properties, doc, rowLevel) {
     _forEach(properties, (property, key) => {
         if (_includes(SIMPLE_TYPES, property.type)) {
             addSimpleRow(doc, key, property, rowLevel);
-        }
-        if (_isEqual(property.type, OBJECT_TYPE)) {
+        } else if (_isEqual(property.type, OBJECT_TYPE)) {
             addDocumentRow(doc, key, property, rowLevel);
-        }
-
-        if (_isEqual(property.type, ARRAY_TYPE)) {
+        } else if (_isEqual(property.type, ARRAY_TYPE)) {
             addArrayRow(doc, key, property, rowLevel);
         }
-        /*
-        if (_isEqual(property.type, MULTI_TYPE)) {
-            addMultiTypeRow(property, doc, key);
-        }
-       */
     });
 }
 
@@ -181,7 +164,7 @@ function createCellsFrom(diagramRoot, schema) {
 }
 
 export const createDiagramRoot = function (schema) {
-    SCHEMA = _cloneDeep(schema);
+    const SCHEMA = _cloneDeep(schema);
 
     const titleText = SCHEMA.title || "Entity Type " + Math.floor(X_START / FIFTY);
     const diagramRoot = new DiagramRoot.Element({

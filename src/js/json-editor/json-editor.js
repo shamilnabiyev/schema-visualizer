@@ -1,13 +1,12 @@
 // create the editor
 import JSONEditor from "jsoneditor";
 import $ from 'jquery';
-import {isNil, template as _template} from 'lodash';
-import {Generator as SchemaGenerator} from "json-s-generator";
+import {isNil} from 'lodash';
+import {json as schemaGenerator} from 'generate-schema';
 import {createDiagramRoot, addRect, updateDiagramRoot} from '../jointjs-helper/diagram-generator';
 import {jsonDocValidator, jsonSchemaValidator} from './schema-validators';
 import {schema as bookSchema} from "../jointjs-helper/schema-examples";
 
-const generator = new SchemaGenerator();
 const jsonEditorModal = $('#jsonEditorModal');
 const modalTitle = $('#jsonEditorModal .modal-title');
 const actionButton = $('#json-editor-action-btn');
@@ -112,7 +111,8 @@ $('#json-doc-button').on('click', () => {
     actionButton.on('click', (evt) => {
         if (isNil(jsonEditor)) return;
         try {
-            const inferredSchema = generator.getSchema(jsonEditor.get());
+            let inferredSchema = schemaGenerator(jsonEditor.get());
+            if(inferredSchema['type'] === 'array') inferredSchema = inferredSchema['items'];
             inferredSchema["title"] = entityTypeNameInput.val() || "";
             createDiagramRoot(inferredSchema);
             jsonEditorModal.modal('hide');

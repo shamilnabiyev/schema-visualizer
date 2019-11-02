@@ -46,7 +46,7 @@ export const jsonSchemaValidator = {
                 "type": {"type": "string"},
             },
             "required": ["type"],
-            "additionalProperties": true
+            "additionalProperties": false
         },
         "array_type": {
             "type": "object",
@@ -60,7 +60,7 @@ export const jsonSchemaValidator = {
                 }
             },
             "required": ["type", "items"],
-            "additionalProperties": true
+            "additionalProperties": false
         },
         "object_type": {
             "type": "object",
