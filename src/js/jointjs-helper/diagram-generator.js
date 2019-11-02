@@ -211,10 +211,24 @@ export const createDiagramRoot = function (schema) {
 };
 
 export const updateDiagramRoot = function (diagramRoot) {
-    const deepEmbeds = diagramRoot.getEmbeddedCells({deep: true}).filter((item) => !(item instanceof DiagramTitle.Element));
+    const deepEmbeds = diagramRoot.getEmbeddedCells({deep: true});
     GRAPH.removeCells(deepEmbeds);
     diagramRoot.removeChildCells();
-    createCellsFrom(diagramRoot, diagramRoot.getSchema());
+
+    const diagramRootSchema = diagramRoot.getSchema();
+
+    const diagramTitle = createTitleRow({
+        title: diagramRootSchema['title'],
+        width: WIDTH,
+        height: HEIGHT
+    });
+
+    GRAPH.addCell(diagramTitle);
+    diagramRoot.embed(diagramTitle);
+    diagramTitle.position(0, 0, {parentRelative: true});
+    diagramRoot.setDiagramTitle(diagramTitle);
+
+    createCellsFrom(diagramRoot, diagramRootSchema);
 };
 
 export const addRect = function () {

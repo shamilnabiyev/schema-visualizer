@@ -27,17 +27,15 @@ HierarchyBase.Element = shapes.devs.Coupled.extend((function () {
     }, shapes.devs.Coupled.prototype.defaults);
 
     /**
-     * @private
-     * @type {DiagramTitle.Element}
-     */
-    let diagramTitle = null;
-
-    /**
      *
      * @param {DiagramTitle.Element} title
      */
     const setDiagramTitle = function (title) {
-        diagramTitle = title;
+        this.prop('diagramTitle', title);
+    };
+
+    const getDiagramTitle = function () {
+        return this.prop('diagramTitle');
     };
 
     /**
@@ -96,6 +94,7 @@ HierarchyBase.Element = shapes.devs.Coupled.extend((function () {
         addSimpleRow: addSimpleRow,
         addObjectRow: addObjectRow,
         setDiagramTitle: setDiagramTitle,
+        getDiagramTitle: getDiagramTitle,
         getSimpleRowList: getSimpleRowList,
         getObjectRowList: getObjectRowList,
         removeChildCells: removeChildCells

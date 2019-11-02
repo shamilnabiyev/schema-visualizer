@@ -18,12 +18,6 @@ DiagramRoot.Element = HierarchyBase.Element.extend((function () {
         },
     }, HierarchyBase.Element.prototype.defaults);
 
-    /**
-     * @private
-     * @type {DiagramTitle.Element}
-     */
-    let diagramTitle = null;
-
     const setSchema = function (schema) {
         this.prop('schema', schema);
     };
@@ -35,17 +29,8 @@ DiagramRoot.Element = HierarchyBase.Element.extend((function () {
         return schema;
     };
 
-    /**
-     *
-     * @param {DiagramTitle.Element} title
-     */
-    const setDiagramTitle = function (title) {
-        diagramTitle = title;
-    };
-
     return {
         defaults: defaults,
-        setDiagramTitle: setDiagramTitle,
         setSchema: setSchema,
         getSchema: getSchema,
     };
