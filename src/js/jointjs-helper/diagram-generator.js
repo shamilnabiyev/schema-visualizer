@@ -73,6 +73,7 @@ const SIMPLE_TYPES = ["boolean", "integer", "null", "number", "string"];
 const OBJECT_TYPE = "object";
 const ARRAY_TYPE = "array";
 const ITEMS = "items";
+const ONE_OF = "oneOf";
 
 function generateRows(properties, doc, rowLevel) {
     _forEach(properties, (property, key) => {
@@ -105,10 +106,15 @@ function addArrayRow(doc, key, property, rowLevel) {
     const arrayRow = objectRow(property, key, rowLevel.value);
     doc.addObjectRow(arrayRow);
 
+    if(!_has(property, ITEMS)) return;
+    if(_has(property, [ITEMS, ONE_OF])) {
+        property[ITEMS] = [...new Set(property[ITEMS][ONE_OF].map(JSON.stringify))].map(JSON.parse);
+    }
+
     rowLevel.value += 1;
-    if (_has(property, ITEMS) && _isPlainObject(property[ITEMS]) && _includes(SIMPLE_TYPES, property[ITEMS][TYPE])) {
+    if (_isPlainObject(property[ITEMS]) && !_isArray(property[ITEMS])) {
         addArrayItems(arrayRow, property[ITEMS], '[0]', rowLevel);
-    } else if (_has(property, ITEMS) && _isArray(property[ITEMS])) {
+    } else if (_isArray(property[ITEMS])) {
         _forEach(property[ITEMS], (elem, elemIndex) => {
             addArrayItems(arrayRow, elem, `[${elemIndex}]`, rowLevel);
         });
