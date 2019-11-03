@@ -130,6 +130,7 @@ function addArrayItems(arrayRow, items, key, rowLevel) {
 }
 
 function createCellsFrom(diagramRoot, schema) {
+    requiredProps = schema['required'] || [];
     const rowLevel = {value: 0};
     generateRows(schema.properties, diagramRoot, rowLevel);
 
