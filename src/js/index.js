@@ -5,6 +5,7 @@ import 'bootstrap/dist/js/bootstrap.bundle';
 import './ui-script.js';
 import './font-awesome-custom.js';
 import './json-editor/json-editor';
+import './schema-editor';
 /* Import the custom classes */
 import {getPaper} from "./jointjs-helper/diagram-generator";
 import 'typeface-nunito';
