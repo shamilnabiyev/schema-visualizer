@@ -26,29 +26,6 @@
   opacity: 1;
 }
 
-.modal-header-success {
-  color:#fff;
-  padding:9px 15px;
-  border-bottom:1px solid #eee;
-  background-color: #0099ee;
+#schema-editor-modal .modal-content {
+  height: 80vh;
 }
-
-.close {
-  color: #ffffff;
-}
-
-/*
-.btn-icon-split .btn-text {
-  display: none;
-  visibility: hidden;
-  opacity: 0;
-  transition: visibility 0s, opacity 0.5s linear;
-}
-
-.btn-icon-split:hover .btn-text {
-  display: block;
-  visibility: visible;
-  opacity: 1;
-}
-
-*/
