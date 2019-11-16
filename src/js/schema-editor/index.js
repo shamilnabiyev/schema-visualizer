@@ -2,6 +2,8 @@ import $ from 'jquery';
 import {createSeSimpleRow} from "./simple-row";
 import {createSeObjectRow} from "./object-row";
 
+import './html-to-json-schema';
+
 // schema-editor-btn
 const schemaEditorButton = $('#schema-editor-btn');
 const schemaEditorModal = $('#schema-editor-modal');

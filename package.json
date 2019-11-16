@@ -52,6 +52,7 @@
     "bootstrap": "^4.3.1",
     "core-js": "^3.2.1",
     "generate-schema": "^2.6.0",
+    "himalaya": "^1.1.0",
     "jointjs": "^3.0.4",
     "jquery": "^3.4.1",
     "jquery.easing": "^1.4.1",
