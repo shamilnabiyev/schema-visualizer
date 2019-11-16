@@ -28,7 +28,10 @@ import {
     faPencilAlt,
     faChevronDown,
     faChevronRight,
-    faPlus
+    faPlus,
+    faCheckCircle,
+    faTrashAlt,
+    faTimesCircle
 } from '@fortawesome/free-solid-svg-icons';
 
 import {
@@ -37,9 +40,6 @@ import {
     faFilePdf, 
     faImage,
     faCaretSquareRight,
-    faCheckCircle,
-    faTrashAlt,
-    faTimesCircle
 } from '@fortawesome/free-regular-svg-icons';
 
 

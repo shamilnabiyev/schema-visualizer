@@ -21,6 +21,12 @@ schemaEditorModal.on('show.bs.modal', function () {
     $('#schema-editor > .object-row > .form-inline > .remove-btn-block > .remove-btn').first().remove();
     $('#schema-editor > .object-row > .simple-row > .property-info > .field-name > .expander-btn').remove();
 });
+const row2 = createSeObjectRow('ROOT', 'object');
+$('#schema-editor').empty();
+$('#schema-editor').append(row2);
+$('#schema-editor > .new-prop-container > .new-field-elements > .add-btn').prop("disabled", true);
+$('#schema-editor > .object-row > .form-inline > .remove-btn-block > .remove-btn').first().remove();
+$('#schema-editor > .object-row > .simple-row > .property-info > .field-name > .expander-btn').remove();
 
 export {createSeSimpleRow, createSeObjectRow};
 
