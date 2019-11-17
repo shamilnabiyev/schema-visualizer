@@ -119,45 +119,7 @@
 <div id="wrapper" style="visibility: hidden;">
 
     <!-- Sidebar -->
-    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion toggled" id="accordionSidebar">
-        <!-- Sidebar - Brand -->
-        <span class="sidebar-brand d-flex align-items-center justify-content-center" href="">
-        <div class="sidebar-brand-icon rotate-n-15">
-          <i class="fas fa-border-style"></i>
-        </div>
-        <div class="sidebar-brand-text mx-3">Demo</div>
-      </span>
 
-        <!-- Divider -->
-        <hr class="sidebar-divider my-0">
-
-        <!-- Divider -->
-        <hr class="sidebar-divider">
-
-        <!-- Nav Item - Pages Collapse Menu -->
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
-               aria-expanded="true"
-               aria-controls="collapseTwo">
-                <i class="fas fa-grip-horizontal"></i>
-                <span>Examples</span>
-            </a>
-            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                <div class="bg-white py-2 collapse-inner">
-                    <a class="collapse-item" href="#">Species-Protocols</a>
-                    <a class="collapse-item" href="#">MovieLens</a>
-                    <a class="collapse-item" href="#">Social network</a>
-                    <a class="collapse-item" href="#">Online shop</a>
-                    <a class="collapse-item" href="#">Company</a>
-                    <a class="collapse-item" href="#">Library</a>
-                </div>
-            </div>
-        </li>
-
-        <!-- Divider -->
-        <hr class="sidebar-divider d-none d-md-block">
-
-    </ul>
     <!-- End of Sidebar -->
 
     <!-- Content Wrapper -->
@@ -216,27 +178,24 @@
                                 <div class="vertical-divider mr-3"></div>
                                 -->
 
-                                <div class="mr-3 d-inline">
-                                    <a href="#" id="schema-editor-btn"
-                                       class="btn btn-sm btn-outline-primary btn-icon-split">
-                                        <span class="icon"><i class="far fa-file"></i></span>
-                                        <span class="text btn-text">New Diagram</span>
-                                    </a>
-
-                                    <a href="#" id="json-doc-button"
-                                       class="btn btn-sm btn-outline-primary btn-icon-split">
-                                        <span class="icon"><i class="far fa-file"></i></span>
-                                        <span class="text btn-text">Import a JSON Document</span>
-                                    </a>
-
-                                    <a href="#" id="json-schema-button"
-                                       class="btn btn-sm btn-outline-primary btn-icon-split">
-                                        <span class="icon"><i class="fas fa-file-code"></i></span>
-                                        <span class="text btn-text">Import a JSON-Schema</span>
-                                    </a>
+                                <div class="mr-1 d-inline">
+                                    <div class="btn-group">
+                                        <button class="btn btn-sm btn-outline-primary dropdown-toggle mb-1" type="button"
+                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <span class="icon"><i class="fas fa-plus"></i></span>
+                                            <span class="text btn-text">New Diagram</span>
+                                        </button>
+                                        <div class="dropdown-menu">
+                                            <button id="schema-editor-btn" class="dropdown-item">Visual Editor</button>
+                                            <div class="dropdown-divider"></div>
+                                            <button id="json-doc-button" class="dropdown-item">Import a JSON Document</button>
+                                            <div class="dropdown-divider"></div>
+                                            <button id="json-schema-button" class="dropdown-item">Import a JSON-Schema</button>
+                                        </div>
+                                    </div>
                                 </div>
 
-                                <div class="vertical-divider mr-3"></div>
+                                <div class="vertical-divider mr-2"></div>
 
                                 <!-- Diagram controllers -->
                                 <!--
@@ -271,22 +230,47 @@
                                 -->
 
                                 <!-- Zoom controllers -->
-                                <div class="mr-3 d-inline">
-                                    <a href="#" id="zoom-out-btn" class="btn btn-sm btn-outline-primary btn-icon-split">
+                                <div class="mr-1 d-inline">
+                                    <a href="#" id="zoom-out-btn" class="btn btn-sm btn-outline-primary mr-1 mb-1">
                                         <span class="icon"><i class="fas fa-search-minus"></i></span>
                                         <span class="text btn-text">Zoom Out</span>
                                     </a>
 
                                     <a href="#" id="zoom-reset-btn"
-                                       class="btn btn-sm btn-outline-primary btn-icon-split">
+                                       class="btn btn-sm btn-outline-primary mr-1 mb-1">
                                         <span class="icon"><i class="fas fa-expand"></i></span>
                                         <span class="text btn-text">Reset Zoom</span>
                                     </a>
 
-                                    <a href="#" id="zoom-in-btn" class="btn btn-sm btn-outline-primary btn-icon-split">
+                                    <a href="#" id="zoom-in-btn" class="btn btn-sm btn-outline-primary mb-1">
                                         <span class="icon"><i class="fas fa-search-plus"></i></span>
                                         <span class="text btn-text">Zoom In</span>
                                     </a>
+                                </div>
+
+                                <div class="vertical-divider mr-2"></div>
+
+                                <div class="mr-3 d-inline">
+                                    <div class="btn-group">
+                                        <button class="btn btn-sm btn-outline-primary dropdown-toggle mb-1" type="button"
+                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <span class="icon"><i class="fas fa-plus"></i></span>
+                                            <span class="text btn-text">Examples</span>
+                                        </button>
+                                        <div class="dropdown-menu">
+                                            <a class="dropdown-item disabled" href="#">Species-Protocols</a>
+                                            <div class="dropdown-divider"></div>
+                                            <a class="dropdown-item disabled" href="#">MovieLens</a>
+                                            <div class="dropdown-divider"></div>
+                                            <a class="dropdown-item disabled" href="#">Social network</a>
+                                            <div class="dropdown-divider"></div>
+                                            <a class="dropdown-item disabled" href="#">Online shop</a>
+                                            <div class="dropdown-divider"></div>
+                                            <a class="dropdown-item disabled" href="#">Company</a>
+                                            <div class="dropdown-divider"></div>
+                                            <a class="dropdown-item disabled" href="#">Library</a>
+                                        </div>
+                                    </div>
                                 </div>
                                 <!-- End of Zoom controllers -->
 
