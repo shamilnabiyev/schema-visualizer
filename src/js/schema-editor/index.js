@@ -4,9 +4,6 @@ import {createSeSimpleRow} from "./simple-row";
 import {createSeObjectRow} from "./object-row";
 import {createDiagramRoot} from "../jointjs-helper/diagram-generator";
 
-// import './html-to-json-schema';
-
-const schemaEditor = $('#schema-editor');
 const schemaEditorButton = $('#schema-editor-btn');
 const schemaEditorModal = $('#schema-editor-modal');
 const visualizeButton = schemaEditorModal.find('.visualize-btn');
@@ -28,16 +25,14 @@ visualizeButton.on('click', function () {
 
 schemaEditorModal.on('show.bs.modal', function () {
     const row1 = createSeObjectRow('ROOT', 'object');
+    const schemaEditor = $('#schema-editor');
+    schemaEditor.empty();
+    schemaEditor.append(row1);
 
-    $('#schema-editor').empty();
-    $('#schema-editor').append(row1);
     $('#schema-editor > .object-row > .new-prop-container > .new-field-elements > .add-btn').prop("disabled", true);
     $('#schema-editor > .object-row > .form-inline > .remove-btn-block > .remove-btn').first().remove();
     $('#schema-editor > .object-row > .simple-row > .property-info > .field-name > .expander-btn').remove();
 });
-
-
-
 
 export {createSeSimpleRow, createSeObjectRow};
 
