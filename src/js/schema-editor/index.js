@@ -21,6 +21,7 @@ visualizeButton.on('click', function () {
         return;
     }
     const jsonSchema = htmlToJsonSchema(properties.html());
+    jsonSchema["title"] = schemaTitleInput.val() || "Entity_type";
     createDiagramRoot(jsonSchema);
     schemaEditorModal.modal('hide');
 });
