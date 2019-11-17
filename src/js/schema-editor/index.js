@@ -7,6 +7,8 @@ import {createDiagramRoot} from "../jointjs-helper/diagram-generator";
 const schemaEditorButton = $('#schema-editor-btn');
 const schemaEditorModal = $('#schema-editor-modal');
 const visualizeButton = schemaEditorModal.find('.visualize-btn');
+const schemaTitleInput = schemaEditorModal.find('#schema-title-input');
+const actionButton = schemaEditorModal.find('.visualize-btn');
 
 schemaEditorButton.on('click', function () {
     schemaEditorModal.modal('show');
@@ -24,6 +26,9 @@ visualizeButton.on('click', function () {
 });
 
 schemaEditorModal.on('show.bs.modal', function () {
+    schemaTitleInput.val('');
+    schemaTitleInput.removeClass('is-valid').addClass('is-invalid');
+
     const row1 = createSeObjectRow('ROOT', 'object');
     const schemaEditor = $('#schema-editor');
     schemaEditor.empty();
@@ -33,6 +38,23 @@ schemaEditorModal.on('show.bs.modal', function () {
     $('#schema-editor > .object-row > .form-inline > .remove-btn-block > .remove-btn').first().remove();
     $('#schema-editor > .object-row > .simple-row > .property-info > .field-name > .expander-btn').remove();
 });
+
+schemaTitleInput.on('input propertychange', function(){
+    const invalidInputFeedback = schemaEditorModal.find('.invalid-feedback');
+    if(isFieldNameValid(this.value)){
+        actionButton.prop("disabled", false);
+        schemaTitleInput.removeClass('is-invalid').addClass('is-valid');
+        invalidInputFeedback.fadeOut();
+    } else {
+        actionButton.prop("disabled", true);
+        schemaTitleInput.removeClass('is-valid').addClass('is-invalid');
+        invalidInputFeedback.fadeIn();
+    }
+});
+
+function isFieldNameValid(value){
+    return (/^([a-zA-Z0-9_]+)$/.test(value));
+}
 
 export {createSeSimpleRow, createSeObjectRow};
 

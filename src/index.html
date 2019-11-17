@@ -217,17 +217,20 @@
                                 -->
 
                                 <div class="mr-3 d-inline">
-                                    <a href="#" id="schema-editor-btn" class="btn btn-sm btn-outline-primary btn-icon-split">
+                                    <a href="#" id="schema-editor-btn"
+                                       class="btn btn-sm btn-outline-primary btn-icon-split">
                                         <span class="icon"><i class="far fa-file"></i></span>
                                         <span class="text btn-text">New Diagram</span>
                                     </a>
 
-                                    <a href="#" id="json-doc-button" class="btn btn-sm btn-outline-primary btn-icon-split">
+                                    <a href="#" id="json-doc-button"
+                                       class="btn btn-sm btn-outline-primary btn-icon-split">
                                         <span class="icon"><i class="far fa-file"></i></span>
                                         <span class="text btn-text">Import a JSON Document</span>
                                     </a>
 
-                                    <a href="#" id="json-schema-button"  class="btn btn-sm btn-outline-primary btn-icon-split">
+                                    <a href="#" id="json-schema-button"
+                                       class="btn btn-sm btn-outline-primary btn-icon-split">
                                         <span class="icon"><i class="fas fa-file-code"></i></span>
                                         <span class="text btn-text">Import a JSON-Schema</span>
                                     </a>
@@ -274,7 +277,8 @@
                                         <span class="text btn-text">Zoom Out</span>
                                     </a>
 
-                                    <a href="#" id="zoom-reset-btn" class="btn btn-sm btn-outline-primary btn-icon-split">
+                                    <a href="#" id="zoom-reset-btn"
+                                       class="btn btn-sm btn-outline-primary btn-icon-split">
                                         <span class="icon"><i class="fas fa-expand"></i></span>
                                         <span class="text btn-text">Reset Zoom</span>
                                     </a>
@@ -329,13 +333,16 @@
                     <div class="modal-body">
                         <form id="entity-type-name-form" class="pt-3 pl-3 pr-3 mb-3">
                             <div class="form-group row">
-                                <label for="entity-type-name-input" class="col-sm-3 col-form-label col-form-label-sm">Entity
-                                    type name:</label>
+                                <label for="entity-type-name-input" class="col-sm-3 col-form-label col-form-label-sm">
+                                    Entity type name:
+                                </label>
                                 <div class="col-sm-9">
                                     <input type="text" class="form-control form-control-sm is-invalid"
                                            id="entity-type-name-input" placeholder="Please enter an entity type name "
                                            required>
-                                    <div class="invalid-feedback"> Please choose a valid name containing only the allowed characters: a-zA-Z0-9_</div>
+                                    <div class="invalid-feedback">
+                                        Please choose a valid name containing only the allowed characters: a-zA-Z0-9_
+                                    </div>
                                 </div>
                             </div>
                         </form>
@@ -344,8 +351,9 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Close</button>
                         <!-- the button text will be updated through jQuery -->
-                        <button id="json-editor-action-btn" type="button" class="btn btn-sm btn-primary"
-                                disabled="true"> BTN_TEXT
+                        <button class="btn btn-sm btn-primary" disabled="true" id="json-editor-action-btn"
+                                type="button">
+                            BTN_TEXT
                         </button>
                     </div>
                 </div>
@@ -364,15 +372,18 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form id="schema-editor-title-form" class="pt-3 pl-3 pr-3 mb-3">
+                        <form id="form-schema-editor-title" class="pt-3 pl-3 pr-3 mb-3">
                             <div class="form-group row">
-                                <label for="schema-title-input" class="col-sm-3 col-form-label col-form-label-sm">Entity
-                                    type name:</label>
+                                <label for="schema-title-input" class="col-sm-3 col-form-label col-form-label-sm">
+                                    Entity type name:
+                                </label>
                                 <div class="col-sm-9">
                                     <input type="text" class="form-control form-control-sm is-invalid"
                                            id="schema-title-input" placeholder="Please enter an entity type name "
                                            required>
-                                    <div class="invalid-feedback"> Please choose a valid name containing only the allowed characters: a-zA-Z0-9_</div>
+                                    <div class="invalid-feedback">
+                                        Please choose a valid name containing only the allowed characters: a-zA-Z0-9_
+                                    </div>
                                 </div>
                             </div>
                         </form>
@@ -383,7 +394,9 @@
                         <!--
                         <button id="parser-btn" class="btn btn-sm btn-outline-success">Parse to JSON-Schema</button>
                         -->
-                        <button type="button" class="btn btn-sm btn-primary visualize-btn"> Visualize </button>
+                        <button type="button" class="btn btn-sm btn-primary visualize-btn" disabled="true">
+                            Visualize
+                        </button>
                     </div>
                 </div>
             </div>
@@ -404,8 +417,8 @@
                             <div class="form-group">
                                 <label for="cardinality-selection">Select the cardinality:</label>
                                 <select id="cardinality-selection" class="custom-select custom-select-sm ml-3">
-                                    <option value="0..1"> 0..1 (at most one) </option>
-                                    <option value="1..1"> 1..1 (exact one) </option>
+                                    <option value="0..1"> 0..1 (at most one)</option>
+                                    <option value="1..1"> 1..1 (exact one)</option>
                                     <option value="1..N"> 1..N (at least one)</option>
                                     <option value="0..N" selected> 0..N (any)</option>
                                 </select>
