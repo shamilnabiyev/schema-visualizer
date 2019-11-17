@@ -5,7 +5,7 @@
 }
 
 #schema-editor {
-  border: 1px solid #ccc;
+  border: 1px solid #dddddd;
 }
 
 .new-prop-block,
@@ -20,8 +20,8 @@
 
 .object-row {
   margin-bottom: -1px;
-  border-left: 1px solid #ccc;
-  border-bottom: 1px solid #ccc;
+  border-left: 1px solid #dddddd;
+  border-bottom: 1px solid #dddddd;
 }
 
 #schema-editor > .object-row {
@@ -30,8 +30,8 @@
 
 .simple-row {
   padding: 0.3em 0 0.3em 1em;
-  border-left: 1px solid #ccc;
-  border-bottom: 1px solid #ccc;
+  border-left: 1px solid #dddddd;
+  border-bottom: 1px solid #dddddd;
   display: flex;
   justify-content: space-between;
 }
@@ -47,7 +47,7 @@
 }
 
 .new-field-elements {
-  border-top: 1px solid #ccc;
+  border-top: 1px solid #dddddd;
 }
 
 .add-btn,
@@ -85,4 +85,8 @@
 
 #parser-btn {
   float: right;
+}
+
+#schema-editor-title-form {
+  border: 1px solid #dddddd;
 }

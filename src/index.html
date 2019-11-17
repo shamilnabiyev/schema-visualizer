@@ -327,7 +327,7 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form id="entity-type-name-form">
+                        <form id="entity-type-name-form" class="pt-3 pl-3 pr-3 mb-3">
                             <div class="form-group row">
                                 <label for="entity-type-name-input" class="col-sm-3 col-form-label col-form-label-sm">Entity
                                     type name:</label>
@@ -339,8 +339,8 @@
                                 </div>
                             </div>
                         </form>
-                        <hr>
                         <div id="json-editor" class="jsoneditor-wrapper"></div>
+                        <div id="schema-validation-error-container"></div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Close</button>
@@ -365,11 +365,25 @@
                         </button>
                     </div>
                     <div class="modal-body">
+                        <form id="schema-editor-title-form" class="pt-3 pl-3 pr-3 mb-3">
+                            <div class="form-group row">
+                                <label for="schema-title-input" class="col-sm-3 col-form-label col-form-label-sm">Entity
+                                    type name:</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control form-control-sm is-invalid"
+                                           id="schema-title-input" placeholder="Please enter an entity type name "
+                                           required>
+                                    <div class="invalid-feedback"> Please choose a valid name containing only the allowed characters: a-zA-Z0-9_</div>
+                                </div>
+                            </div>
+                        </form>
                         <div id="schema-editor"></div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Close</button>
+                        <!--
                         <button id="parser-btn" class="btn btn-sm btn-outline-success">Parse to JSON-Schema</button>
+                        -->
                         <button type="button" class="btn btn-sm btn-primary visualize-btn"> Visualize </button>
                     </div>
                 </div>

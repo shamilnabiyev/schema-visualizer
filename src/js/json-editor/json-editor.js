@@ -59,23 +59,23 @@ function onJsonDocChange() {
     }
 }
 
-jsonEditorModal.on('shown.bs.modal', (evt) => {
-    showErrorsTable();
+jsonEditorModal.on('shown.bs.modal', () => {
+    // showErrorsTable();
     onJsonDocChange();
 });
 
-jsonEditorModal.on('hidden.bs.modal', (evt) => {
+jsonEditorModal.on('hide.bs.modal', () => {
     entityTypeNameInput.val('');
     entityTypeNameInput.removeClass('is-valid').addClass('is-invalid');
+
 });
 
-
 function showErrorsTable() {
-    const errorsTable = $('.jsoneditor-validation-errors');
-    if (errorsTable.length > 0) return;
-
     const errorIcon = $('.jsoneditor-validation-error-icon');
-    if (isNil(errorIcon) || errorIcon.css('display') === 'none') return;
+    if (errorIcon.css('display') === 'none') return;
+
+    const errorsTable = $('.jsoneditor-validation-errors');
+    if (errorsTable.length > 0) errorIcon.trigger('click');
 
     errorIcon.trigger('click');
 }
@@ -99,7 +99,7 @@ function createJSONEditor(selector, options, json) {
     return editor;
 }
 
-$('#example1').on('click', (evt) => {
+$('#example1').on('click', () => {
     createDiagramRoot(bookSchema);
 });
 
@@ -108,7 +108,7 @@ $('#json-doc-button').on('click', () => {
     jsonEditor.setSchema(jsonDocValidator);
 
     actionButton.off('click');
-    actionButton.on('click', (evt) => {
+    actionButton.on('click', () => {
         if (isNil(jsonEditor)) return;
         try {
             let inferredSchema = schemaGenerator(jsonEditor.get());
@@ -131,7 +131,7 @@ $('#json-schema-button').on('click', () => {
     jsonEditor.setSchema(jsonSchemaValidator);
 
     actionButton.off('click');
-    actionButton.on('click', (evt) => {
+    actionButton.on('click', () => {
         if (isNil(jsonEditor)) return;
         try {
             const doc = jsonEditor.get();
@@ -157,7 +157,8 @@ entityTypeNameInput.on('input propertychange', function () {
     if (isValid) {
         invalidFeedbackBlock.fadeOut();
         entityTypeNameInput.removeClass('is-invalid').addClass('is-valid');
-        actionButton.prop("disabled", false);
+        // actionButton.prop("disabled", false);
+        onJsonDocChange();
     } else {
         invalidFeedbackBlock.fadeIn();
         entityTypeNameInput.removeClass('is-valid').addClass('is-invalid');
@@ -171,14 +172,14 @@ export const openSchemaUpdateModal = function (diagramRoot) {
     jsonEditor.set(diagramRootSchema);
     jsonEditor.setSchema(jsonSchemaValidator);
 
-    entityTypeNameInput.val(diagramRootSchema["title"] || "");
+    entityTypeNameInput.val(diagramRootSchema["title"] || "TITLE");
     entityTypeNameInput.removeClass('is-invalid').addClass('is-valid');
 
     modalTitle.text('Update the Schema');
     actionButton.text('Update');
 
     actionButton.off('click');
-    actionButton.on('click', (evt) => {
+    actionButton.on('click', () => {
         if (isNil(jsonEditor)) return;
         try {
             const updatedSchema = jsonEditor.get();

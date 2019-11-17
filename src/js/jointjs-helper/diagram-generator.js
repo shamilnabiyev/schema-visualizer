@@ -173,7 +173,9 @@ function createCellsFrom(diagramRoot, schema) {
 export const createDiagramRoot = function (schema) {
     const SCHEMA = _cloneDeep(schema);
 
-    const titleText = SCHEMA.title || "Entity Type " + Math.floor(X_START / FIFTY);
+    const titleText = SCHEMA.title || "Entity_Type_" + Math.floor(X_START / FIFTY);
+    if(isNil(SCHEMA.title)) SCHEMA.title = titleText;
+
     const diagramRoot = new DiagramRoot.Element({
         attrs: {
             text: {text: titleText},
@@ -195,7 +197,7 @@ export const createDiagramRoot = function (schema) {
     diagramRoot.embed(diagramTitle);
     diagramTitle.position(0, 0, {parentRelative: true});
     diagramRoot.setDiagramTitle(diagramTitle);
-    diagramRoot.setSchema(schema);
+    diagramRoot.setSchema(SCHEMA);
 
     createCellsFrom(diagramRoot, SCHEMA);
 };

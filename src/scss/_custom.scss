@@ -3,8 +3,14 @@
   border-right: 1px solid $gray-900;
 }
 
+.modal-body {
+  height: 70vh;
+  display: flex;
+  flex-direction: column;
+}
 .jsoneditor-wrapper {
-  height: 60vh;
+  flex-grow: 1;
+  /* height: 40vh; */
 }
 
 .jsoneditor-menu {
@@ -27,5 +33,9 @@
 }
 
 #schema-editor-modal .modal-content {
-  height: 80vh;
+  /*height: 80vh;*/
+}
+
+#entity-type-name-form {
+  border: 1px solid #dddddd;
 }

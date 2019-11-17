@@ -70,7 +70,7 @@ export const createSeObjectRow = function createSeObjectRow(field_Name, field_Ty
         const fieldName = fieldNameInput.val();
 
         if (_.isEmpty(fieldName)) {
-            alert('field name must be a valid string');
+            alert('Property name must be a valid string');
             return;
         }
 
@@ -82,14 +82,16 @@ export const createSeObjectRow = function createSeObjectRow(field_Name, field_Ty
             case 'integer':
             case 'number':
             case 'boolean':
-                const simpleRow = createSeSimpleRow(fieldName, fieldType);
+                const simpleRow = createSeSimpleRow(fieldName, fieldType).hide();
                 properties.append(simpleRow);
+                simpleRow.fadeIn();
                 break;
 
             case 'object':
             case 'array':
-                const objectRow = createSeObjectRow(fieldName, fieldType);
+                const objectRow = createSeObjectRow(fieldName, fieldType).hide();
                 properties.append(objectRow);
+                objectRow.fadeIn();
                 break;
         }
 
@@ -99,7 +101,9 @@ export const createSeObjectRow = function createSeObjectRow(field_Name, field_Ty
     });
 
     removeButton.on('click', function(){
-        row.remove();
+        row.fadeOut('100', function(){
+            row.remove();
+        });
     });
 
     editButton.on('click', function(){
