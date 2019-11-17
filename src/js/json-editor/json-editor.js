@@ -60,11 +60,11 @@ function onJsonDocChange() {
 }
 
 jsonEditorModal.on('shown.bs.modal', () => {
-    // showErrorsTable();
+    $('button.jsoneditor-format').trigger('click');
     onJsonDocChange();
 });
 
-jsonEditorModal.on('hide.bs.modal', () => {
+jsonEditorModal.on('hidden.bs.modal', () => {
     entityTypeNameInput.val('');
     entityTypeNameInput.removeClass('is-valid').addClass('is-invalid');
 
