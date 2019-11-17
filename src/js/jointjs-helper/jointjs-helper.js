@@ -5,7 +5,6 @@ import SimpleRow from '../schema-diagram/simple-row/simple-row';
 import DiagramTitle from '../schema-diagram/diagram-title/diagram-title';
 import ObjectRow from "../schema-diagram/object-row/object-row";
 import ObjectRowHeader from "../schema-diagram/object-row-header/object-row-header";
-import diagramTitleTemplate from "../schema-diagram/diagram-title/diagram-title.html";
 import DiagramRoot from "../schema-diagram/diagram-root";
 import {openSchemaUpdateModal} from "../json-editor/json-editor";
 
@@ -121,13 +120,12 @@ const createInfoButton = function createInfoButton() {
         }],
         distance: -60,
         offset: 0,
-        action: function (evt) {
-            console.log('View id: ' + this.id + '\n' + 'Model id: ' + this.model.id);
-            // console.log('Source: ', null || this.model.getSourceElement().prop('customAttrs/field_name'));
-            // console.log('Target: ', null || this.model.getTargetElement().prop('customAttrs/field_name'));
+        action: function () {
             cardinalityUpdateModal.modal('show');
+            cardinalitySelection.val('0..N');
+            cardinalityUpdateButton.off('click');
             cardinalityUpdateButton.on('click', () => {
-                const cardinalityLabel = {
+                let cardinalityLabel = {
                     attrs: {
                         text: {
                             text: cardinalitySelection.children('option:selected').val() || '0..N'
@@ -187,7 +185,6 @@ export const createPaper = function createPaper(paperDivElement, graph) {
         validateConnection: validateConnection,
     });
 
-    let highlighted = false;
     paper.on({
         'blank:mousewheel': (event, x, y, delta) => {
             event.preventDefault();
@@ -268,7 +265,7 @@ export const createPaper = function createPaper(paperDivElement, graph) {
                                     'pointer-events': 'none'
                                 }
                             }],
-                            action: function (evt) {
+                            action: function () {
                                 if(!isFunction(this.model.getSchema)) return;
                                 openSchemaUpdateModal(this.model);
                             }
@@ -280,17 +277,6 @@ export const createPaper = function createPaper(paperDivElement, graph) {
     });
 
     return paper;
-};
-
-export const createCoupled = function createCoupled(options) {
-    return new shapes.devs.Coupled({
-        attrs: {
-            text: {text: options.text},
-            rect: {stroke: '#ffffff', 'stroke-width': 1}
-        },
-        position: getPosition(options),
-        size: getSize(options),
-    });
 };
 
 export const createTitleRow = function createTitleRow(options) {
@@ -349,316 +335,6 @@ export const createObjectRow = function createObjectRow(options) {
     return objectRow;
 };
 
-
-export const createDummyDiagrams = function (graph) {
-    const c1 = createCoupled({text: 'Customer', x: 50, y: 15, width: 400, height: 140});
-
-    const t1 = createTitleRow({
-        title: 'Customer',
-        template: diagramTitleTemplate,
-        x: 50, y: 15,
-        width: 400, height: 35
-    });
-
-    const sr1 = new SimpleRow.Element({
-
-        customAttrs: {
-            field_name: 'id',
-            field_constraints: 'ID, req, unq, idx',
-            field_date_type: 'str'
-        },
-        size: {width: 400, height: 36},
-        position: {x: 50, y: 50},
-        inPorts: ['in'],
-        outPorts: ['out'],
-        ports: PORT_OPTIONS
-    });
-
-    const sr2 = new SimpleRow.Element({
-        size: {width: 400, height: 36},
-        customAttrs: {
-            field_name: 'password',
-            field_constraints: 'req',
-            field_date_type: 'str',
-        },
-        position: {x: 50, y: 85},
-        inPorts: ['in'],
-        outPorts: ['out'],
-        ports: PORT_OPTIONS
-    });
-
-    const sr3 = new SimpleRow.Element({
-        size: {width: 400, height: 36},
-        customAttrs: {
-            field_name: 'email',
-            field_constraints: 'req, unq, idx',
-            field_date_type: 'str',
-        },
-        position: {x: 50, y: 120},
-        inPorts: ['in'],
-        outPorts: ['out'],
-        ports: PORT_OPTIONS
-    });
-
-    c1.embed(t1);
-    c1.embed(sr1);
-    c1.embed(sr2);
-    c1.embed(sr3);
-    c1.position({x: 55, y: 255});
-
-    const c2 = new shapes.devs.Coupled({
-        attrs: {rect: {stroke: '#7d7d7d', 'stroke-width': 1}},
-        position: {x: 700, y: 15},
-        size: {width: 400, height: 210},
-    });
-
-    const t2 = createTitleRow({title: 'Order', template: diagramTitleTemplate, x: 700, y: 15, width: 400, height: 35});
-
-    const sr21 = new SimpleRow.Element({
-        size: {width: 400, height: 35},
-        customAttrs: {
-            field_name: 'id',
-            field_constraints: 'ID, req, unq, idx',
-            field_date_type: 'str',
-        },
-        position: {x: 700, y: 50},
-        inPorts: ['in'],
-        outPorts: ['out'],
-        ports: PORT_OPTIONS
-    });
-
-    const sr22 = new SimpleRow.Element({
-        size: {width: 400, height: 35},
-        customAttrs: {
-            field_name: 'created_on',
-            field_constraints: 'req',
-            field_date_type: 'str',
-        },
-        position: {x: 700, y: 85},
-        inPorts: ['in'],
-        outPorts: ['out'],
-        ports: PORT_OPTIONS
-    });
-
-    const sr23 = new SimpleRow.Element({
-        size: {width: 400, height: 35},
-        customAttrs: {
-            field_name: 'user_id',
-            field_constraints: 'REF, req',
-            field_date_type: 'str',
-        },
-        position: {x: 700, y: 120},
-        inPorts: ['in'],
-        outPorts: ['out'],
-        ports: PORT_OPTIONS
-    });
-
-    const sr24 = new ObjectRow.Element({
-        size: {width: 400, height: 35},
-        isObjectRow: true,
-        customAttrs: {
-            field_name: 'items',
-            field_constraints: 'REF',
-            field_date_type: 'arr',
-        },
-        position: {x: 700, y: 155},
-        inPorts: ['in'],
-        outPorts: ['out'],
-        ports: PORT_OPTIONS
-    });
-
-    const sr241 = new SimpleRow.Element({
-        size: {width: 400, height: 35},
-        customAttrs: {
-            field_name: '[0]',
-            field_constraints: 'REF',
-            field_date_type: 'str',
-        },
-        rowLevel: 1,
-        inPorts: ['in'],
-        outPorts: ['out'],
-        ports: PORT_OPTIONS
-    });
-
-    const sr242 = new SimpleRow.Element({
-        size: {width: 400, height: 35},
-        customAttrs: {
-            field_name: '[1]',
-            field_constraints: 'REF',
-            field_date_type: 'int',
-        },
-        rowLevel: 1,
-        inPorts: ['in'],
-        outPorts: ['out'],
-        ports: PORT_OPTIONS
-    });
-
-    sr24.addSimpleRow(sr241);
-    sr24.addSimpleRow(sr242);
-
-    const sr25 = new ObjectRow.Element({
-        size: {width: 400, height: 35},
-        isObjectRow: true,
-        customAttrs: {
-            field_name: 'meta',
-            field_constraints: 'opt',
-            field_date_type: 'obj',
-        },
-        position: {x: 700, y: 190},
-        inPorts: ['in'],
-        outPorts: ['out'],
-        ports: PORT_OPTIONS
-    });
-
-    const sr251 = new SimpleRow.Element({
-        size: {width: 400, height: 35},
-        customAttrs: {
-            field_name: 'log',
-            field_constraints: 'opt',
-            field_date_type: 'str',
-        },
-        rowLevel: 1,
-        inPorts: ['in'],
-        outPorts: ['out'],
-        ports: PORT_OPTIONS
-    });
-
-    sr25.addSimpleRow(sr251);
-
-    const sr243 = new SimpleRow.Element({
-        size: {width: 400, height: 35},
-        customAttrs: {
-            field_name: '[2]',
-            field_constraints: 'REF',
-            field_date_type: 'bool',
-        },
-        rowLevel: 1,
-        inPorts: ['in'],
-        outPorts: ['out'],
-        ports: PORT_OPTIONS
-    });
-
-    sr24.addSimpleRow(sr243);
-
-    c2.embed(t2);
-    c2.embed(sr21);
-    c2.embed(sr22);
-    c2.embed(sr23);
-    c2.embed(sr24);
-    c2.embed(sr25);
-
-    const c3 = createCoupled({text: 'Item', x: 1300, y: 15, width: 400, height: 175});
-
-    const t3 = createTitleRow({title: 'Item', template: diagramTitleTemplate, x: 1300, y: 15, width: 400, height: 35});
-
-    const sr31 = new SimpleRow.Element({
-        customAttrs: {
-            field_name: 'id',
-            field_constraints: 'ID, req, unq, idx',
-            field_date_type: 'str'
-        },
-        size: {width: 400, height: 35},
-        position: {x: 1300, y: 50},
-        inPorts: ['in'],
-        outPorts: ['out'],
-        ports: PORT_OPTIONS
-    });
-
-    const sr32 = new SimpleRow.Element({
-        size: {width: 400, height: 35},
-        customAttrs: {
-            field_name: 'name',
-            field_constraints: 'req',
-            field_date_type: 'str',
-        },
-        position: {x: 1300, y: 85},
-        inPorts: ['in'],
-        outPorts: ['out'],
-        ports: PORT_OPTIONS
-    });
-
-    const sr33 = new SimpleRow.Element({
-        size: {width: 400, height: 35},
-        customAttrs: {
-            field_name: 'description',
-            field_constraints: 'req',
-            field_date_type: 'str',
-        },
-        position: {x: 1300, y: 120},
-        inPorts: ['in'],
-        outPorts: ['out'],
-        ports: PORT_OPTIONS
-    });
-
-    const sr34 = new SimpleRow.Element({
-        size: {width: 400, height: 35},
-        customAttrs: {
-            field_name: 'price',
-            field_constraints: 'req',
-            field_date_type: 'num',
-        },
-        position: {x: 1300, y: 155},
-        inPorts: ['in'],
-        outPorts: ['out'],
-        ports: PORT_OPTIONS
-    });
-
-    c3.embed(t3);
-    c3.embed(sr31);
-    c3.embed(sr32);
-    c3.embed(sr33);
-    c3.embed(sr34);
-
-
-    graph.addCells([c1, t1, sr1, sr2, sr3, c2, t2, sr21, sr22, sr23, sr24, sr25, c3, t3, sr31, sr32, sr33, sr34]);
-
-    c1.toFront();
-    c2.toFront();
-    c3.toFront();
-
-    try {
-        const cardinalityLabel = {
-            attrs: {
-                text: {
-                    text: '1:1'
-                },
-                line: {
-                    strokeWidth: 2,
-                }
-            },
-            position: {
-                distance: 20,
-                offset: 20
-            }
-        };
-        createLink(sr23.id, "in", sr1.id, "out", "REF", cardinalityLabel).addTo(graph).reparent();
-
-        const cardinalityLabel2 = {
-            attrs: {
-                text: {
-                    text: '1:N'
-                },
-                line: {
-                    strokeWidth: 2,
-                }
-            },
-            position: {
-                distance: 20,
-                offset: 20
-            }
-        };
-        createLink(sr24.id, "out", sr31.id, "in", "REF", cardinalityLabel2).addTo(graph).reparent();
-
-    } catch (error) {
-        console.log(error);
-    }
-};
-
 export const createRect = function () {
   return new shapes.devs.Model();
 };
-
-/*
-    c1.set('inPorts', ['in']);
-    c1.set('outPorts', ['out 1', 'out 2']);
- */
