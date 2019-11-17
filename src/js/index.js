@@ -9,6 +9,7 @@ import './schema-editor';
 /* Import the custom classes */
 import {getPaper} from "./jointjs-helper/diagram-generator";
 import 'typeface-nunito';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import 'jointjs/dist/joint.min.css';
 import 'jsoneditor/dist/jsoneditor.min.css';
 import '@fortawesome/fontawesome-free/css/fontawesome.min.css';
