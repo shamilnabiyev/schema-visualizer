@@ -1,0 +1,67 @@
+.flex-container {
+    height: 100%;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    background-color: #ffffff;
+    border-bottom: 1px solid #7d7d7d;
+    border-left: 1px solid #7d7d7d;
+    border-right: 1px solid #7d7d7d;
+}
+
+.in_port {
+    padding: 0.5em 0.5em;
+}
+
+.out_port {
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+.field_constraints {
+    font-style: italic;
+    color: #aaa;
+    padding: 0.5em 0.5em;
+}
+
+.field_date_type {
+    min-width: 5em;
+    text-align: right;
+    padding: 0.5em 0.5em;
+}
+
+.header {
+    height: 100%;
+    width: 100%;
+    padding: 0.2em 0.5em;
+    text-align: center;
+    background-color: #0099ee;
+    color: #fff;
+    border: 1px solid #00598a;
+}
+
+.row-placeholder {
+    padding: 0 0.25rem;
+}
+
+.row-expander {
+    cursor: pointer;
+}
+
+
+.fa-caret-right {
+    -moz-transition: all 200ms linear;
+    -webkit-transition: all 200ms linear;
+    transition: all 200ms linear;
+}
+
+.fa-caret-right.down {
+    -moz-transform: rotate(90deg);
+    -webkit-transform: rotate(90deg);
+    transform: rotate(90deg);
+}
+
+.html-element .flex-container {
+    /* Enable interacting with inputs only. */
+    pointer-events: auto;
+}
