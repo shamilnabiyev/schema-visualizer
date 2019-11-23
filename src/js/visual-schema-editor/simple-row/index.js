@@ -1,46 +1,75 @@
 import $ from 'jquery';
+import uuidV4 from 'uuid/v4';
 import {template as _template} from 'lodash';
 import simpleRowTemplate from './template.html';
 
-function isFieldNameValid(value){
+function isFieldNameValid(value) {
     return (/^([a-zA-Z0-9_]+)$/.test(value));
 }
 
-export const createSeSimpleRow = function (fieldName, fieldType){
-    const row = $(_template(simpleRowTemplate)({fieldName: fieldName, fieldType: fieldType}));
+function createIDs() {
+    return {
+        propertyInfoId: `property-info-${uuidV4()}`,
+        propertyEditorId: `property-editor-${uuidV4()}`,
+        nameInputId: `field-name-input-${uuidV4()}`,
+        typeSelectionId: `field-type-selection-${uuidV4()}`,
+        removeButtonId: `remove-button-${uuidV4()}`,
+        addButtonId: `add-button-${uuidV4()}`,
+        cancelButtonId: `cancel-button-${uuidV4()}`,
+        editButtonId: `edit-button-${uuidV4()}`,
+    };
+}
 
-    const propertyInfo = row.children('.property-info');
-    const propertyEditor = row.children('.property-editor');
-    const nameInput = propertyEditor.children("[name='field-name-input']");
-    const typeSelection = propertyEditor.children("[name='field-type-selection']");
-    const removeButton = row.children('.remove-btn-block').children('.remove-btn');
-    const addBtn = propertyEditor.children('.add-btn');
-    const cancelButton = propertyEditor.children('.cancel-btn');
+function findElements(row, IDs) {
+    return {
+        propertyInfo: row.find(`#${IDs.propertyInfoId}`),
+        propertyEditor: row.find(`#${IDs.propertyEditorId}`),
+        nameInput: row.find(`#${IDs.nameInputId}`),
+        typeSelection: row.find(`#${IDs.typeSelectionId}`),
+        removeButton: row.find(`#${IDs.removeButtonId}`),
+        addButton: row.find(`#${IDs.addButtonId}`),
+        cancelButton: row.find(`#${IDs.cancelButtonId}`),
+        editButton: row.find(`#${IDs.editButtonId}`),
+    };
+}
 
-    removeButton.on('click', function(){
-        row.fadeOut('100', function(){
+export const createSeSimpleRow = function (fieldName, fieldType) {
+    const IDs = createIDs();
+
+    const row = $(_template(simpleRowTemplate)({
+        fieldName: fieldName,
+        fieldType: fieldType,
+        IDs: IDs
+    }));
+
+    const {
+        propertyInfo, propertyEditor, nameInput, typeSelection, removeButton, addButton, cancelButton, editButton
+    } = findElements(row, IDs);
+
+    removeButton.on('click', function () {
+        row.fadeOut('100', function () {
             row.remove();
         });
     });
 
-    row.children('.remove-btn-block').children('.edit-btn').on('click', function(){
+    editButton.on('click', function () {
         nameInput.val(row.attr('data-prop-name'));
         typeSelection.val(row.attr('data-prop-type'));
-        addBtn.prop("disabled", false);
+        addButton.prop("disabled", false);
 
         propertyInfo.css('display', 'none');
         propertyEditor.fadeIn('500');
     });
 
-    nameInput.on('input propertychange', function(){
-        if(isFieldNameValid(this.value)){
-            addBtn.prop("disabled", false);
+    nameInput.on('input propertychange', function () {
+        if (isFieldNameValid(this.value)) {
+            addButton.prop("disabled", false);
         } else {
-            addBtn.prop("disabled", true);
+            addButton.prop("disabled", true);
         }
     });
 
-    addBtn.on('click', function(){
+    addButton.on('click', function () {
         propertyInfo.children('.field-name').text(nameInput.val());
         propertyInfo.children('.field-type').text(typeSelection.children("option:selected").val());
 
@@ -51,7 +80,7 @@ export const createSeSimpleRow = function (fieldName, fieldType){
         propertyInfo.fadeIn('500');
     });
 
-    cancelButton.on('click', function(){
+    cancelButton.on('click', function () {
         propertyEditor.css('display', 'none');
         propertyInfo.fadeIn('500');
     });
