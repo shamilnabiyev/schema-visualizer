@@ -1,40 +1,70 @@
 import $ from 'jquery';
+import uuidV4 from 'uuid/v4';
 import {template as _template} from 'lodash';
 import {createSeSimpleRow} from '../simple-row';
 import objectRowTemplate from './template.html';
 
-function resetInputs(row){
+function resetInputs(row) {
     const newFieldElements = row.children('.new-prop-container').children('.new-field-elements');
     newFieldElements.children("[name='field-name-input']").val('');
     newFieldElements.children('[name="field-type-selection"]').val('string');
     newFieldElements.children('.add-btn').prop("disabled", true);
 }
 
-function isFieldNameValid(value){
+function isFieldNameValid(value) {
     return (/^([a-zA-Z0-9_]+)$/.test(value));
 }
 
-export const createSeObjectRow = function createSeObjectRow(field_Name, field_Type){
-    const row = $(_template(objectRowTemplate)({fieldName: field_Name, fieldType: field_Type}));
+function createIDs() {
+    return {
+        newPropContainerId: `new-prop-container-${uuidV4()}`,
+        propertiesId: `properties-${uuidV4()}`,
+        newPropBlockId: `new-prop-block-${uuidV4()}`,
+        newFieldElementsId: `new-field-elements-${uuidV4()}`,
+        fieldNameInputId: `field-name-input-${uuidV4()}`,
+        fieldTypeSelectionId: `field-type-selection-${uuidV4()}`,
+        addButtonId: `add-button-${uuidV4()}`,
+        cancelButtonId: `cancel-button-${uuidV4()}`,
+        removeButtonId: `remove-button-${uuidV4()}`,
+        expanderButtonId: `expander-button-${uuidV4()}`,
+    };
+}
 
-    const properties = row.children('.new-prop-container').children('.properties');
-    const newPropContainer = row.children('.new-prop-container');
-    const newPropBlock = newPropContainer.children('.new-prop-block');
-    const newFieldElements = newPropContainer.children('.new-field-elements');
-    const fieldNameInput = newFieldElements.children("[name='field-name-input']");
-    const fieldTypeSelection = newFieldElements.children('[name="field-type-selection"]');
+function findElements(row, IDs) {
+    return {
+        properties: row.find(`#${IDs.propertiesId}`),
+        newPropContainer: row.find(`#${IDs.newPropContainerId}`),
+        newPropBlock: row.find(`#${IDs.newPropBlockId}`),
+        newFieldElements: row.find(`#${IDs.newFieldElementsId}`),
+        fieldNameInput: row.find(`#${IDs.fieldNameInputId}`),
+        fieldTypeSelection: row.find(`#${IDs.fieldTypeSelectionId}`),
+        addButton: row.find(`#${IDs.addButtonId}`),
+        cancelButton: row.find(`#${IDs.cancelButtonId}`),
+        removeButton: row.find(`#${IDs.removeButtonId}`),
+        expanderButton: row.find(`#${IDs.expanderButtonId}`),
+    };
+}
 
-    const expanderBtn = row.children('.simple-row').children('.property-info').children('.field-name').children('.expander-btn');
-    const removeButton = row.children('.simple-row').children('.remove-btn-block').children('.remove-btn');
-    const editButton = row.children('.simple-row').children('.remove-btn-block').children('.edit-btn');
-    const addButton = newFieldElements.children('.add-btn');
+export const createSeObjectRow = function createSeObjectRow(field_Name, field_Type) {
+    const IDs = createIDs();
 
-    expanderBtn.on('click', function(){
-        if(properties.children().length < 1) return;
+    const row = $(_template(objectRowTemplate)({
+        fieldName: field_Name,
+        fieldType: field_Type,
+        IDs: IDs,
+    }));
+
+    const {
+        properties, newPropContainer, newPropBlock, newFieldElements, fieldNameInput, fieldTypeSelection,
+        addButton, cancelButton, removeButton, expanderButton
+    } = findElements(row, IDs);
+
+    expanderButton.on('click', function () {
+        if (properties.children().length < 1) return;
 
         let isExpanded = ($(this).attr('data-expanded') === 'true');
 
-        if(isExpanded) {
+        if (isExpanded) {
             $(this).attr('data-expanded', 'false');
             $(this).children('i').toggleClass('fa-chevron-down fa-chevron-right');
 
@@ -47,8 +77,8 @@ export const createSeObjectRow = function createSeObjectRow(field_Name, field_Ty
         }
     });
 
-    fieldNameInput.on('input propertychange', function(){
-        if(isFieldNameValid(this.value)){
+    fieldNameInput.on('input propertychange', function () {
+        if (isFieldNameValid(this.value)) {
             newFieldElements.children('.add-btn').prop("disabled", false);
         } else {
             newFieldElements.children('.add-btn').prop("disabled", true);
@@ -56,17 +86,17 @@ export const createSeObjectRow = function createSeObjectRow(field_Name, field_Ty
     });
 
 
-    newPropBlock.children('button').on('click', function(){
+    newPropBlock.children('button').on('click', function () {
         newPropBlock.css('display', 'none');
         newFieldElements.fadeIn('500');
     });
 
-    newFieldElements.children('.cancel-btn').on('click', function(){
+    cancelButton.on('click', function () {
         newFieldElements.css('display', 'none');
         newPropBlock.fadeIn('500');
     });
 
-    addButton.on('click', function(){
+    addButton.on('click', function () {
         const fieldName = fieldNameInput.val();
 
         if (_.isEmpty(fieldName)) {
@@ -77,7 +107,7 @@ export const createSeObjectRow = function createSeObjectRow(field_Name, field_Ty
         const fieldType = fieldTypeSelection.children("option:selected").val();
         row.find('.empty-placeholder').remove();
 
-        switch(fieldType){
+        switch (fieldType) {
             case 'string':
             case 'integer':
             case 'number':
@@ -100,14 +130,10 @@ export const createSeObjectRow = function createSeObjectRow(field_Name, field_Ty
         resetInputs(row);
     });
 
-    removeButton.on('click', function(){
-        row.fadeOut('100', function(){
+    removeButton.on('click', function () {
+        row.fadeOut('100', function () {
             row.remove();
         });
-    });
-
-    editButton.on('click', function(){
-        console.log('EDIT');
     });
 
     return row;
