@@ -4,17 +4,6 @@ import {template as _template} from 'lodash';
 import {createSeSimpleRow} from '../simple-row';
 import objectRowTemplate from './template.html';
 
-function resetInputs(row) {
-    const newFieldElements = row.children('.new-prop-container').children('.new-field-elements');
-    newFieldElements.children("[name='field-name-input']").val('');
-    newFieldElements.children('[name="field-type-selection"]').val('string');
-    newFieldElements.children('.add-btn').prop("disabled", true);
-}
-
-function isFieldNameValid(value) {
-    return (/^([a-zA-Z0-9_]+)$/.test(value));
-}
-
 function createIDs() {
     return {
         newPropContainerId: `new-prop-container-${uuidV4()}`,
@@ -43,6 +32,10 @@ function findElements(row, IDs) {
         removeButton: row.find(`#${IDs.removeButtonId}`),
         expanderButton: row.find(`#${IDs.expanderButtonId}`),
     };
+}
+
+function isFieldNameValid(value) {
+    return (/^([a-zA-Z0-9_]+)$/.test(value));
 }
 
 export const createSeObjectRow = function createSeObjectRow(field_Name, field_Type) {
@@ -94,6 +87,7 @@ export const createSeObjectRow = function createSeObjectRow(field_Name, field_Ty
     cancelButton.on('click', function () {
         newFieldElements.css('display', 'none');
         newPropBlock.fadeIn('500');
+        resetInput();
     });
 
     addButton.on('click', function () {
@@ -127,7 +121,7 @@ export const createSeObjectRow = function createSeObjectRow(field_Name, field_Ty
 
         newFieldElements.css('display', 'none');
         newPropBlock.fadeIn('500');
-        resetInputs(row);
+        resetInput();
     });
 
     removeButton.on('click', function () {
@@ -135,6 +129,12 @@ export const createSeObjectRow = function createSeObjectRow(field_Name, field_Ty
             row.remove();
         });
     });
+
+    function resetInput() {
+        fieldNameInput.val('');
+        fieldTypeSelection.val('string');
+        addButton.prop("disabled", true);
+    }
 
     return row;
 };
