@@ -151,16 +151,60 @@
                                 <div class="d-inline">
                                     <div class="btn-group">
                                         <button class="btn btn-sm btn-outline-secondary dropdown-toggle mb-1" type="button"
-                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <span class="icon"><i class="fas fa-plus"></i></span>
-                                            <span class="text btn-text">New Diagram</span>
+                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <span class="icon"><i class="fas fa-file-import"></i></span>
+                                            <span class="text btn-text">Import</span>
                                         </button>
                                         <div class="dropdown-menu">
-                                            <button id="schema-editor-btn" class="dropdown-item">Visual Editor</button>
+                                            <button id="json-doc-button" class="dropdown-item">JSON Document</button>
                                             <div class="dropdown-divider"></div>
-                                            <button id="json-doc-button" class="dropdown-item">Import a JSON Document</button>
+                                            <button id="json-schema-button" class="dropdown-item">JSON-Schema</button>
                                             <div class="dropdown-divider"></div>
-                                            <button id="json-schema-button" class="dropdown-item">Import a JSON-Schema</button>
+                                            <button class="dropdown-item disabled" style="text-decoration: line-through;">
+                                                Serialized Diagrams
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="d-inline">
+                                    <div class="btn-group">
+                                        <button class="btn btn-sm btn-outline-secondary dropdown-toggle mb-1" type="button"
+                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <span class="icon"><i class="fas fa-plus"></i></i></span>
+                                            <span class="text btn-text">New</span>
+                                        </button>
+                                        <div class="dropdown-menu">
+                                            <button id="schema-editor-btn" class="dropdown-item">Entity Type</button>
+                                            <div class="dropdown-divider"></div>
+                                            <button class="dropdown-item disabled" style="text-decoration: line-through;">
+                                                Attribute / Property
+                                            </button>
+                                            <div class="dropdown-divider"></div>
+                                            <button class="dropdown-item disabled" style="text-decoration: line-through;">
+                                                Reference Line
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="d-inline">
+                                    <div class="btn-group">
+                                        <button class="btn btn-sm btn-outline-secondary dropdown-toggle mb-1" type="button"
+                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <span class="icon"><i class="fas fa-edit"></i></span>
+                                            <span class="text btn-text">Edit</span>
+                                        </button>
+                                        <div class="dropdown-menu">
+                                            <button class="dropdown-item disabled" style="text-decoration: line-through;">
+                                                Entity Type
+                                            </button>
+                                            <div class="dropdown-divider"></div>
+                                            <button class="dropdown-item disabled" style="text-decoration: line-through;">
+                                                Attribute / Property
+                                            </button>
+                                            <div class="dropdown-divider"></div>
+                                            <button class="dropdown-item disabled" style="text-decoration: line-through;">
+                                                Reference Line
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
@@ -192,21 +236,21 @@
                                     <div class="btn-group">
                                         <button class="btn btn-sm btn-outline-secondary dropdown-toggle mb-1" type="button"
                                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <span class="icon"><i class="fas fa-plus"></i></span>
+                                            <span class="icon"><i class="fas fa-stream"></i></i></span>
                                             <span class="text btn-text">Examples</span>
                                         </button>
                                         <div class="dropdown-menu">
-                                            <a class="dropdown-item disabled" href="#">Species-Protocols</a>
+                                            <a class="dropdown-item disabled" style="text-decoration: line-through;" href="#">Species-Protocols</a>
                                             <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item disabled" href="#">MovieLens</a>
+                                            <a class="dropdown-item disabled" style="text-decoration: line-through;" href="#">MovieLens</a>
                                             <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item disabled" href="#">Social network</a>
+                                            <a class="dropdown-item disabled" style="text-decoration: line-through;" href="#">Social network</a>
                                             <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item disabled" href="#">Online shop</a>
+                                            <a class="dropdown-item disabled" style="text-decoration: line-through;" href="#">Online shop</a>
                                             <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item disabled" href="#">Company</a>
+                                            <a class="dropdown-item disabled" style="text-decoration: line-through;" href="#">Company</a>
                                             <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item disabled" href="#">Library</a>
+                                            <a class="dropdown-item disabled" style="text-decoration: line-through;" href="#">Library</a>
                                         </div>
                                     </div>
                                 </div>
