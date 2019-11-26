@@ -1,17 +1,17 @@
-import {createTitleRow, createSimpleRow, createObjectRow, createPaper, createRect} from './jointjs-helper';
+import _isArray from 'lodash/isArray';
+import _isEqual from 'lodash/isEqual';
+import _isPlainObject from 'lodash/isPlainObject';
+import _includes from 'lodash/includes';
+import isNil from 'lodash/isNil';
+import _has from 'lodash/has';
+import _forEach from 'lodash/forEach';
+import _cloneDeep from 'lodash/cloneDeep';
 import {
-    isArray as _isArray,
-    isEqual as _isEqual,
-    isPlainObject as _isPlainObject,
-    includes as _includes,
-    has as _has,
-    forEach as _forEach, isNil,
-    cloneDeep as _cloneDeep
-} from 'lodash';
+    createTitleRow, createSimpleRow, createObjectRow, createPaper, createRect
+} from './jointjs-helper';
 import DiagramRoot from "../schema-diagram/diagram-root/diagram-root";
 import {dia} from "jointjs";
 import $ from "jquery";
-import DiagramTitle from "../schema-diagram/diagram-title";
 
 let GRAPH = initGraph();
 let PAPER = initPaper();

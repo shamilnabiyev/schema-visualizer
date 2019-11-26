@@ -1,7 +1,4 @@
-import $ from 'jquery';
-import {
-    isUndefined as _isUndefined,
-} from 'lodash';
+import _isUndefined from 'lodash/isUndefined';
 import { dia, shapes, util } from 'jointjs';
 import {renderBox, updateBox, removeBox, initializeBox, appendValuesToTemplate} from '../utils';
 

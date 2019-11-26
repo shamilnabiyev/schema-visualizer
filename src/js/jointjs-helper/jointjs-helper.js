@@ -1,5 +1,7 @@
 import {dia, shapes, linkTools, elementTools} from 'jointjs';
-import {isUndefined, isNull, isFunction} from 'lodash';
+import isUndefined from 'lodash/isUndefined';
+import isNull from 'lodash/isNull';
+import isFunction from 'lodash/isFunction';
 import $ from 'jquery';
 import SimpleRow from '../schema-diagram/simple-row/simple-row';
 import DiagramTitle from '../schema-diagram/diagram-title/diagram-title';

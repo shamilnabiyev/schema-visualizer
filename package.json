@@ -55,14 +55,11 @@
     "himalaya": "^1.1.0",
     "jointjs": "^3.0.4",
     "jquery": "^3.4.1",
-    "jquery.easing": "^1.4.1",
     "json-s-generator": "^0.0.4",
     "json-schema-ref-parser": "^7.1.1",
     "json-schema-traverse": "^0.4.1",
     "jsoneditor": "^7.2.0",
     "lodash": "^4.17.15",
-    "traverse": "^0.6.6",
-    "typeface-nunito": "^0.0.72",
     "uuid": "^3.3.3"
   }
 }

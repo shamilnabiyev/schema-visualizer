@@ -1,3 +1,6 @@
+import isNil from 'lodash/isNil';
+import has from 'lodash/has';
+import isArray from 'lodash/isArray';
 const himalaya = require('himalaya');
 const parse = himalaya.parse;
 const parseDefaults = himalaya.parseDefaults;
@@ -34,9 +37,9 @@ function removeWhitespace(nodes) {
  * @returns the property name
  */
 function getPropName(e) {
-    if (_.isNil(e)) throw Error("Element is undefined");
-    if (!_.has(e, "attributes")) throw Error("attributes is undefined");
-    if (!_.isArray(e.attributes)) throw Error("attributes isn't an Array");
+    if (isNil(e)) throw Error("Element is undefined");
+    if (!has(e, "attributes")) throw Error("attributes is undefined");
+    if (!isArray(e.attributes)) throw Error("attributes isn't an Array");
 
     return e.attributes.find(a => a.key === "data-prop-name").value || "";
 }
@@ -48,9 +51,9 @@ function getPropName(e) {
  * @returns the property type
  */
 function getPropType(e) {
-    if (_.isNil(e)) throw Error("Element is undefined");
-    if (!_.has(e, "attributes")) throw Error("attributes is undefined");
-    if (!_.isArray(e.attributes)) throw Error("attributes isn't an Array");
+    if (isNil(e)) throw Error("Element is undefined");
+    if (!has(e, "attributes")) throw Error("attributes is undefined");
+    if (!isArray(e.attributes)) throw Error("attributes isn't an Array");
 
     return e.attributes.find(a => a.key === "data-prop-type").value || "";
 }

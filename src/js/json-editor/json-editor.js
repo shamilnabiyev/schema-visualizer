@@ -1,9 +1,8 @@
-// create the editor
 import JSONEditor from "jsoneditor";
 import $ from 'jquery';
-import {isNil} from 'lodash';
+import isNil from 'lodash/isNil';
 import {json as schemaGenerator} from 'generate-schema';
-import {createDiagramRoot, addRect, updateDiagramRoot} from '../jointjs-helper/diagram-generator';
+import {createDiagramRoot, updateDiagramRoot} from '../jointjs-helper/diagram-generator';
 import {jsonDocValidator, jsonSchemaValidator} from './schema-validators';
 import {schema as bookSchema} from "../jointjs-helper/schema-examples";
 

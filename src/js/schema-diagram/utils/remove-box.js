@@ -1,7 +1,5 @@
-import {
-    has as _has,
-    isNil as _isNil
-} from 'lodash';
+import _isNil from 'lodash/isNil';
+import _has from 'lodash/has';
 const removeBox = function (evt) {
     if(_isNil(this)) return;
     if(!_has(this, '$box')) return;
