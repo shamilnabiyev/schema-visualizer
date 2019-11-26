@@ -1,5 +1,5 @@
 import {shapes, util} from 'jointjs';
-import {isNil} from 'lodash';
+import isNil from 'lodash/isNil';
 import HierarchyBase from "../common/hierarchy-base";
 
 const DiagramRoot = shapes.html.DiagramRoot = {};

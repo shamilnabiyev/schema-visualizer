@@ -1,11 +1,8 @@
-import {
-    isUndefined as _isUndefined,
-    isNull as _isNull,
-    isNil as _isNil,
-    isFunction as _isFunction,
-    has as _has,
-    forEach as _forEach,
-} from 'lodash';
+import _isUndefined from 'lodash/isUndefined';
+import _isNil from 'lodash/isNil';
+import _isFunction from 'lodash/isFunction';
+import _has from 'lodash/has';
+import _forEach from 'lodash/forEach';
 import {shapes, util} from 'jointjs';
 import CustomHtml from '../common/html-element';
 import ObjectRowHeaderTemplate from './object-row-header.html';

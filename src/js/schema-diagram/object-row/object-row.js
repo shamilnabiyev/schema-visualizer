@@ -1,16 +1,9 @@
-import {
-    concat as _concat,
-    findIndex as _findIndex,
-    isUndefined as _isUndefined,
-    isFunction as _isFunction,
-    forEach as _forEach
-} from 'lodash';
-import {dia, shapes, util} from 'jointjs';
-import ObjectRowTemplate from './object-row.html';
-import DiagramRoot from "../diagram-root";
+import _findIndex from 'lodash/findIndex';
+import _isUndefined from 'lodash/isUndefined';
+import _forEach from 'lodash/forEach';
+import {shapes, util} from 'jointjs';
 import HierarchyBase from "../common/hierarchy-base-view";
-import $ from "jquery";
-import {removeBox, renderBox, updateBox, initializeBox, appendValuesToTemplate} from "../utils";
+import {appendValuesToTemplate} from "../utils";
 import SimpleRow from "../simple-row/simple-row";
 
 

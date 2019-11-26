@@ -1,4 +1,4 @@
-import { isUndefined as _isUndefined } from 'lodash';
+import _isUndefined from 'lodash/isUndefined';
 import { shapes, util } from 'jointjs';
 import CustomHtml from '../common/html-element';
 import DiagramTitleTemplate from './diagram-title.html';

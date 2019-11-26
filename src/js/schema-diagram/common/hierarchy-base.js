@@ -1,6 +1,4 @@
-import {
-    isUndefined as _isUndefined
-} from 'lodash';
+import _isUndefined from 'lodash/isUndefined';
 import {shapes, util} from 'jointjs';
 
 const HierarchyBase = shapes.html.HierarchyBase = {};

@@ -1,6 +1,6 @@
 import $ from 'jquery';
 import uuidV4 from 'uuid/v4';
-import {template as _template} from 'lodash';
+import _template from 'lodash/template';
 import simpleRowTemplate from './template.html';
 
 function isFieldNameValid(value) {

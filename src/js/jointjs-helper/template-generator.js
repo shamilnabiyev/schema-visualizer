@@ -1,7 +1,4 @@
-import {
-    template as _template,
-    templateSettings as _templateSettings,
-} from 'lodash';
+import _templateSettings from 'lodash/templateSettings';
 
 _templateSettings.interpolate = /\{\{(.+?)\}\}/g;
 var tmpl = _.template('<li>{{ name }}</li>');
