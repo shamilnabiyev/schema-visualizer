@@ -31,7 +31,10 @@ import {
     faPlus,
     faCheckCircle,
     faTrashAlt,
-    faTimesCircle
+    faTimesCircle,
+    faFileImport,
+    faEdit,
+    faStream
 } from '@fortawesome/free-solid-svg-icons';
 
 import {
@@ -47,7 +50,7 @@ library.add(faBars, faBorderStyle, faCheck, faFlag, faInfoCircle, faExclamationT
     faTrash, faSearchPlus, faSearchMinus, faFolder, faGripHorizontal, faExpand,
     faArrowsAltH, faFile, faSave, faPrint, faFilePdf, faImage, faCaretRight, 
     faCaretSquareRight, faFileCode, faCheckCircle, faBan, faPencilAlt, faTrashAlt, faChevronDown,
-    faChevronRight, faPlus, faTimesCircle);
+    faChevronRight, faPlus, faTimesCircle, faFileImport, faEdit, faStream);
 
 
 // automatically find any <i> tags in the page and replace those with <svg> elements

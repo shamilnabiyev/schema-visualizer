@@ -1,0 +1,63 @@
+.joint-paper {
+    border: 1px solid lightgray;
+    display: inline-block;
+    overflow: hidden;
+}
+
+#paper-multiple-papers-small {
+    width: 300px;
+}
+
+#paper-html-elements {
+    position: relative;
+    border: 1px solid #cccccc;
+    display: inline-block;
+    background: transparent;
+    overflow: hidden;
+    margin-bottom: 1rem;
+}
+
+#paper-html-elements svg {
+    background: transparent;
+}
+
+#paper-html-elements svg .link {
+    z-index: 2;
+}
+
+.html-element {
+    position: absolute;
+    pointer-events: none;
+    -webkit-user-select: none;
+    z-index: 2;
+}
+
+
+circle.port-body,
+circle.joint-port-body {
+    opacity: 0;
+    fill: yellow;
+    stroke: #424242;
+}
+
+
+circle.port-body:hover,
+circle.joint-port-body:hover {
+    opacity: 1;
+}
+
+
+/* port styling */
+.available-magnet {
+    fill: yellow;
+}
+
+/* element styling */
+.available-cell rect {
+    stroke-dasharray: 5, 2;
+}
+
+#paper-holder {
+    height: 100vh !important;
+    flex-grow: 1;
+}

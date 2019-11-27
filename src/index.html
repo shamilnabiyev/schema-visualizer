@@ -119,45 +119,7 @@
 <div id="wrapper" style="visibility: hidden;">
 
     <!-- Sidebar -->
-    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion toggled" id="accordionSidebar">
-        <!-- Sidebar - Brand -->
-        <span class="sidebar-brand d-flex align-items-center justify-content-center" href="">
-        <div class="sidebar-brand-icon rotate-n-15">
-          <i class="fas fa-border-style"></i>
-        </div>
-        <div class="sidebar-brand-text mx-3">Demo</div>
-      </span>
 
-        <!-- Divider -->
-        <hr class="sidebar-divider my-0">
-
-        <!-- Divider -->
-        <hr class="sidebar-divider">
-
-        <!-- Nav Item - Pages Collapse Menu -->
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
-               aria-expanded="true"
-               aria-controls="collapseTwo">
-                <i class="fas fa-grip-horizontal"></i>
-                <span>Examples</span>
-            </a>
-            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                <div class="bg-white py-2 collapse-inner">
-                    <a class="collapse-item" href="#">Species-Protocols</a>
-                    <a class="collapse-item" href="#">MovieLens</a>
-                    <a class="collapse-item" href="#">Social network</a>
-                    <a class="collapse-item" href="#">Online shop</a>
-                    <a class="collapse-item" href="#">Company</a>
-                    <a class="collapse-item" href="#">Library</a>
-                </div>
-            </div>
-        </li>
-
-        <!-- Divider -->
-        <hr class="sidebar-divider d-none d-md-block">
-
-    </ul>
     <!-- End of Sidebar -->
 
     <!-- Content Wrapper -->
@@ -173,7 +135,7 @@
                     <i class="fa fa-bars"></i>
                 </button>
 
-                <div class=""><strong> Schema Visualizer </strong> - a Diagramming Tool for JSON and JSON-Schema | v1.8
+                <div class=""><strong> Schema Visualizer </strong> - a Diagramming Tool for JSON and JSON-Schema (Demo Version)
                 </div>
             </nav>
             <!-- End of Topbar -->
@@ -186,107 +148,111 @@
                     <div class="col-12">
                         <div class="card mb-4">
                             <div class="card-body">
-                                <!-- File -->
-                                <!--
-                                <div class="mr-3 d-inline">
-                                    <a href="#" class="btn btn-sm btn-outline-secondary btn-icon-split">
-                                        <span class="icon"><i class="fas fa-print"></i></span>
-                                        <span class="text btn-text">Print</span>
-                                    </a>
-
-                                    <a href="#" class="btn btn-sm btn-outline-secondary btn-icon-split">
-                                        <span class="icon"><i class="far fa-save"></i></span>
-                                        <span class="text btn-text">Save as JSON</span>
-                                    </a>
-
-                                    <a href="#" class="btn btn-sm btn-outline-secondary btn-icon-split">
-                                        <span class="icon"><i class="far fa-file-pdf"></i></span>
-                                        <span class="text btn-text">Save as PDF</span>
-                                    </a>
-
-                                    <a href="#" class="btn btn-sm btn-outline-secondary btn-icon-split">
-                                        <span class="icon"><i class="far fa-image"></i></span>
-                                        <span class="text btn-text">Save as PNG</span>
-                                    </a>
+                                <div class="d-inline mr-1">
+                                    <div class="btn-group">
+                                        <button class="btn btn-sm btn-outline-secondary dropdown-toggle mb-1" type="button"
+                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <span class="icon"><i class="fas fa-file-import"></i></span>
+                                            <span class="text btn-text">Import</span>
+                                        </button>
+                                        <div class="dropdown-menu">
+                                            <button id="json-doc-button" class="dropdown-item">JSON Document</button>
+                                            <div class="dropdown-divider"></div>
+                                            <button id="json-schema-button" class="dropdown-item">JSON-Schema</button>
+                                            <div class="dropdown-divider"></div>
+                                            <button class="dropdown-item disabled" style="text-decoration: line-through;">
+                                                Serialized Diagrams
+                                            </button>
+                                        </div>
+                                    </div>
                                 </div>
-                                -->
-                                <!-- End of file -->
-
-                                <!--
-                                <div class="vertical-divider mr-3"></div>
-                                -->
-
-                                <div class="mr-3 d-inline">
-                                    <a href="#" id="schema-editor-btn"
-                                       class="btn btn-sm btn-outline-primary btn-icon-split">
-                                        <span class="icon"><i class="far fa-file"></i></span>
-                                        <span class="text btn-text">New Diagram</span>
-                                    </a>
-
-                                    <a href="#" id="json-doc-button"
-                                       class="btn btn-sm btn-outline-primary btn-icon-split">
-                                        <span class="icon"><i class="far fa-file"></i></span>
-                                        <span class="text btn-text">Import a JSON Document</span>
-                                    </a>
-
-                                    <a href="#" id="json-schema-button"
-                                       class="btn btn-sm btn-outline-primary btn-icon-split">
-                                        <span class="icon"><i class="fas fa-file-code"></i></span>
-                                        <span class="text btn-text">Import a JSON-Schema</span>
-                                    </a>
+                                <div class="d-inline mr-1">
+                                    <div class="btn-group">
+                                        <button class="btn btn-sm btn-outline-secondary dropdown-toggle mb-1" type="button"
+                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <span class="icon"><i class="fas fa-plus"></i></i></span>
+                                            <span class="text btn-text">New</span>
+                                        </button>
+                                        <div class="dropdown-menu">
+                                            <button id="schema-editor-btn" class="dropdown-item">Entity Type</button>
+                                            <div class="dropdown-divider"></div>
+                                            <button class="dropdown-item disabled" style="text-decoration: line-through;">
+                                                Attribute / Property
+                                            </button>
+                                            <div class="dropdown-divider"></div>
+                                            <button class="dropdown-item disabled" style="text-decoration: line-through;">
+                                                Reference Line
+                                            </button>
+                                        </div>
+                                    </div>
                                 </div>
-
-                                <div class="vertical-divider mr-3"></div>
-
-                                <!-- Diagram controllers -->
-                                <!--
-                                <div class="mr-3 d-inline">
-                                  <button id="" type="button" class="btn btn-sm btn-outline-secondary" data-toggle="tooltip"
-                                    data-placement="bottom" title="Add entity">
-                                    <span class="far fa-file"></span>
-                                  </button>
-                                  <button id="" type="button" class="btn btn-sm btn-outline-secondary" data-toggle="tooltip"
-                                    data-placement="bottom" title="Edit entity">
-                                    <span class="far fa-file"></span>
-                                  </button>
-                                  <button id="" type="button" class="btn btn-sm btn-outline-secondary" data-toggle="tooltip"
-                                    data-placement="bottom" title="Add property">
-                                    <span class="far fa-file"></span>
-                                  </button>
-                                  <button id="" type="button" class="btn btn-sm btn-outline-secondary" data-toggle="tooltip"
-                                    data-placement="bottom" title="Edit property">
-                                    <span class="far fa-file"></span>
-                                  </button>
-                                  <button id="" type="button" class="btn btn-sm btn-outline-secondary" data-toggle="tooltip"
-                                    data-placement="bottom" title="Add link">
-                                    <span class="fas fa-arrows-alt-h"></span>
-                                  </button>
-                                  <button id="" type="button" class="btn btn-sm btn-outline-secondary" data-toggle="tooltip"
-                                    data-placement="bottom" title="Edit link">
-                                    <span class="fas fa-arrows-alt-h"></span>
-                                  </button>
+                                <div class="d-inline mr-1">
+                                    <div class="btn-group">
+                                        <button class="btn btn-sm btn-outline-secondary dropdown-toggle mb-1" type="button"
+                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <span class="icon"><i class="fas fa-edit"></i></span>
+                                            <span class="text btn-text">Edit</span>
+                                        </button>
+                                        <div class="dropdown-menu">
+                                            <button class="dropdown-item disabled" style="text-decoration: line-through;">
+                                                Entity Type
+                                            </button>
+                                            <div class="dropdown-divider"></div>
+                                            <button class="dropdown-item disabled" style="text-decoration: line-through;">
+                                                Attribute / Property
+                                            </button>
+                                            <div class="dropdown-divider"></div>
+                                            <button class="dropdown-item disabled" style="text-decoration: line-through;">
+                                                Reference Line
+                                            </button>
+                                        </div>
+                                    </div>
                                 </div>
 
-                                <div class="vertical-divider mr-3"></div>
-                                -->
+                                <div class="vertical-divider ml-2 mr-2"></div>
 
                                 <!-- Zoom controllers -->
-                                <div class="mr-3 d-inline">
-                                    <a href="#" id="zoom-out-btn" class="btn btn-sm btn-outline-primary btn-icon-split">
+                                <div class="d-inline">
+                                    <a href="#" id="zoom-out-btn" class="btn btn-sm btn-outline-secondary mr-1 mb-1">
                                         <span class="icon"><i class="fas fa-search-minus"></i></span>
                                         <span class="text btn-text">Zoom Out</span>
                                     </a>
 
                                     <a href="#" id="zoom-reset-btn"
-                                       class="btn btn-sm btn-outline-primary btn-icon-split">
+                                       class="btn btn-sm btn-outline-secondary mr-1 mb-1">
                                         <span class="icon"><i class="fas fa-expand"></i></span>
                                         <span class="text btn-text">Reset Zoom</span>
                                     </a>
 
-                                    <a href="#" id="zoom-in-btn" class="btn btn-sm btn-outline-primary btn-icon-split">
+                                    <a href="#" id="zoom-in-btn" class="btn btn-sm btn-outline-secondary mb-1">
                                         <span class="icon"><i class="fas fa-search-plus"></i></span>
                                         <span class="text btn-text">Zoom In</span>
                                     </a>
+                                </div>
+
+                                <div class="vertical-divider ml-2 mr-2"></div>
+
+                                <div class="d-inline">
+                                    <div class="btn-group">
+                                        <button class="btn btn-sm btn-outline-secondary dropdown-toggle mb-1" type="button"
+                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <span class="icon"><i class="fas fa-stream"></i></i></span>
+                                            <span class="text btn-text">Examples</span>
+                                        </button>
+                                        <div class="dropdown-menu">
+                                            <a class="dropdown-item disabled" style="text-decoration: line-through;" href="#">Species-Protocols</a>
+                                            <div class="dropdown-divider"></div>
+                                            <a class="dropdown-item disabled" style="text-decoration: line-through;" href="#">MovieLens</a>
+                                            <div class="dropdown-divider"></div>
+                                            <a class="dropdown-item disabled" style="text-decoration: line-through;" href="#">Social network</a>
+                                            <div class="dropdown-divider"></div>
+                                            <a class="dropdown-item disabled" style="text-decoration: line-through;" href="#">Online shop</a>
+                                            <div class="dropdown-divider"></div>
+                                            <a class="dropdown-item disabled" style="text-decoration: line-through;" href="#">Company</a>
+                                            <div class="dropdown-divider"></div>
+                                            <a class="dropdown-item disabled" style="text-decoration: line-through;" href="#">Library</a>
+                                        </div>
+                                    </div>
                                 </div>
                                 <!-- End of Zoom controllers -->
 

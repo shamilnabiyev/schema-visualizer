@@ -1,20 +1,22 @@
 /* Import the core libs */
 import $ from 'jquery';
-import {template as _template} from 'lodash';
 import 'bootstrap/dist/js/bootstrap.bundle';
 import './ui-script.js';
 import './font-awesome-custom.js';
 import './json-editor/json-editor';
-import './schema-editor';
+import './visual-schema-editor';
 /* Import the custom classes */
 import {getPaper} from "./jointjs-helper/diagram-generator";
-import 'typeface-nunito';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import 'jointjs/dist/joint.min.css';
 import 'jsoneditor/dist/jsoneditor.min.css';
 import '@fortawesome/fontawesome-free/css/fontawesome.min.css';
 import '@fortawesome/fontawesome-free/css/solid.min.css';
-import '../scss/index.scss';
-import modalTemplate from './modal-template.html';
+import '../css/custom.css';
+import '../css/custom-jointjs.css';
+import '../css/schema-diagram.css';
+import '../css/schema-editor.css';
+
 
 $(window).on("load", () => {
     $('#loading-icon').remove();

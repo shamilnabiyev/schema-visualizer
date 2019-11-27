@@ -1,9 +1,8 @@
-// create the editor
 import JSONEditor from "jsoneditor";
 import $ from 'jquery';
-import {isNil} from 'lodash';
+import isNil from 'lodash/isNil';
 import {json as schemaGenerator} from 'generate-schema';
-import {createDiagramRoot, addRect, updateDiagramRoot} from '../jointjs-helper/diagram-generator';
+import {createDiagramRoot, updateDiagramRoot} from '../jointjs-helper/diagram-generator';
 import {jsonDocValidator, jsonSchemaValidator} from './schema-validators';
 import {schema as bookSchema} from "../jointjs-helper/schema-examples";
 
@@ -61,7 +60,7 @@ function onJsonDocChange() {
 
 jsonEditorModal.on('shown.bs.modal', () => {
     $('button.jsoneditor-format').trigger('click');
-    onJsonDocChange();
+    // onJsonDocChange();
 });
 
 jsonEditorModal.on('hidden.bs.modal', () => {
@@ -72,10 +71,14 @@ jsonEditorModal.on('hidden.bs.modal', () => {
 
 function showErrorsTable() {
     const errorIcon = $('.jsoneditor-validation-error-icon');
-    if (errorIcon.css('display') === 'none') return;
+    if (errorIcon.css('display') === 'none') {
+        return;
+    }
 
     const errorsTable = $('.jsoneditor-validation-errors');
-    if (errorsTable.length > 0) errorIcon.trigger('click');
+    if (errorsTable.length > 0) {
+        errorIcon.trigger('click');
+    }
 
     errorIcon.trigger('click');
 }
