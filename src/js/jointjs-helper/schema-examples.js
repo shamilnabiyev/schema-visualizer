@@ -548,6 +548,1751 @@ export const simulations = {
     ]
 };
 
+export const migCastDbSchemata = {
+    simulations: {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "title": "SIMULATIONS",
+        "type": "object",
+        "properties": {
+            "_id": {
+                "type": "string"
+            },
+            "createdOn": {
+                "type": "string"
+            },
+            "fileName": {
+                "type": "string"
+            },
+            "migCastConfigurationList": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "_id": {
+                            "type": "string"
+                        },
+                        "createdOn": {
+                            "type": "string"
+                        },
+                        "migCastParameters": {
+                            "type": "object",
+                            "properties": {
+                                "adaptiveFlag": {
+                                    "type": "boolean"
+                                },
+                                "cloudPrice": {
+                                    "type": "number"
+                                },
+                                "complexity": {
+                                    "type": "integer"
+                                },
+                                "dataGrowthRate": {
+                                    "type": "integer"
+                                },
+                                "eagerFlag": {
+                                    "type": "boolean"
+                                },
+                                "incrementalFlag": {
+                                    "type": "boolean"
+                                },
+                                "incrementalRound": {
+                                    "type": "integer"
+                                },
+                                "initialNumber": {
+                                    "type": "integer"
+                                },
+                                "lazyFlag": {
+                                    "type": "boolean"
+                                },
+                                "location": {
+                                    "type": "string"
+                                },
+                                "migrationType": {
+                                    "type": "string"
+                                },
+                                "mission2playerCardinality": {
+                                    "type": "integer"
+                                },
+                                "operationExecution": {
+                                    "type": "string"
+                                },
+                                "pattern": {
+                                    "type": "string"
+                                },
+                                "percentageAccessedData": {
+                                    "type": "integer"
+                                },
+                                "place2missionCardinality": {
+                                    "type": "integer"
+                                },
+                                "predictionCacheSize": {
+                                    "type": "integer"
+                                },
+                                "predictionSetSize": {
+                                    "type": "integer"
+                                },
+                                "predictiveFlag": {
+                                    "type": "boolean"
+                                },
+                                "realInitialNumber": {
+                                    "type": "integer"
+                                },
+                                "schemaChanges4Adaptive": {
+                                    "type": "integer"
+                                },
+                                "schemaModifications": {
+                                    "type": "integer"
+                                },
+                                "simpleLRUFlag": {
+                                    "type": "boolean"
+                                },
+                                "superPredictionSetEscalation": {
+                                    "type": "integer"
+                                },
+                                "useCacheFlag": {
+                                    "type": "boolean"
+                                },
+                                "workloadExecutions": {
+                                    "type": "integer"
+                                }
+                            },
+                            "required": [
+                                "adaptiveFlag",
+                                "cloudPrice",
+                                "complexity",
+                                "dataGrowthRate",
+                                "eagerFlag",
+                                "incrementalFlag",
+                                "incrementalRound",
+                                "initialNumber",
+                                "lazyFlag",
+                                "location",
+                                "migrationType",
+                                "mission2playerCardinality",
+                                "operationExecution",
+                                "pattern",
+                                "percentageAccessedData",
+                                "place2missionCardinality",
+                                "predictionCacheSize",
+                                "predictionSetSize",
+                                "predictiveFlag",
+                                "realInitialNumber",
+                                "schemaChanges4Adaptive",
+                                "schemaModifications",
+                                "simpleLRUFlag",
+                                "superPredictionSetEscalation",
+                                "useCacheFlag",
+                                "workloadExecutions"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "_id",
+                        "createdOn",
+                        "migCastParameters"
+                    ]
+                }
+
+            }
+        },
+        "required": [
+            "_id",
+            "createdOn",
+            "fileName",
+            "migCastConfigurationList"
+        ]
+    },
+    results: {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "type": "object",
+        "properties": {
+            "_id": {
+                "type": "string"
+            },
+            "configId": {
+                "type": "string"
+            },
+            "f1Score": {
+                "type": "number"
+            },
+            "f1ScoreAdaptive": {
+                "type": "number"
+            },
+            "latencyPeriodCumulated": {
+                "type": "object",
+                "properties": {
+                    "adaptive": {
+                        "type": "array",
+                        "items": {
+                            "type": "number"
+                        }
+                    },
+                    "eager": {
+                        "type": "array",
+                        "items": {
+                            "type": "number"
+                        }
+                    },
+                    "lazy": {
+                        "type": "array",
+                        "items": {
+                            "type": "number"
+                        }
+                    },
+                    "predictive": {
+                        "type": "array",
+                        "items": {
+                            "type": "number"
+                        }
+                    },
+                    "incremental": {
+                        "type": "array",
+                        "items": {
+                            "type": "number"
+                        }
+                    }
+                }
+            },
+            "migCastLogs": {
+                "type": "string"
+            },
+            "migrationCostsCumulated": {
+                "type": "object",
+                "properties": {
+                    "adaptive": {
+                        "type": "array",
+                        "items": {
+                            "type": "number"
+                        }
+                    },
+                    "eager": {
+                        "type": "array",
+                        "items": {
+                            "type": "number"
+                        }
+                    },
+                    "lazy": {
+                        "type": "array",
+                        "items": {
+                            "type": "number"
+                        }
+                    },
+                    "predictive": {
+                        "type": "array",
+                        "items": {
+                            "type": "number"
+                        }
+                    },
+                    "incremental": {
+                        "type": "array",
+                        "items": {
+                            "type": "number"
+                        }
+                    }
+                }
+            },
+            "migrationCostsOnRead": {
+                "type": "object",
+                "properties": {
+                    "adaptive": {
+                        "type": "array",
+                        "items": {
+                            "type": "number"
+                        }
+                    },
+                    "eager": {
+                        "type": "array",
+                        "items": {
+                            "type": "number"
+                        }
+                    },
+                    "lazy": {
+                        "type": "array",
+                        "items": {
+                            "type": "number"
+                        }
+                    },
+                    "predictive": {
+                        "type": "array",
+                        "items": {
+                            "type": "number"
+                        }
+                    },
+                    "incremental": {
+                        "type": "array",
+                        "items": {
+                            "type": "number"
+                        }
+                    }
+                }
+            },
+            "migrationCostsOnRelease": {
+                "type": "object",
+                "properties": {
+                    "adaptive": {
+                        "type": "array",
+                        "items": {
+                            "type": "number"
+                        }
+                    },
+                    "eager": {
+                        "type": "array",
+                        "items": {
+                            "type": "number"
+                        }
+                    },
+                    "lazy": {
+                        "type": "array",
+                        "items": {
+                            "type": "number"
+                        }
+                    },
+                    "predictive": {
+                        "type": "array",
+                        "items": {
+                            "type": "number"
+                        }
+                    },
+                    "incremental": {
+                        "type": "array",
+                        "items": {
+                            "type": "number"
+                        }
+                    }
+                }
+            },
+            "migrationDebtCumulated": {
+                "type": "object",
+                "properties": {
+                    "adaptive": {
+                        "type": "array",
+                        "items": {
+                            "type": "number"
+                        }
+                    },
+                    "eager": {
+                        "type": "array",
+                        "items": {
+                            "type": "number"
+                        }
+                    },
+                    "lazy": {
+                        "type": "array",
+                        "items": {
+                            "type": "number"
+                        }
+                    },
+                    "predictive": {
+                        "type": "array",
+                        "items": {
+                            "type": "number"
+                        }
+                    },
+                    "incremental": {
+                        "type": "array",
+                        "items": {
+                            "type": "number"
+                        }
+                    }
+                }
+            },
+            "precision": {
+                "type": "number"
+            },
+            "precisionAdaptive": {
+                "type": "number"
+            },
+            "recall": {
+                "type": "number"
+            },
+            "recallAdaptive": {
+                "type": "number"
+            }
+        },
+        "title": "RESULTS"
+    },
+    stats: {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "type": "object",
+        "properties": {
+            "_id": {
+                "type": "string"
+            },
+            "data": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "adaptive": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "release": {
+                                        "type": "number"
+                                    },
+                                    "min": {
+                                        "type": "object",
+                                        "properties": {
+                                            "migrationCostsCumulated": {
+                                                "type": "number"
+                                            },
+                                            "migrationCostsOnRelease": {
+                                                "type": "number"
+                                            },
+                                            "migrationCostsOnRead": {
+                                                "type": "number"
+                                            },
+                                            "latencyPeriodCumulated": {
+                                                "type": "number"
+                                            },
+                                            "migrationDebtCumulated": {
+                                                "type": "number"
+                                            }
+                                        }
+                                    },
+                                    "first_quartile": {
+                                        "type": "object",
+                                        "properties": {
+                                            "migrationCostsCumulated": {
+                                                "type": "number"
+                                            },
+                                            "migrationCostsOnRelease": {
+                                                "type": "number"
+                                            },
+                                            "migrationCostsOnRead": {
+                                                "type": "number"
+                                            },
+                                            "latencyPeriodCumulated": {
+                                                "type": "number"
+                                            },
+                                            "migrationDebtCumulated": {
+                                                "type": "number"
+                                            }
+                                        }
+                                    },
+                                    "median": {
+                                        "type": "object",
+                                        "properties": {
+                                            "migrationCostsCumulated": {
+                                                "type": "number"
+                                            },
+                                            "migrationCostsOnRelease": {
+                                                "type": "number"
+                                            },
+                                            "migrationCostsOnRead": {
+                                                "type": "number"
+                                            },
+                                            "latencyPeriodCumulated": {
+                                                "type": "number"
+                                            },
+                                            "migrationDebtCumulated": {
+                                                "type": "number"
+                                            }
+                                        }
+                                    },
+                                    "mean": {
+                                        "type": "object",
+                                        "properties": {
+                                            "migrationCostsCumulated": {
+                                                "type": "number"
+                                            },
+                                            "migrationCostsOnRelease": {
+                                                "type": "number"
+                                            },
+                                            "migrationCostsOnRead": {
+                                                "type": "number"
+                                            },
+                                            "latencyPeriodCumulated": {
+                                                "type": "number"
+                                            },
+                                            "migrationDebtCumulated": {
+                                                "type": "number"
+                                            }
+                                        }
+                                    },
+                                    "third_quartile": {
+                                        "type": "object",
+                                        "properties": {
+                                            "migrationCostsCumulated": {
+                                                "type": "number"
+                                            },
+                                            "migrationCostsOnRelease": {
+                                                "type": "number"
+                                            },
+                                            "migrationCostsOnRead": {
+                                                "type": "number"
+                                            },
+                                            "latencyPeriodCumulated": {
+                                                "type": "number"
+                                            },
+                                            "migrationDebtCumulated": {
+                                                "type": "number"
+                                            }
+                                        }
+                                    },
+                                    "max": {
+                                        "type": "object",
+                                        "properties": {
+                                            "migrationCostsCumulated": {
+                                                "type": "number"
+                                            },
+                                            "migrationCostsOnRelease": {
+                                                "type": "number"
+                                            },
+                                            "migrationCostsOnRead": {
+                                                "type": "number"
+                                            },
+                                            "latencyPeriodCumulated": {
+                                                "type": "number"
+                                            },
+                                            "migrationDebtCumulated": {
+                                                "type": "number"
+                                            }
+                                        }
+                                    },
+                                    "lower_fence": {
+                                        "type": "object",
+                                        "properties": {
+                                            "migrationCostsCumulated": {
+                                                "type": "number"
+                                            },
+                                            "migrationCostsOnRelease": {
+                                                "type": "number"
+                                            },
+                                            "migrationCostsOnRead": {
+                                                "type": "number"
+                                            },
+                                            "latencyPeriodCumulated": {
+                                                "type": "number"
+                                            },
+                                            "migrationDebtCumulated": {
+                                                "type": "number"
+                                            }
+                                        }
+                                    },
+                                    "upper_fence": {
+                                        "type": "object",
+                                        "properties": {
+                                            "migrationCostsCumulated": {
+                                                "type": "number"
+                                            },
+                                            "migrationCostsOnRelease": {
+                                                "type": "number"
+                                            },
+                                            "migrationCostsOnRead": {
+                                                "type": "number"
+                                            },
+                                            "latencyPeriodCumulated": {
+                                                "type": "number"
+                                            },
+                                            "migrationDebtCumulated": {
+                                                "type": "number"
+                                            }
+                                        }
+                                    },
+                                    "lower_outliers": {
+                                        "type": "object",
+                                        "properties": {
+                                            "migrationCostsCumulated": {
+                                                "type": "array",
+                                                "items": {}
+                                            },
+                                            "migrationCostsOnRelease": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "number"
+                                                }
+                                            },
+                                            "migrationCostsOnRead": {
+                                                "type": "array",
+                                                "items": {}
+                                            },
+                                            "latencyPeriodCumulated": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "number"
+                                                }
+                                            },
+                                            "migrationDebtCumulated": {
+                                                "type": "array",
+                                                "items": {}
+                                            }
+                                        }
+                                    },
+                                    "upper_outliers": {
+                                        "type": "object",
+                                        "properties": {
+                                            "migrationCostsCumulated": {
+                                                "type": "array",
+                                                "items": {}
+                                            },
+                                            "migrationCostsOnRelease": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "number"
+                                                }
+                                            },
+                                            "migrationCostsOnRead": {
+                                                "type": "array",
+                                                "items": {}
+                                            },
+                                            "latencyPeriodCumulated": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "number"
+                                                }
+                                            },
+                                            "migrationDebtCumulated": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "number"
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "required": [
+                                    "release",
+                                    "min",
+                                    "first_quartile",
+                                    "median",
+                                    "mean",
+                                    "third_quartile",
+                                    "max",
+                                    "lower_fence",
+                                    "upper_fence",
+                                    "lower_outliers",
+                                    "upper_outliers"
+                                ]
+                            }
+                        },
+                        "eager": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "release": {
+                                        "type": "number"
+                                    },
+                                    "min": {
+                                        "type": "object",
+                                        "properties": {
+                                            "migrationCostsCumulated": {
+                                                "type": "number"
+                                            },
+                                            "migrationCostsOnRelease": {
+                                                "type": "number"
+                                            },
+                                            "migrationCostsOnRead": {
+                                                "type": "number"
+                                            },
+                                            "latencyPeriodCumulated": {
+                                                "type": "number"
+                                            },
+                                            "migrationDebtCumulated": {
+                                                "type": "number"
+                                            }
+                                        }
+                                    },
+                                    "first_quartile": {
+                                        "type": "object",
+                                        "properties": {
+                                            "migrationCostsCumulated": {
+                                                "type": "number"
+                                            },
+                                            "migrationCostsOnRelease": {
+                                                "type": "number"
+                                            },
+                                            "migrationCostsOnRead": {
+                                                "type": "number"
+                                            },
+                                            "latencyPeriodCumulated": {
+                                                "type": "number"
+                                            },
+                                            "migrationDebtCumulated": {
+                                                "type": "number"
+                                            }
+                                        }
+                                    },
+                                    "median": {
+                                        "type": "object",
+                                        "properties": {
+                                            "migrationCostsCumulated": {
+                                                "type": "number"
+                                            },
+                                            "migrationCostsOnRelease": {
+                                                "type": "number"
+                                            },
+                                            "migrationCostsOnRead": {
+                                                "type": "number"
+                                            },
+                                            "latencyPeriodCumulated": {
+                                                "type": "number"
+                                            },
+                                            "migrationDebtCumulated": {
+                                                "type": "number"
+                                            }
+                                        }
+                                    },
+                                    "mean": {
+                                        "type": "object",
+                                        "properties": {
+                                            "migrationCostsCumulated": {
+                                                "type": "number"
+                                            },
+                                            "migrationCostsOnRelease": {
+                                                "type": "number"
+                                            },
+                                            "migrationCostsOnRead": {
+                                                "type": "number"
+                                            },
+                                            "latencyPeriodCumulated": {
+                                                "type": "number"
+                                            },
+                                            "migrationDebtCumulated": {
+                                                "type": "number"
+                                            }
+                                        }
+                                    },
+                                    "third_quartile": {
+                                        "type": "object",
+                                        "properties": {
+                                            "migrationCostsCumulated": {
+                                                "type": "number"
+                                            },
+                                            "migrationCostsOnRelease": {
+                                                "type": "number"
+                                            },
+                                            "migrationCostsOnRead": {
+                                                "type": "number"
+                                            },
+                                            "latencyPeriodCumulated": {
+                                                "type": "number"
+                                            },
+                                            "migrationDebtCumulated": {
+                                                "type": "number"
+                                            }
+                                        }
+                                    },
+                                    "max": {
+                                        "type": "object",
+                                        "properties": {
+                                            "migrationCostsCumulated": {
+                                                "type": "number"
+                                            },
+                                            "migrationCostsOnRelease": {
+                                                "type": "number"
+                                            },
+                                            "migrationCostsOnRead": {
+                                                "type": "number"
+                                            },
+                                            "latencyPeriodCumulated": {
+                                                "type": "number"
+                                            },
+                                            "migrationDebtCumulated": {
+                                                "type": "number"
+                                            }
+                                        }
+                                    },
+                                    "lower_fence": {
+                                        "type": "object",
+                                        "properties": {
+                                            "migrationCostsCumulated": {
+                                                "type": "number"
+                                            },
+                                            "migrationCostsOnRelease": {
+                                                "type": "number"
+                                            },
+                                            "migrationCostsOnRead": {
+                                                "type": "number"
+                                            },
+                                            "latencyPeriodCumulated": {
+                                                "type": "number"
+                                            },
+                                            "migrationDebtCumulated": {
+                                                "type": "number"
+                                            }
+                                        }
+                                    },
+                                    "upper_fence": {
+                                        "type": "object",
+                                        "properties": {
+                                            "migrationCostsCumulated": {
+                                                "type": "number"
+                                            },
+                                            "migrationCostsOnRelease": {
+                                                "type": "number"
+                                            },
+                                            "migrationCostsOnRead": {
+                                                "type": "number"
+                                            },
+                                            "latencyPeriodCumulated": {
+                                                "type": "number"
+                                            },
+                                            "migrationDebtCumulated": {
+                                                "type": "number"
+                                            }
+                                        }
+                                    },
+                                    "lower_outliers": {
+                                        "type": "object",
+                                        "properties": {
+                                            "migrationCostsCumulated": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "number"
+                                                }
+                                            },
+                                            "migrationCostsOnRelease": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "number"
+                                                }
+                                            },
+                                            "migrationCostsOnRead": {
+                                                "type": "array",
+                                                "items": {}
+                                            },
+                                            "latencyPeriodCumulated": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "number"
+                                                }
+                                            },
+                                            "migrationDebtCumulated": {
+                                                "type": "array",
+                                                "items": {}
+                                            }
+                                        }
+                                    },
+                                    "upper_outliers": {
+                                        "type": "object",
+                                        "properties": {
+                                            "migrationCostsCumulated": {
+                                                "type": "array",
+                                                "items": {}
+                                            },
+                                            "migrationCostsOnRelease": {
+                                                "type": "array",
+                                                "items": {}
+                                            },
+                                            "migrationCostsOnRead": {
+                                                "type": "array",
+                                                "items": {}
+                                            },
+                                            "latencyPeriodCumulated": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "number"
+                                                }
+                                            },
+                                            "migrationDebtCumulated": {
+                                                "type": "array",
+                                                "items": {}
+                                            }
+                                        }
+                                    }
+                                },
+                                "required": [
+                                    "release",
+                                    "min",
+                                    "first_quartile",
+                                    "median",
+                                    "mean",
+                                    "third_quartile",
+                                    "max",
+                                    "lower_fence",
+                                    "upper_fence",
+                                    "lower_outliers",
+                                    "upper_outliers"
+                                ]
+                            }
+                        },
+                        "lazy": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "release": {
+                                        "type": "number"
+                                    },
+                                    "min": {
+                                        "type": "object",
+                                        "properties": {
+                                            "migrationCostsCumulated": {
+                                                "type": "number"
+                                            },
+                                            "migrationCostsOnRelease": {
+                                                "type": "number"
+                                            },
+                                            "migrationCostsOnRead": {
+                                                "type": "number"
+                                            },
+                                            "latencyPeriodCumulated": {
+                                                "type": "number"
+                                            },
+                                            "migrationDebtCumulated": {
+                                                "type": "number"
+                                            }
+                                        }
+                                    },
+                                    "first_quartile": {
+                                        "type": "object",
+                                        "properties": {
+                                            "migrationCostsCumulated": {
+                                                "type": "number"
+                                            },
+                                            "migrationCostsOnRelease": {
+                                                "type": "number"
+                                            },
+                                            "migrationCostsOnRead": {
+                                                "type": "number"
+                                            },
+                                            "latencyPeriodCumulated": {
+                                                "type": "number"
+                                            },
+                                            "migrationDebtCumulated": {
+                                                "type": "number"
+                                            }
+                                        }
+                                    },
+                                    "median": {
+                                        "type": "object",
+                                        "properties": {
+                                            "migrationCostsCumulated": {
+                                                "type": "number"
+                                            },
+                                            "migrationCostsOnRelease": {
+                                                "type": "number"
+                                            },
+                                            "migrationCostsOnRead": {
+                                                "type": "number"
+                                            },
+                                            "latencyPeriodCumulated": {
+                                                "type": "number"
+                                            },
+                                            "migrationDebtCumulated": {
+                                                "type": "number"
+                                            }
+                                        }
+                                    },
+                                    "mean": {
+                                        "type": "object",
+                                        "properties": {
+                                            "migrationCostsCumulated": {
+                                                "type": "number"
+                                            },
+                                            "migrationCostsOnRelease": {
+                                                "type": "number"
+                                            },
+                                            "migrationCostsOnRead": {
+                                                "type": "number"
+                                            },
+                                            "latencyPeriodCumulated": {
+                                                "type": "number"
+                                            },
+                                            "migrationDebtCumulated": {
+                                                "type": "number"
+                                            }
+                                        }
+                                    },
+                                    "third_quartile": {
+                                        "type": "object",
+                                        "properties": {
+                                            "migrationCostsCumulated": {
+                                                "type": "number"
+                                            },
+                                            "migrationCostsOnRelease": {
+                                                "type": "number"
+                                            },
+                                            "migrationCostsOnRead": {
+                                                "type": "number"
+                                            },
+                                            "latencyPeriodCumulated": {
+                                                "type": "number"
+                                            },
+                                            "migrationDebtCumulated": {
+                                                "type": "number"
+                                            }
+                                        }
+                                    },
+                                    "max": {
+                                        "type": "object",
+                                        "properties": {
+                                            "migrationCostsCumulated": {
+                                                "type": "number"
+                                            },
+                                            "migrationCostsOnRelease": {
+                                                "type": "number"
+                                            },
+                                            "migrationCostsOnRead": {
+                                                "type": "number"
+                                            },
+                                            "latencyPeriodCumulated": {
+                                                "type": "number"
+                                            },
+                                            "migrationDebtCumulated": {
+                                                "type": "number"
+                                            }
+                                        }
+                                    },
+                                    "lower_fence": {
+                                        "type": "object",
+                                        "properties": {
+                                            "migrationCostsCumulated": {
+                                                "type": "number"
+                                            },
+                                            "migrationCostsOnRelease": {
+                                                "type": "number"
+                                            },
+                                            "migrationCostsOnRead": {
+                                                "type": "number"
+                                            },
+                                            "latencyPeriodCumulated": {
+                                                "type": "number"
+                                            },
+                                            "migrationDebtCumulated": {
+                                                "type": "number"
+                                            }
+                                        }
+                                    },
+                                    "upper_fence": {
+                                        "type": "object",
+                                        "properties": {
+                                            "migrationCostsCumulated": {
+                                                "type": "number"
+                                            },
+                                            "migrationCostsOnRelease": {
+                                                "type": "number"
+                                            },
+                                            "migrationCostsOnRead": {
+                                                "type": "number"
+                                            },
+                                            "latencyPeriodCumulated": {
+                                                "type": "number"
+                                            },
+                                            "migrationDebtCumulated": {
+                                                "type": "number"
+                                            }
+                                        }
+                                    },
+                                    "lower_outliers": {
+                                        "type": "object",
+                                        "properties": {
+                                            "migrationCostsCumulated": {
+                                                "type": "array",
+                                                "items": {}
+                                            },
+                                            "migrationCostsOnRelease": {
+                                                "type": "array",
+                                                "items": {}
+                                            },
+                                            "migrationCostsOnRead": {
+                                                "type": "array",
+                                                "items": {}
+                                            },
+                                            "latencyPeriodCumulated": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "number"
+                                                }
+                                            },
+                                            "migrationDebtCumulated": {
+                                                "type": "array",
+                                                "items": {}
+                                            }
+                                        }
+                                    },
+                                    "upper_outliers": {
+                                        "type": "object",
+                                        "properties": {
+                                            "migrationCostsCumulated": {
+                                                "type": "array",
+                                                "items": {}
+                                            },
+                                            "migrationCostsOnRelease": {
+                                                "type": "array",
+                                                "items": {}
+                                            },
+                                            "migrationCostsOnRead": {
+                                                "type": "array",
+                                                "items": {}
+                                            },
+                                            "latencyPeriodCumulated": {
+                                                "type": "array",
+                                                "items": {}
+                                            },
+                                            "migrationDebtCumulated": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "number"
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "required": [
+                                    "release",
+                                    "min",
+                                    "first_quartile",
+                                    "median",
+                                    "mean",
+                                    "third_quartile",
+                                    "max",
+                                    "lower_fence",
+                                    "upper_fence",
+                                    "lower_outliers",
+                                    "upper_outliers"
+                                ]
+                            }
+                        },
+                        "predictive": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "release": {
+                                        "type": "number"
+                                    },
+                                    "min": {
+                                        "type": "object",
+                                        "properties": {
+                                            "migrationCostsCumulated": {
+                                                "type": "number"
+                                            },
+                                            "migrationCostsOnRelease": {
+                                                "type": "number"
+                                            },
+                                            "migrationCostsOnRead": {
+                                                "type": "number"
+                                            },
+                                            "latencyPeriodCumulated": {
+                                                "type": "number"
+                                            },
+                                            "migrationDebtCumulated": {
+                                                "type": "number"
+                                            }
+                                        }
+                                    },
+                                    "first_quartile": {
+                                        "type": "object",
+                                        "properties": {
+                                            "migrationCostsCumulated": {
+                                                "type": "number"
+                                            },
+                                            "migrationCostsOnRelease": {
+                                                "type": "number"
+                                            },
+                                            "migrationCostsOnRead": {
+                                                "type": "number"
+                                            },
+                                            "latencyPeriodCumulated": {
+                                                "type": "number"
+                                            },
+                                            "migrationDebtCumulated": {
+                                                "type": "number"
+                                            }
+                                        }
+                                    },
+                                    "median": {
+                                        "type": "object",
+                                        "properties": {
+                                            "migrationCostsCumulated": {
+                                                "type": "number"
+                                            },
+                                            "migrationCostsOnRelease": {
+                                                "type": "number"
+                                            },
+                                            "migrationCostsOnRead": {
+                                                "type": "number"
+                                            },
+                                            "latencyPeriodCumulated": {
+                                                "type": "number"
+                                            },
+                                            "migrationDebtCumulated": {
+                                                "type": "number"
+                                            }
+                                        }
+                                    },
+                                    "mean": {
+                                        "type": "object",
+                                        "properties": {
+                                            "migrationCostsCumulated": {
+                                                "type": "number"
+                                            },
+                                            "migrationCostsOnRelease": {
+                                                "type": "number"
+                                            },
+                                            "migrationCostsOnRead": {
+                                                "type": "number"
+                                            },
+                                            "latencyPeriodCumulated": {
+                                                "type": "number"
+                                            },
+                                            "migrationDebtCumulated": {
+                                                "type": "number"
+                                            }
+                                        }
+                                    },
+                                    "third_quartile": {
+                                        "type": "object",
+                                        "properties": {
+                                            "migrationCostsCumulated": {
+                                                "type": "number"
+                                            },
+                                            "migrationCostsOnRelease": {
+                                                "type": "number"
+                                            },
+                                            "migrationCostsOnRead": {
+                                                "type": "number"
+                                            },
+                                            "latencyPeriodCumulated": {
+                                                "type": "number"
+                                            },
+                                            "migrationDebtCumulated": {
+                                                "type": "number"
+                                            }
+                                        }
+                                    },
+                                    "max": {
+                                        "type": "object",
+                                        "properties": {
+                                            "migrationCostsCumulated": {
+                                                "type": "number"
+                                            },
+                                            "migrationCostsOnRelease": {
+                                                "type": "number"
+                                            },
+                                            "migrationCostsOnRead": {
+                                                "type": "number"
+                                            },
+                                            "latencyPeriodCumulated": {
+                                                "type": "number"
+                                            },
+                                            "migrationDebtCumulated": {
+                                                "type": "number"
+                                            }
+                                        }
+                                    },
+                                    "lower_fence": {
+                                        "type": "object",
+                                        "properties": {
+                                            "migrationCostsCumulated": {
+                                                "type": "number"
+                                            },
+                                            "migrationCostsOnRelease": {
+                                                "type": "number"
+                                            },
+                                            "migrationCostsOnRead": {
+                                                "type": "number"
+                                            },
+                                            "latencyPeriodCumulated": {
+                                                "type": "number"
+                                            },
+                                            "migrationDebtCumulated": {
+                                                "type": "number"
+                                            }
+                                        }
+                                    },
+                                    "upper_fence": {
+                                        "type": "object",
+                                        "properties": {
+                                            "migrationCostsCumulated": {
+                                                "type": "number"
+                                            },
+                                            "migrationCostsOnRelease": {
+                                                "type": "number"
+                                            },
+                                            "migrationCostsOnRead": {
+                                                "type": "number"
+                                            },
+                                            "latencyPeriodCumulated": {
+                                                "type": "number"
+                                            },
+                                            "migrationDebtCumulated": {
+                                                "type": "number"
+                                            }
+                                        }
+                                    },
+                                    "lower_outliers": {
+                                        "type": "object",
+                                        "properties": {
+                                            "migrationCostsCumulated": {
+                                                "type": "array",
+                                                "items": {}
+                                            },
+                                            "migrationCostsOnRelease": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "number"
+                                                }
+                                            },
+                                            "migrationCostsOnRead": {
+                                                "type": "array",
+                                                "items": {}
+                                            },
+                                            "latencyPeriodCumulated": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "number"
+                                                }
+                                            },
+                                            "migrationDebtCumulated": {
+                                                "type": "array",
+                                                "items": {}
+                                            }
+                                        }
+                                    },
+                                    "upper_outliers": {
+                                        "type": "object",
+                                        "properties": {
+                                            "migrationCostsCumulated": {
+                                                "type": "array",
+                                                "items": {}
+                                            },
+                                            "migrationCostsOnRelease": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "number"
+                                                }
+                                            },
+                                            "migrationCostsOnRead": {
+                                                "type": "array",
+                                                "items": {}
+                                            },
+                                            "latencyPeriodCumulated": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "number"
+                                                }
+                                            },
+                                            "migrationDebtCumulated": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "number"
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "required": [
+                                    "release",
+                                    "min",
+                                    "first_quartile",
+                                    "median",
+                                    "mean",
+                                    "third_quartile",
+                                    "max",
+                                    "lower_fence",
+                                    "upper_fence",
+                                    "lower_outliers",
+                                    "upper_outliers"
+                                ]
+                            }
+                        },
+                        "incremental": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "release": {
+                                        "type": "number"
+                                    },
+                                    "min": {
+                                        "type": "object",
+                                        "properties": {
+                                            "migrationCostsCumulated": {
+                                                "type": "number"
+                                            },
+                                            "migrationCostsOnRelease": {
+                                                "type": "number"
+                                            },
+                                            "migrationCostsOnRead": {
+                                                "type": "number"
+                                            },
+                                            "latencyPeriodCumulated": {
+                                                "type": "number"
+                                            },
+                                            "migrationDebtCumulated": {
+                                                "type": "number"
+                                            }
+                                        }
+                                    },
+                                    "first_quartile": {
+                                        "type": "object",
+                                        "properties": {
+                                            "migrationCostsCumulated": {
+                                                "type": "number"
+                                            },
+                                            "migrationCostsOnRelease": {
+                                                "type": "number"
+                                            },
+                                            "migrationCostsOnRead": {
+                                                "type": "number"
+                                            },
+                                            "latencyPeriodCumulated": {
+                                                "type": "number"
+                                            },
+                                            "migrationDebtCumulated": {
+                                                "type": "number"
+                                            }
+                                        }
+                                    },
+                                    "median": {
+                                        "type": "object",
+                                        "properties": {
+                                            "migrationCostsCumulated": {
+                                                "type": "number"
+                                            },
+                                            "migrationCostsOnRelease": {
+                                                "type": "number"
+                                            },
+                                            "migrationCostsOnRead": {
+                                                "type": "number"
+                                            },
+                                            "latencyPeriodCumulated": {
+                                                "type": "number"
+                                            },
+                                            "migrationDebtCumulated": {
+                                                "type": "number"
+                                            }
+                                        }
+                                    },
+                                    "mean": {
+                                        "type": "object",
+                                        "properties": {
+                                            "migrationCostsCumulated": {
+                                                "type": "number"
+                                            },
+                                            "migrationCostsOnRelease": {
+                                                "type": "number"
+                                            },
+                                            "migrationCostsOnRead": {
+                                                "type": "number"
+                                            },
+                                            "latencyPeriodCumulated": {
+                                                "type": "number"
+                                            },
+                                            "migrationDebtCumulated": {
+                                                "type": "number"
+                                            }
+                                        }
+                                    },
+                                    "third_quartile": {
+                                        "type": "object",
+                                        "properties": {
+                                            "migrationCostsCumulated": {
+                                                "type": "number"
+                                            },
+                                            "migrationCostsOnRelease": {
+                                                "type": "number"
+                                            },
+                                            "migrationCostsOnRead": {
+                                                "type": "number"
+                                            },
+                                            "latencyPeriodCumulated": {
+                                                "type": "number"
+                                            },
+                                            "migrationDebtCumulated": {
+                                                "type": "number"
+                                            }
+                                        }
+                                    },
+                                    "max": {
+                                        "type": "object",
+                                        "properties": {
+                                            "migrationCostsCumulated": {
+                                                "type": "number"
+                                            },
+                                            "migrationCostsOnRelease": {
+                                                "type": "number"
+                                            },
+                                            "migrationCostsOnRead": {
+                                                "type": "number"
+                                            },
+                                            "latencyPeriodCumulated": {
+                                                "type": "number"
+                                            },
+                                            "migrationDebtCumulated": {
+                                                "type": "number"
+                                            }
+                                        }
+                                    },
+                                    "lower_fence": {
+                                        "type": "object",
+                                        "properties": {
+                                            "migrationCostsCumulated": {
+                                                "type": "number"
+                                            },
+                                            "migrationCostsOnRelease": {
+                                                "type": "number"
+                                            },
+                                            "migrationCostsOnRead": {
+                                                "type": "number"
+                                            },
+                                            "latencyPeriodCumulated": {
+                                                "type": "number"
+                                            },
+                                            "migrationDebtCumulated": {
+                                                "type": "number"
+                                            }
+                                        }
+                                    },
+                                    "upper_fence": {
+                                        "type": "object",
+                                        "properties": {
+                                            "migrationCostsCumulated": {
+                                                "type": "number"
+                                            },
+                                            "migrationCostsOnRelease": {
+                                                "type": "number"
+                                            },
+                                            "migrationCostsOnRead": {
+                                                "type": "number"
+                                            },
+                                            "latencyPeriodCumulated": {
+                                                "type": "number"
+                                            },
+                                            "migrationDebtCumulated": {
+                                                "type": "number"
+                                            }
+                                        }
+                                    },
+                                    "lower_outliers": {
+                                        "type": "object",
+                                        "properties": {
+                                            "migrationCostsCumulated": {
+                                                "type": "array",
+                                                "items": {}
+                                            },
+                                            "migrationCostsOnRelease": {
+                                                "type": "array",
+                                                "items": {}
+                                            },
+                                            "migrationCostsOnRead": {
+                                                "type": "array",
+                                                "items": {}
+                                            },
+                                            "latencyPeriodCumulated": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "number"
+                                                }
+                                            },
+                                            "migrationDebtCumulated": {
+                                                "type": "array",
+                                                "items": {}
+                                            }
+                                        }
+                                    },
+                                    "upper_outliers": {
+                                        "type": "object",
+                                        "properties": {
+                                            "migrationCostsCumulated": {
+                                                "type": "array",
+                                                "items": {}
+                                            },
+                                            "migrationCostsOnRelease": {
+                                                "type": "array",
+                                                "items": {}
+                                            },
+                                            "migrationCostsOnRead": {
+                                                "type": "array",
+                                                "items": {}
+                                            },
+                                            "latencyPeriodCumulated": {
+                                                "type": "array",
+                                                "items": {}
+                                            },
+                                            "migrationDebtCumulated": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "number"
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "required": [
+                                    "release",
+                                    "min",
+                                    "first_quartile",
+                                    "median",
+                                    "mean",
+                                    "third_quartile",
+                                    "max",
+                                    "lower_fence",
+                                    "upper_fence",
+                                    "lower_outliers",
+                                    "upper_outliers"
+                                ]
+                            }
+                        }
+                    }
+                }
+            },
+            "simulationFileName": {
+                "type": "string"
+            },
+            "simulationId": {
+                "type": "string"
+            }
+        },
+        "title": "STATS"
+    }
+};
+
+export const speciesDbSchemata = {
+    species: {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "type": "object",
+        "properties": {
+            "_id": {
+                "type": "string"
+            },
+            "id": {
+                "type": "number"
+            },
+            "name": {
+                "type": "string"
+            },
+            "ts": {
+                "type": "number"
+            },
+            "worms": {
+                "type": "string"
+            }
+        },
+        "title": "SPECIES"
+    },
+    protocols: {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "type": "object",
+        "properties": {
+            "_id": {
+                "type": "string"
+            },
+            "id": {
+                "type": "number"
+            },
+            "timemarker": {
+                "type": "string"
+            },
+            "location": {
+                "type": "string"
+            },
+            "spec_id": {
+                "type": "number"
+            },
+            "ts": {
+                "type": "number"
+            }
+        },
+        "title": "PROTOCOLS"
+    }
+};
+
+export const movieLensDbSchemata = {
+    users: {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "type": "object",
+        "properties": {
+            "id": {
+                "type": "string"
+            },
+            "name": {
+                "type": "string"
+            },
+            "email": {
+                "type": "string"
+            }
+        },
+        "title": "USERS"
+    },
+    links: {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "type": "object",
+        "properties": {
+            "id": {
+                "type": "string"
+            },
+            "movie_id": {
+                "type": "string"
+            },
+            "imdb_id": {
+                "type": "string"
+            },
+            "tmdb_id": {
+                "type": "string"
+            }
+        },
+        "title": "LINKS"
+    },
+    movies: {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "type": "object",
+        "properties": {
+            "id": {
+                "type": "string"
+            },
+            "title": {
+                "type": "string"
+            },
+            "genres": {
+                "type": "array",
+                "items": {
+                    "type": "string"
+                }
+            }
+        },
+        "title": "MOVIES"
+    },
+    ratings: {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "type": "object",
+        "properties": {
+            "id": {
+                "type": "string"
+            },
+            "user_id": {
+                "type": "string"
+            },
+            "movie_id": {
+                "type": "string"
+            },
+            "rating": {
+                "type": "number"
+            },
+            "timestamp": {
+                "type": "number"
+            }
+        },
+        "title": "RATINGS"
+    },
+    tags: {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "type": "object",
+        "properties": {
+            "id": {
+                "type": "string"
+            },
+            "user_id": {
+                "type": "string"
+            },
+            "movie_id": {
+                "type": "string"
+            },
+            "tag": {
+                "type": "string"
+            },
+            "timestamp": {
+                "type": "number"
+            }
+        },
+        "title": "TAGS"
+    }
+};
 
 export const schema2 = {
     "$id": "http://example.com/example.json",

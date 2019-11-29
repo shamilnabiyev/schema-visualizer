@@ -3,7 +3,6 @@ import {htmlToJsonSchema} from "./html-to-json-schema";
 import {createSeSimpleRow} from "./simple-row";
 import {createSeObjectRow} from "./object-row";
 import {createDiagramRoot} from "../jointjs-helper/diagram-generator";
-import {simulations} from "../jointjs-helper/schema-examples";
 
 const schemaEditorButton = $('#schema-editor-btn');
 const schemaEditorModal = $('#schema-editor-modal');
