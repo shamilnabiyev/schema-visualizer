@@ -6,7 +6,13 @@ import './font-awesome-custom.js';
 import './json-editor/json-editor';
 import './visual-schema-editor';
 /* Import the custom classes */
-import {getPaper} from "./jointjs-helper/diagram-generator";
+import {
+    getPaper,
+    addMigCastDbDiagrams,
+    addSpeciesDbDiagrams,
+    addMovieLensDbSchemata,
+    serializeDiagrams, deserializeDiagrams
+} from "./jointjs-helper/diagram-generator";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'jointjs/dist/joint.min.css';
 import 'jsoneditor/dist/jsoneditor.min.css';
@@ -53,3 +59,9 @@ $("#zoom-reset-btn").on('click', () => {
 
     paper.scale(0.7, 0.7);
 });
+
+$('#migcast-db-btn').on('click', addMigCastDbDiagrams);
+$('#species-db-btn').on('click', addSpeciesDbDiagrams);
+$('#movielens-db-btn').on('click', addMovieLensDbSchemata);
+$('#serialization-btn').on('click', serializeDiagrams);
+$('#deserialization-btn').on('click', deserializeDiagrams);

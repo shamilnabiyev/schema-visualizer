@@ -2,26 +2,27 @@ import _isArray from 'lodash/isArray';
 import _isEqual from 'lodash/isEqual';
 import _isPlainObject from 'lodash/isPlainObject';
 import _includes from 'lodash/includes';
-import isNil from 'lodash/isNil';
+import _isNil from 'lodash/isNil';
 import _has from 'lodash/has';
 import _forEach from 'lodash/forEach';
 import _cloneDeep from 'lodash/cloneDeep';
+import $ from "jquery";
+import {dia, shapes} from "jointjs";
 import {
     createTitleRow, createSimpleRow, createObjectRow, createPaper, createRect
 } from './jointjs-helper';
 import DiagramRoot from "../schema-diagram/diagram-root/diagram-root";
-import {dia} from "jointjs";
-import $ from "jquery";
+import {migCastDbSchemata, movieLensDbSchemata, speciesDbSchemata} from "./schema-examples";
 
 let GRAPH = initGraph();
 let PAPER = initPaper();
 
 function initGraph() {
-    return new dia.Graph();
+    return new dia.Graph({},{ cellNamespace: shapes });
 }
 
 function getGraph() {
-    if (isNil(GRAPH)) GRAPH = initGraph();
+    if (_isNil(GRAPH)) GRAPH = initGraph();
     return GRAPH;
 }
 
@@ -30,7 +31,7 @@ function initPaper() {
 }
 
 export const getPaper = function () {
-    if (isNil(PAPER)) PAPER = initPaper();
+    if (_isNil(PAPER)) PAPER = initPaper();
     return PAPER;
 };
 
@@ -174,7 +175,7 @@ export const createDiagramRoot = function (schema) {
     const SCHEMA = _cloneDeep(schema);
 
     const titleText = SCHEMA.title || "Entity_Type_" + Math.floor(X_START / FIFTY);
-    if(isNil(SCHEMA.title)) SCHEMA.title = titleText;
+    if(_isNil(SCHEMA.title)) SCHEMA.title = titleText;
 
     const diagramRoot = new DiagramRoot.Element({
         attrs: {
@@ -232,4 +233,38 @@ export const addRect = function () {
 
     GRAPH.addCells([rect, child]);
     // rect.toFront();
+};
+
+export const addMigCastDbDiagrams = function () {
+    createDiagramRoot(migCastDbSchemata.simulations);
+    createDiagramRoot(migCastDbSchemata.results);
+    createDiagramRoot(migCastDbSchemata.stats);
+};
+
+export const addSpeciesDbDiagrams = function () {
+    createDiagramRoot(speciesDbSchemata.species);
+    createDiagramRoot(speciesDbSchemata.protocols);
+};
+
+export const addMovieLensDbSchemata = function () {
+    createDiagramRoot(movieLensDbSchemata.users);
+    createDiagramRoot(movieLensDbSchemata.links);
+    createDiagramRoot(movieLensDbSchemata.movies);
+    createDiagramRoot(movieLensDbSchemata.ratings);
+    createDiagramRoot(movieLensDbSchemata.tags);
+};
+
+let SERIALIZED_DATA = null;
+
+export const serializeDiagrams = function () {
+    SERIALIZED_DATA = GRAPH.toJSON();
+    console.log(SERIALIZED_DATA);
+};
+
+export const deserializeDiagrams = function () {
+    if(_isNil(SERIALIZED_DATA)) {
+        alert("No serialized data found");
+        return;
+    }
+    GRAPH.fromJSON(SERIALIZED_DATA);
 };
