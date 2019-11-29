@@ -2189,8 +2189,6 @@ export const speciesDbSchemata = {
 
 export const movieLensDbSchemata = {
     users: {
-        "$schema": "http://json-schema.org/draft-04/schema#",
-        "type": "object",
         "properties": {
             "id": {
                 "type": "string"
@@ -2200,6 +2198,23 @@ export const movieLensDbSchemata = {
             },
             "email": {
                 "type": "string"
+            },
+            "address": {
+                "type": "object",
+                "properties": {
+                    "street": {
+                        "type": "string"
+                    },
+                    "city": {
+                        "type": "string"
+                    }
+                }
+            },
+            "isOnline": {
+                "type": "boolean"
+            },
+            "ssn": {
+                "type": "integer"
             }
         },
         "title": "USERS"
