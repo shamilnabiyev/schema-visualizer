@@ -6,8 +6,8 @@
 
 Examples:
 
-<img src="docs/img/movie-lens-db-schema.png" width="600"> 
+<img src="docs/img/movie-lens-db-schema.png"> 
 
 <hr>
 
-<img src="docs/img/migcast-db-schema.png" width="600"> 
+<img src="docs/img/migcast-db-schema.png"> 
