@@ -10,7 +10,8 @@ import {
     getPaper,
     addMigCastDbDiagrams,
     addSpeciesDbDiagrams,
-    addMovieLensDbSchemata
+    addMovieLensDbSchemata,
+    serializeDiagrams, deserializeDiagrams
 } from "./jointjs-helper/diagram-generator";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'jointjs/dist/joint.min.css';
@@ -62,3 +63,5 @@ $("#zoom-reset-btn").on('click', () => {
 $('#migcast-db-btn').on('click', addMigCastDbDiagrams);
 $('#species-db-btn').on('click', addSpeciesDbDiagrams);
 $('#movielens-db-btn').on('click', addMovieLensDbSchemata);
+$('#serialization-btn').on('click', serializeDiagrams);
+$('#deserialization-btn').on('click', deserializeDiagrams);

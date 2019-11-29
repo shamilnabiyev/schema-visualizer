@@ -2148,9 +2148,6 @@ export const speciesDbSchemata = {
         "$schema": "http://json-schema.org/draft-04/schema#",
         "type": "object",
         "properties": {
-            "_id": {
-                "type": "string"
-            },
             "id": {
                 "type": "number"
             },
@@ -2170,9 +2167,6 @@ export const speciesDbSchemata = {
         "$schema": "http://json-schema.org/draft-04/schema#",
         "type": "object",
         "properties": {
-            "_id": {
-                "type": "string"
-            },
             "id": {
                 "type": "number"
             },
