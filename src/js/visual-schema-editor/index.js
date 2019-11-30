@@ -1,4 +1,5 @@
 import $ from 'jquery';
+import {replace as featherIconsReplace} from 'feather-icons/dist/feather.min';
 import {htmlToJsonSchema} from "./html-to-json-schema";
 import {createSeSimpleRow} from "./simple-row";
 import {createSeObjectRow} from "./object-row";
@@ -27,6 +28,7 @@ visualizeButton.on('click', function () {
 });
 
 schemaEditorModal.on('show.bs.modal', function () {
+    featherIconsReplace();
     schemaTitleInput.val('');
     schemaTitleInput.removeClass('is-valid').addClass('is-invalid');
 

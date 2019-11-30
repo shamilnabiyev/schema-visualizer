@@ -20,10 +20,6 @@
     "@babel/plugin-proposal-class-properties": "^7.4.0",
     "@babel/plugin-syntax-dynamic-import": "^7.2.0",
     "@babel/preset-env": "^7.6.2",
-    "@fortawesome/fontawesome-svg-core": "^1.2.25",
-    "@fortawesome/free-brands-svg-icons": "^5.11.2",
-    "@fortawesome/free-regular-svg-icons": "^5.11.2",
-    "@fortawesome/free-solid-svg-icons": "^5.11.2",
     "babel-loader": "^8.0.6",
     "clean-webpack-plugin": "^2.0.2",
     "copy-webpack-plugin": "^5.0.3",
@@ -46,11 +42,11 @@
     "webpack-merge": "^4.2.1"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-free": "^5.11.2",
     "@jdw/jst": "^2.0.0-beta.15",
     "backbone": "^1.4.0",
     "bootstrap": "^4.3.1",
     "core-js": "^3.2.1",
+    "feather-icons": "^4.24.1",
     "generate-schema": "^2.6.0",
     "himalaya": "^1.1.0",
     "jointjs": "^3.0.4",
