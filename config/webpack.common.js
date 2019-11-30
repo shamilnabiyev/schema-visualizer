@@ -32,8 +32,6 @@ module.exports = {
     alias: {
       '~': Path.resolve(__dirname, '../src'),
       normalize_css: Path.join(__dirname, '../node_modules/normalize.css'),
-      fontawesome_min_css: Path.join(__dirname, '../node_modules/@fortawesome/fontawesome-free/css/fontawesome.min.css'),
-      fontawesome_solid_min_css: Path.join(__dirname, '../node_modules/@fortawesome/fontawesome-free/css/solid.min.css'),
     }
   },
   module: {

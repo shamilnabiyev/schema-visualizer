@@ -13,24 +13,39 @@
             <option value="number">number</option>
             <option value="integer">integer</option>
             <option value="boolean">boolean</option>
-            <!--
-                <option value="array">array</option>
-                <option value="object">object</option>
-            -->
         </select>
         <button id="<%= IDs.addButtonId %>" class="add-btn btn btn-sm btn-outline-success mr-3" disabled="true">
-            <i class="fas fa-check-circle"></i>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                 class="feather feather-check">
+                <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
         </button>
         <button id="<%= IDs.cancelButtonId %>" class="cancel-btn btn btn-sm btn-outline-warning">
-            <i class="fas fa-times-circle"></i>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
         </button>
     </div>
     <div class="remove-btn-block">
         <button id="<%= IDs.editButtonId%>" class="edit-btn btn btn-sm btn-outline-secondary mr-2">
-            <i class="fas fa-pencil-alt"></i>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                 class="feather feather-edit-3">
+                <path d="M12 20h9"></path>
+                <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+            </svg>
         </button>
         <button id="<%= IDs.removeButtonId %>" class="remove-btn btn btn-sm btn-outline-danger mr-2">
-            <i class="fas fa-trash-alt"></i>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                 class="feather feather-trash-2">
+                <polyline points="3 6 5 6 21 6"></polyline>
+                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                <line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line>
+            </svg>
         </button>
     </div>
 </div>
