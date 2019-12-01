@@ -1,5 +1,4 @@
 import $ from 'jquery';
-import {replace as featherIconsReplace} from 'feather-icons/dist/feather.min';
 import {htmlToJsonSchema} from "./html-to-json-schema";
 import {createSeObjectRow} from "./object-row";
 import {createDiagramRoot} from "../jointjs-helper/diagram-generator";
@@ -34,7 +33,6 @@ schemaEditorModal.on('show.bs.modal', function () {
     const schemaEditor = $('#schema-editor');
     schemaEditor.empty();
     schemaEditor.append(row);
-    featherIconsReplace();
 
     $('#schema-editor > .object-row > .new-prop-container > .new-field-elements > .add-btn').prop("disabled", true);
     $('#schema-editor > .object-row > .form-inline > .remove-btn-block > .remove-btn').first().remove();

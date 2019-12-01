@@ -11,14 +11,15 @@ import {dia, shapes} from "jointjs";
 import {
     createTitleRow, createSimpleRow, createObjectRow, createPaper, createRect
 } from './jointjs-helper';
-import DiagramRoot from "../schema-diagram/diagram-root/diagram-root";
+import DiagramRoot from "../schema-diagram/diagram-root/";
 import {migCastDbSchemata, movieLensDbSchemata, speciesDbSchemata} from "./schema-examples";
+import Supertype from "../schema-diagram/supertype/supertype";
 
 let GRAPH = initGraph();
 let PAPER = initPaper();
 
 function initGraph() {
-    return new dia.Graph({},{ cellNamespace: shapes });
+    return new dia.Graph({}, {cellNamespace: shapes});
 }
 
 function getGraph() {
@@ -97,7 +98,7 @@ function addDocumentRow(doc, key, property, rowLevel) {
     const subDoc = objectRow(property, key, rowLevel.value);
     doc.addObjectRow(subDoc);
 
-    if(!_has(property, PROPERTIES)) return;
+    if (!_has(property, PROPERTIES)) return;
     rowLevel.value += 1;
     generateRows(property[PROPERTIES], subDoc, rowLevel);
     rowLevel.value -= 1;
@@ -107,8 +108,8 @@ function addArrayRow(doc, key, property, rowLevel) {
     const arrayRow = objectRow(property, key, rowLevel.value);
     doc.addObjectRow(arrayRow);
 
-    if(!_has(property, ITEMS)) return;
-    if(_has(property, [ITEMS, ONE_OF])) {
+    if (!_has(property, ITEMS)) return;
+    if (_has(property, [ITEMS, ONE_OF])) {
         property[ITEMS] = [...new Set(property[ITEMS][ONE_OF].map(JSON.stringify))].map(JSON.parse);
     }
 
@@ -175,7 +176,7 @@ export const createDiagramRoot = function (schema) {
     const SCHEMA = _cloneDeep(schema);
 
     const titleText = SCHEMA.title || "Entity_Type_" + Math.floor(X_START / FIFTY);
-    if(_isNil(SCHEMA.title)) SCHEMA.title = titleText;
+    if (_isNil(SCHEMA.title)) SCHEMA.title = titleText;
 
     const diagramRoot = new DiagramRoot.Element({
         attrs: {
@@ -262,9 +263,63 @@ export const serializeDiagrams = function () {
 };
 
 export const deserializeDiagrams = function () {
-    if(_isNil(SERIALIZED_DATA)) {
+    if (_isNil(SERIALIZED_DATA)) {
         alert("No serialized data found");
         return;
     }
     GRAPH.fromJSON(SERIALIZED_DATA);
+};
+
+/**
+ * TODO: to be removed
+ * @deprecated
+ */
+export const createSupertype = function () {
+    const person = new Supertype.Element({
+        position: {x: 200, y: 200}
+    });
+    GRAPH.addCell(person);
+
+    const diagramTitle = createTitleRow({
+        title: "Student",
+        width: WIDTH,
+        height: HEIGHT
+    });
+    GRAPH.addCell(diagramTitle);
+
+    const student = new DiagramRoot.Element({
+        attrs: {text: {text: "Student"}},
+    });
+    GRAPH.addCell(student);
+
+
+    student.position(50, 50, {parentRelative: true});
+    // student.setDiagramTitle(diagramTitle);
+
+    student.embed(diagramTitle);
+    diagramTitle.position(0, 0, {parentRelative: true});
+
+    const firstName = simpleRow({"type": "integer"}, "first_name", {value: 0});
+    GRAPH.addCell(firstName);
+
+    student.embed(firstName);
+    firstName.position(0, 35, {parentRelative: true});
+
+    student.fitEmbeds();
+    student.toFront();
+
+    person.embed(student);
+    // person.position(100, 100);
+
+    // student.position(50, 50, {parentRelative: true});
+
+    person.fitEmbeds({
+        padding: {
+            top: 50,
+            left: 50,
+            right: 50,
+            bottom: 50
+        }
+    });
+    // person.toFront();
 };

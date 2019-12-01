@@ -1,7 +1,6 @@
 import $ from 'jquery';
 import uuidV4 from 'uuid/v4';
 import _template from 'lodash/template';
-import {replace as featherIconsReplace} from 'feather-icons/dist/feather.min';
 import {createSeSimpleRow} from '../simple-row';
 import objectRowTemplate from './template.html';
 
@@ -109,7 +108,6 @@ export const createSeObjectRow = function createSeObjectRow(field_Name, field_Ty
             case 'boolean':
                 const simpleRow = createSeSimpleRow(fieldName, fieldType).hide();
                 properties.append(simpleRow);
-                featherIconsReplace();
                 simpleRow.fadeIn();
                 break;
 
@@ -117,7 +115,6 @@ export const createSeObjectRow = function createSeObjectRow(field_Name, field_Ty
             case 'array':
                 const objectRow = createSeObjectRow(fieldName, fieldType).hide();
                 properties.append(objectRow);
-                featherIconsReplace();
                 objectRow.fadeIn();
                 break;
         }
