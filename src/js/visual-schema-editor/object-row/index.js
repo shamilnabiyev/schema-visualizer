@@ -1,12 +1,8 @@
 import $ from 'jquery';
 import uuidV4 from 'uuid/v4';
 import _template from 'lodash/template';
-import {replace as featherIconsReplace} from 'feather-icons/dist/feather.min';
 import {createSeSimpleRow} from '../simple-row';
 import objectRowTemplate from './template.html';
-
-const ICON_CHEVRON_DOWN = $('<i data-feather="chevron-down" width="16" height="16"></i>');
-const ICON_CHEVRON_RIGHT = $('<i data-feather="chevron-right" width="16" height="16"></i>');
 
 function createIDs() {
     return {
@@ -63,16 +59,12 @@ export const createSeObjectRow = function createSeObjectRow(field_Name, field_Ty
 
         if (isExpanded) {
             $(this).attr('data-expanded', 'false');
-            $(this).children('svg').remove();
-            $(this).append(ICON_CHEVRON_RIGHT);
-            featherIconsReplace();
+            $(this).children('i').toggleClass('fa-chevron-down fa-chevron-right');
 
             newPropContainer.slideUp();
         } else {
             $(this).attr('data-expanded', 'true');
-            $(this).children('svg').remove();
-            $(this).append(ICON_CHEVRON_DOWN);
-            featherIconsReplace();
+            $(this).children('i').toggleClass('fa-chevron-right fa-chevron-down');
 
             newPropContainer.slideDown();
         }
@@ -116,7 +108,6 @@ export const createSeObjectRow = function createSeObjectRow(field_Name, field_Ty
             case 'boolean':
                 const simpleRow = createSeSimpleRow(fieldName, fieldType).hide();
                 properties.append(simpleRow);
-                featherIconsReplace();
                 simpleRow.fadeIn();
                 break;
 
@@ -124,7 +115,6 @@ export const createSeObjectRow = function createSeObjectRow(field_Name, field_Ty
             case 'array':
                 const objectRow = createSeObjectRow(fieldName, fieldType).hide();
                 properties.append(objectRow);
-                featherIconsReplace();
                 objectRow.fadeIn();
                 break;
         }

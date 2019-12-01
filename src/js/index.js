@@ -1,8 +1,8 @@
 /* Import the core libs */
 import $ from 'jquery';
 import 'bootstrap/dist/js/bootstrap.bundle';
-import {replace as featherIconsReplace} from 'feather-icons/dist/feather.min';
 import './ui-script.js';
+import './font-awesome-custom';
 import './json-editor/json-editor';
 import './visual-schema-editor';
 /* Import the custom classes */
@@ -17,6 +17,8 @@ import {
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'jointjs/dist/joint.min.css';
 import 'jsoneditor/dist/jsoneditor.min.css';
+import '@fortawesome/fontawesome-free/css/fontawesome.min.css';
+import '@fortawesome/fontawesome-free/css/solid.min.css';
 import '../css/custom.css';
 import '../css/custom-jointjs.css';
 import '../css/schema-diagram.css';
@@ -25,7 +27,6 @@ import '../css/schema-editor.css';
 $(window).on("load", () => {
     $('#loading-icon').remove();
     $('#wrapper').css("visibility", "initial");
-    featherIconsReplace();
 });
 
 /**
