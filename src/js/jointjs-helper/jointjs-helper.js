@@ -7,7 +7,7 @@ import SimpleRow from '../schema-diagram/simple-row/simple-row';
 import DiagramTitle from '../schema-diagram/diagram-title/diagram-title';
 import ObjectRow from "../schema-diagram/object-row/object-row";
 import ObjectRowHeader from "../schema-diagram/object-row-header/object-row-header";
-import DiagramRoot from "../schema-diagram/diagram-root";
+import DiagramRoot from "../schema-diagram/diagram-root/";
 import {openSchemaUpdateModal} from "../json-editor/json-editor";
 
 const cardinalityUpdateModal = $('#update-cardinality-modal');

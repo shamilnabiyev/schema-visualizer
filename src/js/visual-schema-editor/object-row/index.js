@@ -5,6 +5,9 @@ import {replace as featherIconsReplace} from 'feather-icons/dist/feather.min';
 import {createSeSimpleRow} from '../simple-row';
 import objectRowTemplate from './template.html';
 
+const ICON_CHEVRON_DOWN = $('<i data-feather="chevron-down" width="16" height="16"></i>');
+const ICON_CHEVRON_RIGHT = $('<i data-feather="chevron-right" width="16" height="16"></i>');
+
 function createIDs() {
     return {
         newPropContainerId: `new-prop-container-${uuidV4()}`,
@@ -60,12 +63,16 @@ export const createSeObjectRow = function createSeObjectRow(field_Name, field_Ty
 
         if (isExpanded) {
             $(this).attr('data-expanded', 'false');
-            $(this).children('i').toggleClass('fa-chevron-down fa-chevron-right');
+            $(this).children('svg').remove();
+            $(this).append(ICON_CHEVRON_RIGHT);
+            featherIconsReplace();
 
             newPropContainer.slideUp();
         } else {
             $(this).attr('data-expanded', 'true');
-            $(this).children('i').toggleClass('fa-chevron-right fa-chevron-down');
+            $(this).children('svg').remove();
+            $(this).append(ICON_CHEVRON_DOWN);
+            featherIconsReplace();
 
             newPropContainer.slideDown();
         }

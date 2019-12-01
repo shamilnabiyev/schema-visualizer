@@ -11,7 +11,8 @@ import {
     addMigCastDbDiagrams,
     addSpeciesDbDiagrams,
     addMovieLensDbSchemata,
-    serializeDiagrams, deserializeDiagrams
+    serializeDiagrams,
+    deserializeDiagrams,
 } from "./jointjs-helper/diagram-generator";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'jointjs/dist/joint.min.css';
