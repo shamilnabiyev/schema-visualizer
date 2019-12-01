@@ -1,6 +1,6 @@
 import $ from 'jquery';
+import {replace as featherIconsReplace} from 'feather-icons/dist/feather.min';
 import {htmlToJsonSchema} from "./html-to-json-schema";
-import {createSeSimpleRow} from "./simple-row";
 import {createSeObjectRow} from "./object-row";
 import {createDiagramRoot} from "../jointjs-helper/diagram-generator";
 
@@ -30,10 +30,11 @@ schemaEditorModal.on('show.bs.modal', function () {
     schemaTitleInput.val('');
     schemaTitleInput.removeClass('is-valid').addClass('is-invalid');
 
-    const row1 = createSeObjectRow('ROOT', 'object');
+    const row = createSeObjectRow('ROOT', 'object');
     const schemaEditor = $('#schema-editor');
     schemaEditor.empty();
-    schemaEditor.append(row1);
+    schemaEditor.append(row);
+    featherIconsReplace();
 
     $('#schema-editor > .object-row > .new-prop-container > .new-field-elements > .add-btn').prop("disabled", true);
     $('#schema-editor > .object-row > .form-inline > .remove-btn-block > .remove-btn').first().remove();
@@ -56,6 +57,3 @@ schemaTitleInput.on('input propertychange', function(){
 function isFieldNameValid(value){
     return (/^([a-zA-Z0-9_]+)$/.test(value));
 }
-
-export {createSeSimpleRow, createSeObjectRow};
-

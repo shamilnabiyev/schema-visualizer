@@ -4,7 +4,7 @@
                     <span class="field-name col-form-label col-form-label-sm">
                         <button id="<%= IDs.expanderButtonId %>" class="expander-btn btn btn-sm btn-outline-secondary mr-1"
                                 data-expanded="true">
-                            <i class="fas fa-chevron-down"></i>
+                            <i data-feather="chevron-down" width="16" height="16"></i>
                         </button>
                         <span class="field-name-text"><%= fieldName %></span>
                     </span>
@@ -12,7 +12,7 @@
         </div>
         <div class="remove-btn-block">
             <button id="<%= IDs.removeButtonId %>" class="remove-btn btn btn-sm btn-outline-danger mr-2">
-                <i class="fas fa-trash-alt"></i>
+                <i data-feather="trash-2" width="16" height="16"></i>
             </button>
         </div>
     </div>
@@ -23,7 +23,7 @@
 
         <div class="new-prop-block" id="<%= IDs.newPropBlockId %>" style="display: block;">
             <button class="btn btn-sm btn-outline-info new-prop-btn">
-                <i class="fas fa-plus"></i>
+                <i data-feather="plus" width="16" height="16"></i>
             </button>
         </div>
         <div class="form-inline new-field-elements" id="<%= IDs.newFieldElementsId %>" style="display: none;">
@@ -40,10 +40,10 @@
                 <option value="object">object</option>
             </select>
             <button id="<%= IDs.addButtonId %>" class="add-btn btn btn-sm btn-outline-success mr-3" disabled="true">
-                <i class="fas fa-check-circle"></i>
+                <i data-feather="check" width="16" height="16"></i>
             </button>
             <button id="<%= IDs.cancelButtonId %>" class="btn btn-sm btn-outline-warning cancel-btn">
-                <i class="fas fa-times-circle"></i>
+                <i data-feather="x" width="16" height="16"></i>
             </button>
         </div>
     </div>
