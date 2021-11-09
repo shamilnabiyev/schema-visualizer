@@ -58,6 +58,6 @@ circle.joint-port-body:hover {
 }
 
 #paper-holder {
-    height: 100vh !important;
+    height: 65vh !important;
     flex-grow: 1;
 }
