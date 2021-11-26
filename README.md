@@ -53,9 +53,15 @@ Schema Visualizer is an online data modeling tool for JSON and document based da
 
 ---
 
-## How to import a JSON document
+### How to import a JSON document
 
 <img src="docs/img/example-json-document.gif"> 
+
+---
+
+### How to import a JSON-Schema
+
+<img src="docs/img/example-json-schema.gif"> 
 
 ---
 
