@@ -35,8 +35,32 @@ Schema Visualizer is an online data modeling tool for JSON and document based da
 
 ## Example Data Models
 
+### How to create a new entity type
+
+<img src="docs/img/example-user-entity.gif"> 
+
+---
+
+### How to reference an entity
+
+<img src="docs/img/example-entity-referencing.gif"> 
+
+---
+
+### How to zoom in/out
+
+<img src="docs/img/example-zoom-in-out.gif"> 
+
+---
+
+### MovieLens Database Schema Diagrams
+
 <img src="docs/img/movie-lens-db-schema.png"> 
 
-<hr>
+---
+
+### MigCast Database Schema Diagrams
 
 <img src="docs/img/migcast-db-schema.png"> 
+
+---
