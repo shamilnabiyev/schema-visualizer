@@ -33,7 +33,7 @@ Schema Visualizer is an online data modeling tool for JSON and document based da
   * [JSON S Generator](https://github.com/mowgliLab/json-s-gen)
   * [Webpack](https://github.com/webpack/webpack)
 
-## Example Data Models
+## Examples
 
 ### How to create a new entity type
 
@@ -50,6 +50,12 @@ Schema Visualizer is an online data modeling tool for JSON and document based da
 ### How to zoom in/out
 
 <img src="docs/img/example-zoom-in-out.gif"> 
+
+---
+
+## How to import a JSON document
+
+<img src="docs/img/example-json-document.gif"> 
 
 ---
 
