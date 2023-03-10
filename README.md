@@ -27,11 +27,11 @@ Schema Visualizer is an online data modeling tool for JSON and document based da
 
 ## Used libraries
 
-  * [Bootstrap](https://github.com/twbs/bootstrap)
-  * [JointJS](https://github.com/clientIO/joint)
-  * [JSON Editor](https://github.com/josdejong/jsoneditor)
-  * [JSON S Generator](https://github.com/mowgliLab/json-s-gen)
-  * [Webpack](https://github.com/webpack/webpack)
+  * Bootstrap: https://github.com/twbs/bootstrap
+  * JointJS: https://github.com/clientIO/joint
+  * JSON Editor: https://github.com/josdejong/jsoneditor
+  * JSON Schema Generator: https://github.com/mowgliLab/json-s-gen
+  * Webpack: https://github.com/webpack/webpack
 
 ## Examples
 
