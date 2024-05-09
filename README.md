@@ -2,16 +2,9 @@
   <img width="460"  src="docs/img/schema-visualizer-social-banner-cut.png">
 </p>
 
-![Vercel Deloyment Status](http://therealsujitk-vercel-badge.vercel.app/?app=schemavisualizer&style=flat-square&logo=false)
-[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg?style=flat-square)](https://github.com/shamilnabiyev/schema-visualizer-v2?style=flat-square)
-![Open issues](https://img.shields.io/github/issues/shamilnabiyev/schema-visualizer?style=flat-square)
-
-
 # Schema Visualizer
 
 Schema Visualizer is an online data modeling tool for JSON and document based databases (document stores). It also can be used to visualize JSON data and JSON-Schema.
-
-*Live demo*: [URL](https://schema-visualizer-v2-git-shamilnabiyev-patch-1-shamilnabiyev.vercel.app/)
 
 ## Installation
 
