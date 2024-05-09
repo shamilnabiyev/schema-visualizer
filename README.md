@@ -11,7 +11,7 @@
 
 Schema Visualizer is an online data modeling tool for JSON and document based databases (document stores). It also can be used to visualize JSON data and JSON-Schema.
 
-*Live demo*: [https://schemavisualizer.com](https://schemavisualizer.com)
+*Live demo*: [URL](https://schema-visualizer-v2-git-shamilnabiyev-patch-1-shamilnabiyev.vercel.app/)
 
 ## Installation
 
